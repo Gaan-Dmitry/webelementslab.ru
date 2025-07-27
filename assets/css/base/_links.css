@@ -26,19 +26,6 @@ a:hover {
 	}
 }
 
-/* Стили для внешних ссылок */
-a[href^='http']::before {
-	content: '↗';
-	margin-right: 0.25rem;
-	font-size: 0.8em;
-	opacity: 0.7;
-	transition: opacity 0.2s ease;
-}
-
-a[href^='http']:hover::before {
-	opacity: 1;
-}
-
 /* Стили для ссылок в кнопках (отключаем эффекты) */
 .btn-card a,
 input[type='submit'] a,

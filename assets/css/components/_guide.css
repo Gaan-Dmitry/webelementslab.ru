@@ -9,6 +9,19 @@
 	color: #2a7ae2;
 	font-size: 1.2em;
 }
+
+.guide-main a[href^='http']::before {
+	content: '↗';
+	margin-right: 0.25rem;
+	font-size: 0.8em;
+	opacity: 0.7;
+	transition: opacity 0.2s ease;
+}
+
+.guide-main a[href^='http']:hover::before {
+	opacity: 1;
+}
+
 .guide-main pre {
 	background: #252525;
 	border-radius: 6px;

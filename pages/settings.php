@@ -99,6 +99,8 @@ $profile = $stmt->fetch() ?: [];
 <head>
     <meta charset="UTF-8">
     <title>Настройки профиля — WebElementsLab</title>
+    <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
+    <link rel="icon" href="/assets/img/favicon.ico" >
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/pages/settings.css">
 </head>

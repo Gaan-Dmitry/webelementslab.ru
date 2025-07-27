@@ -7,7 +7,6 @@ if (!empty($_GET['id'])) {
 } elseif (!empty($_SESSION['id'])) {
     $user_id = $_SESSION['id'];
 } else {
-    // Если не авторизован и не указан id — редирект на логин
     header('Location: /pages/login.php');
     exit;
 }
@@ -19,11 +18,13 @@ $stmt = $pdo->prepare('SELECT * FROM user_profiles WHERE user_id = ? LIMIT 1');
 $stmt->execute([$user_id]);
 $profile = $stmt->fetch();
 
-// Получаем информацию о пользователе
-$stmt = $pdo->prepare('SELECT username, email FROM users WHERE id = ? LIMIT 1');
+// Получаем основную информацию
+$stmt = $pdo->prepare('SELECT username, email, role FROM users WHERE id = ? LIMIT 1');
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
+// Проверка: это свой профиль?
+$is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +32,12 @@ $user = $stmt->fetch();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/img/favicon.ico" >
-    <meta name="theme-color" content="#000000" >
+    <title>Профиль пользователя — WebElementsLab</title>
+    <link rel="icon" href="/assets/img/favicon.ico">
+    <meta name="theme-color" content="#000000">
     <meta name="robots" content="index, follow">
     <meta name="description" content="Профиль пользователя WebElementsLab">
-    <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
-    <title>WebElementsLab — HTML, CSS и JS сниппеты для веб-разработчиков</title>
+    <link rel="apple-touch-icon" href="/assets/img/logo192.png">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/pages/profile.css">
     <meta property="og:title" content="WebElementsLab — HTML/CSS/JS элементы">
@@ -44,20 +45,23 @@ $user = $stmt->fetch();
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
     <meta property="og:url" content="https://webelementslab.ru/">
     <meta property="og:type" content="website">
-
 </head>
 <body>
-    <?php require_once __DIR__ . '/../templates/header.php'; ?>
-    <div class="wrapper">
-        <main>
+<?php require_once __DIR__ . '/../templates/header.php'; ?>
+
+<div class="wrapper">
+    <main>
         <section class="block-main">
-            <!-- Фоновое изображение -->
-            <div class="profile-bg" 
-                style="background-image: url('<?= !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : '/uploads/default-bg.jpg' ?>');">
+            <!-- Фон -->
+            <div class="profile-bg"
+                 style="background-image: url('<?= !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : '/uploads/default-bg.jpg' ?>');">
             </div>
 
+            <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar">
-                <img src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>" alt="Аватар" />
+                <img class="avatar <?= htmlspecialchars($user['role'] ?? 'guest') ?>"
+                     src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>"
+                     alt="Аватар" />
             </div>
 
             <div class="profile-info">
@@ -79,20 +83,21 @@ $user = $stmt->fetch();
                     <?php endif; ?>
                 </div>
 
-                <a href="/pages/logout.php" class="reg-btn anim-hover-box-shadow">Выход</a>
+                <?php if ($is_own_profile): ?>
+                    <a href="/pages/logout.php" class="reg-btn anim-hover-box-shadow">Выход</a>
+                <?php endif; ?>
             </div>
         </section>
 
-            <script>
-                document.querySelectorAll('.profile-social').forEach(btn => {
+        <script>
+            document.querySelectorAll('.profile-social').forEach(btn => {
                 btn.addEventListener('mouseup', e => btn.blur());
                 btn.addEventListener('mouseleave', e => btn.blur());
-                });
-            </script>
-        </main>
-    </div>
-    <?php require_once __DIR__ . '/../templates/footer.php'; ?>
+            });
+        </script>
+    </main>
+</div>
 
-
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>
 </body>
 </html>
