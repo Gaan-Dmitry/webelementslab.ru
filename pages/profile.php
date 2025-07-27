@@ -53,11 +53,11 @@ $user = $stmt->fetch();
         <section class="block-main">
             <!-- Фоновое изображение -->
             <div class="profile-bg" 
-                style="background-image: url('/uploads/<?= !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : 'default-bg.jpg' ?>');">
+                style="background-image: url('<?= !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : '/uploads/default-bg.jpg' ?>');">
             </div>
 
             <div class="profile-avatar">
-                <img src="/uploads/<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : 'default-avatar.png' ?>" alt="Аватар" />
+                <img src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>" alt="Аватар" />
             </div>
 
             <div class="profile-info">
