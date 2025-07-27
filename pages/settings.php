@@ -29,18 +29,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Аватар
     if (!empty($_FILES['avatar']['tmp_name'])) {
         $avatar_ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
-        $avatar_path = 'https://webelementslab.ru/uploads/avatar_' . $user_id . '.' . $avatar_ext;
-        move_uploaded_file($_FILES['avatar']['tmp_name'], __DIR__ . '/../' . $avatar_path);
+        $avatar_filename = 'avatar_' . $user_id . '.' . $avatar_ext;
+        $avatar_path = '/uploads/' . $avatar_filename; // путь для БД и <img>
+        $destination = $upload_dir . $avatar_filename; // абсолютный путь на сервере
+        move_uploaded_file($_FILES['avatar']['tmp_name'], $destination);
         $avatar = $avatar_path;
     }
-
-    // Фон
+    
+    //Фон
     if (!empty($_FILES['bg_img']['tmp_name'])) {
         $bg_ext = pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION);
-        $bg_path = 'https://webelementslab.ru/uploads/bg_' . $user_id . '.' . $bg_ext;
-        move_uploaded_file($_FILES['bg_img']['tmp_name'], __DIR__ . '/../' . $bg_path);
+        $bg_filename = 'bg_' . $user_id . '.' . $bg_ext;
+        $bg_path = '/uploads/' . $bg_filename;
+        $destination = $upload_dir . $bg_filename;
+        move_uploaded_file($_FILES['bg_img']['tmp_name'], $destination);
         $bg_img = $bg_path;
     }
+    
 
     // Проверка существования профиля
     $stmt = $pdo->prepare("SELECT id FROM user_profiles WHERE user_id = ?");
