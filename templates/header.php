@@ -1,10 +1,10 @@
 <?php
 if (isset($_SESSION['id'])) {
     require_once __DIR__ . '/../includes/db.php';
-    $stmt = $pdo->prepare('SELECT avatar_url FROM user_profiles WHERE user_id = ? LIMIT 1');
+    $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
     $stmt->execute([$_SESSION['id']]);
     $user_profile = $stmt->fetch();
-    $avatar_url = !empty($user_profile['avatar_url']) ? $user_profile['avatar_url'] : '/assets/img/default-avatar.png';
+    $avatar_url = !empty($user_profile['avatar']) ? '/uploads/' . htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
 }
 ?>
 
