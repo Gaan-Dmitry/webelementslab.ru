@@ -118,17 +118,17 @@ $profile = $stmt->fetch() ?: [];
                         <input type="file" name="avatar" accept="image/*">
                     </label>
 
+                        <?php if (!empty($profile['avatar'])): ?>
+                            <img src="<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar" style="max-height:100px">
+                        <?php endif; ?>
+
                     <label>
                         Фон:
                         <input type="file" name="bg_img" accept="image/*">
                     </label>
 
-                    <?php if (!empty($profile['avatar'])): ?>
-                        <img src="/<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar" style="max-height:100px">
-                    <?php endif; ?>
-
                     <?php if (!empty($profile['bg_img'])): ?>
-                        <img src="/<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
+                        <img src="<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
                     <?php endif; ?>
 
                     <label>
