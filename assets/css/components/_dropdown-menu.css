@@ -23,15 +23,6 @@
 	cursor: pointer;
 }
 
-.avatar.admin {
-	border: 3px solid #e74c3c;
-}
-.avatar.moderator {
-	border: 3px solid #f39c12;
-}
-.avatar.user {
-	border: 3px solid #3498db;
-}
 
 .avatar:hover {
 	box-shadow: 0 0 8px var(--accent-hover);
