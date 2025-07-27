@@ -16,6 +16,14 @@
 	position: relative;
 }
 
+.avatar-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
 /* Общий стиль */
 .profile-avatar .avatar {
 	width: 100%;
@@ -27,14 +35,10 @@
 	z-index: 1;
 }
 
-/* ================= ADMIN ================= */
-.profile-avatar .avatar.admin::before {
+.avatar-wrapper.admin::before {
 	content: '';
 	position: absolute;
-	top: -6px;
-	left: -6px;
-	right: -6px;
-	bottom: -6px;
+	inset: -6px;
 	border-radius: 50%;
 	background: radial-gradient(
 		circle,
@@ -46,68 +50,59 @@
 	z-index: 0;
 }
 
-@keyframes adminPulse {
-	0%,
-	100% {
-		transform: scale(1);
-		opacity: 0.6;
-	}
-	50% {
-		transform: scale(1.2);
-		opacity: 1;
-	}
-}
-
-/* ================= PREMIUM ================= */
-.profile-avatar .avatar.premium::before {
+.avatar-wrapper.premium::before {
 	content: '';
 	position: absolute;
-	top: -4px;
-	left: -4px;
-	right: -4px;
-	bottom: -4px;
+	inset: -4px;
 	border-radius: 50%;
-	z-index: 0;
 	background: conic-gradient(from 0deg, #f39c12, #f1c40f, #e67e22, #f39c12);
 	animation: spinGradient 3s linear infinite;
+	z-index: 0;
 }
 
-.profile-avatar .avatar.premium::after {
+.avatar-wrapper.premium::after {
 	content: '';
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	inset: 0;
 	border-radius: 50%;
 	box-shadow: 0 0 20px rgba(243, 156, 18, 0.6);
 	animation: premiumGlow 2s ease-in-out infinite;
 	z-index: 0;
 }
 
-@keyframes spinGradient {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes premiumGlow {
-	0%,
-	100% {
-		box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
-	}
-	50% {
-		box-shadow: 0 0 25px rgba(243, 156, 18, 0.9);
-	}
-}
-
 /* ================= USER ================= */
-.profile-avatar .avatar.user::before,
-.profile-avatar .avatar.user::after {
+.avatar-wrapper.user::before,
+.avatar-wrapper.user::after {
 	display: none;
+}
+
+/* ================= Бейдж ================= */
+
+.avatar-wrapper::after {
+	content: attr(data-role);
+	position: absolute;
+	bottom: -6px;
+	right: -6px;
+	background: var(--color-premium);
+	color: #000;
+	font-size: 0.65rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 12px;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+	text-transform: uppercase;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.avatar-wrapper.admin::after {
+	background: var(--color-admin);
+	content: 'Admin';
+}
+
+.avatar-wrapper.premium::after {
+	background: var(--color-premium);
+	content: 'Premium';
 }
 
 .profile-bg {
