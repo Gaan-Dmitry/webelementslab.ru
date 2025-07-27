@@ -58,14 +58,14 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
             </div>
 
             <!-- Аватар с ролью как дополнительным классом -->
-            <div class="profile-avatar">
-            <div class="avatar-wrapper <?= htmlspecialchars($user['role'] ?? 'guest') ?>">
-                <img class="avatar"
-                    src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>"
-                    alt="Аватар" />
+            <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
+                <div class="avatar-inner">
+                    <img class="avatar"
+                        src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>"
+                        alt="Аватар" />
+                </div>
             </div>
 
-            </div>
 
             <div class="profile-info">
                 <h1><?= htmlspecialchars($user['username'] ?? 'Гость') ?></h1>

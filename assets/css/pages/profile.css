@@ -4,27 +4,6 @@
 	--color-premium: #f39c12;
 	--bg-avatar: #222a44;
 }
-
-/* Контейнер */
-.profile-avatar {
-	margin: -2rem auto 8px;
-	width: var(--avatar-size);
-	height: var(--avatar-size);
-	border-radius: 50%;
-	overflow: hidden;
-	background: var(--bg-avatar);
-	position: relative;
-}
-
-.avatar-wrapper {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	overflow: hidden;
-}
-
-/* Общий стиль */
 .profile-avatar .avatar {
 	width: 100%;
 	height: 100%;
@@ -35,7 +14,34 @@
 	z-index: 1;
 }
 
-.avatar-wrapper.admin::before {
+.profile-avatar {
+	position: relative;
+	width: var(--avatar-size);
+	height: var(--avatar-size);
+	margin: -2rem auto 8px;
+	background: var(--bg-avatar);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* круглая обрезка ТОЛЬКО для изображения */
+.avatar-inner {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	overflow: hidden;
+	position: relative;
+}
+
+/* изображение */
+.avatar {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* ================= ADMIN эффекты ================= */
+.profile-avatar.admin::before {
 	content: '';
 	position: absolute;
 	inset: -6px;
@@ -50,7 +56,24 @@
 	z-index: 0;
 }
 
-.avatar-wrapper.premium::before {
+.profile-avatar.admin::after {
+	content: 'Admin';
+	position: absolute;
+	bottom: -6px;
+	right: -6px;
+	background: var(--color-admin);
+	color: #fff;
+	font-size: 0.65rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 10px;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+	text-transform: uppercase;
+	z-index: 2;
+}
+
+/* ================= PREMIUM эффекты ================= */
+.profile-avatar.premium::before {
 	content: '';
 	position: absolute;
 	inset: -4px;
@@ -60,26 +83,8 @@
 	z-index: 0;
 }
 
-.avatar-wrapper.premium::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: 50%;
-	box-shadow: 0 0 20px rgba(243, 156, 18, 0.6);
-	animation: premiumGlow 2s ease-in-out infinite;
-	z-index: 0;
-}
-
-/* ================= USER ================= */
-.avatar-wrapper.user::before,
-.avatar-wrapper.user::after {
-	display: none;
-}
-
-/* ================= Бейдж ================= */
-
-.avatar-wrapper::after {
-	content: attr(data-role);
+.profile-avatar.premium::after {
+	content: 'Premium';
 	position: absolute;
 	bottom: -6px;
 	right: -6px;
@@ -88,21 +93,10 @@
 	font-size: 0.65rem;
 	font-weight: 700;
 	padding: 2px 6px;
-	border-radius: 12px;
+	border-radius: 10px;
 	box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 	text-transform: uppercase;
 	z-index: 2;
-	pointer-events: none;
-}
-
-.avatar-wrapper.admin::after {
-	background: var(--color-admin);
-	content: 'Admin';
-}
-
-.avatar-wrapper.premium::after {
-	background: var(--color-premium);
-	content: 'Premium';
 }
 
 .profile-bg {
