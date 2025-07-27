@@ -4,7 +4,8 @@ if (isset($_SESSION['id'])) {
     $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
     $stmt->execute([$_SESSION['id']]);
     $user_profile = $stmt->fetch();
-    $avatar = !empty($user_profile['avatar']) ?  . htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
+    $avatar = !empty($user_profile['avatar']) ? 
+    htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
 }
 ?>
 
