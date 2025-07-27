@@ -23,15 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tg = trim($_POST['tg'] ?? '');
     $github = trim($_POST['github'] ?? '');
 
-    $avatar_url = null;
-    $bg_img_url = null;
+    $avatar = null;
+    $bg_img = null;
 
     // Аватар
     if (!empty($_FILES['avatar']['tmp_name'])) {
         $avatar_ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
         $avatar_path = 'uploads/avatar_' . $user_id . '.' . $avatar_ext;
         move_uploaded_file($_FILES['avatar']['tmp_name'], __DIR__ . '/../' . $avatar_path);
-        $avatar_url = $avatar_path;
+        $avatar = $avatar_path;
     }
 
     // Фон
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bg_ext = pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION);
         $bg_path = 'uploads/bg_' . $user_id . '.' . $bg_ext;
         move_uploaded_file($_FILES['bg_img']['tmp_name'], __DIR__ . '/../' . $bg_path);
-        $bg_img_url = $bg_path;
+        $bg_img = $bg_path;
     }
 
     // Проверка существования профиля
@@ -52,14 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "UPDATE user_profiles SET ";
         $params = [];
 
-        if ($avatar_url) {
-            $query .= "avatar_url = ?, ";
-            $params[] = $avatar_url;
+        if ($avatar) {
+            $query .= "avatar = ?, ";
+            $params[] = $avatar;
         }
 
-        if ($bg_img_url) {
-            $query .= "bg_img_url = ?, ";
-            $params[] = $bg_img_url;
+        if ($bg_img) {
+            $query .= "bg_img = ?, ";
+            $params[] = $bg_img;
         }
 
         $query .= "bio = ?, vk = ?, tg = ?, github = ? WHERE user_id = ?";
@@ -73,11 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute($params);
     } else {
         // Вставка
-        $stmt = $pdo->prepare("INSERT INTO user_profiles (user_id, avatar_url, bg_img_url, bio, vk, tg, github) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO user_profiles (user_id, avatar, bg_img, bio, vk, tg, github) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $user_id,
-            $avatar_url,
-            $bg_img_url,
+            $avatar,
+            $bg_img,
             $bio,
             $vk,
             $tg,
@@ -123,12 +123,12 @@ $profile = $stmt->fetch() ?: [];
                         <input type="file" name="bg_img" accept="image/*">
                     </label>
 
-                    <?php if (!empty($profile['avatar_url'])): ?>
-                        <img src="/<?= htmlspecialchars($profile['avatar_url']) ?>" alt="avatar" style="max-height:100px">
+                    <?php if (!empty($profile['avatar'])): ?>
+                        <img src="/<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar" style="max-height:100px">
                     <?php endif; ?>
 
-                    <?php if (!empty($profile['bg_img_url'])): ?>
-                        <img src="/<?= htmlspecialchars($profile['bg_img_url']) ?>" alt="bg" style="max-height:100px">
+                    <?php if (!empty($profile['bg_img'])): ?>
+                        <img src="/<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
                     <?php endif; ?>
 
                     <label>

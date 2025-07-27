@@ -4,7 +4,7 @@ if (isset($_SESSION['id'])) {
     $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
     $stmt->execute([$_SESSION['id']]);
     $user_profile = $stmt->fetch();
-    $avatar_url = !empty($user_profile['avatar']) ? '/uploads/' . htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
+    $avatar = !empty($user_profile['avatar']) ? '/uploads/' . htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
 }
 ?>
 
@@ -23,7 +23,7 @@ if (isset($_SESSION['id'])) {
         <?php if (isset($_SESSION['username'])): ?>
             <div class="profile-menu-wrapper" id="profileWrapper">
                 <span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
-                <img src="<?= $avatar_url ?>" alt="avatar" class="avatar" id="avatarToggle">
+                <img src="<?= $avatar ?>" alt="avatar" class="avatar" id="avatarToggle">
                 <div class="dropdown-menu" id="profileMenu">
                     <a href="/pages/profile.php">Профиль</a>
                     <a href="/pages/settings.php">Настройки</a>
