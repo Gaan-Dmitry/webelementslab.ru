@@ -80,6 +80,10 @@ $tags = explode(',', $snippet['tag'] ?? '');
                     <button class="btn-card j-c-center d-flex<?= $is_favorite ? ' fav' : '' ?>" id="fav-btn" data-id="<?= $snippet['id'] ?>">
                         <?= $is_favorite ? '💖 В избранном' : '🤍 В избранное' ?>
                     </button>
+
+                    <?php if ($_SESSION['id'] === (int)$snippet['user_id']): ?>
+                        <a href="/pages/edit_or_create_card.php?id=<?= $snippet['id'] ?>" class="btn-card j-c-center d-flex" style="margin-top: 0.5rem;">✏️ Редактировать</a>
+                    <?php endif; ?>
                 <?php endif; ?>
                 </div>
 
