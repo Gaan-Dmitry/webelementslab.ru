@@ -1,9 +1,29 @@
 let cropper = null;
 let currentTarget = null;
 
-function openCropper(type) {
+function openCropper(type, useCurrent = false) {
 	currentTarget = type;
 	const input = document.getElementById(type + 'Input');
+
+	// Если обрезаем уже выбранное изображение (без выбора нового файла)
+	if (useCurrent) {
+		const img = document.getElementById(type + 'Image');
+		const src = img?.src;
+
+		if (src && !src.includes('placeholder')) {
+			document.getElementById('cropperImage').src = src;
+			document.getElementById('cropModal').style.display = 'flex';
+			cropper = new Cropper(document.getElementById('cropperImage'), {
+				aspectRatio: type === 'avatar' ? 1 : NaN,
+				viewMode: 1,
+			});
+		} else {
+			alert('Нет изображения для обрезки.');
+		}
+		return;
+	}
+
+	// Иначе — загружаем новый файл
 	input.click();
 
 	input.onchange = function () {

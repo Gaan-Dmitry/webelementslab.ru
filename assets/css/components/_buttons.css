@@ -152,3 +152,9 @@ input[type='reset']:hover {
 	box-shadow: 0 0.125rem 0.5rem rgba(255, 76, 76, 0.2),
 		inset 0 0.0625rem 0 rgba(255, 76, 76, 0.1);
 }
+
+.error {
+	border-color: var(--error) !important;
+	color: var(--error) !important;
+	box-shadow: 0 0 1rem rgba(255, 76, 76, 0.6) !important;
+}
