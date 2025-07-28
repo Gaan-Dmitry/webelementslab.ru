@@ -133,7 +133,7 @@ $profile = $stmt->fetch() ?: [];
                 <?php if (!empty($error)): ?>
                     <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
-                <form method="POST" class="profile-settings-form" enctype="multipart/form-data" id="profileForm">
+                <form method="POST" class="profile-settings-form a-i-center" enctype="multipart/form-data" id="profileForm">
                     <label class="file-label">
                         <span>📁</span> Выбрать аватар
                         <input type="file" name="avatar" accept="image/*" id="avatarInput">

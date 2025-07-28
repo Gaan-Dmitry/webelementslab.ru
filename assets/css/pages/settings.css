@@ -124,3 +124,22 @@
 	color: #8a80f2;
 	font-size: 0.95rem;
 }
+
+.edit_block {
+	display: flex;
+	gap: 1rem;
+}
+
+.edit_block input[type='text'],
+.edit_block input[type='password'],
+.edit_block input[type='email'],
+.edit_block textarea {
+	width: 20rem;
+	padding: 0.8rem;
+	margin-bottom: 0;
+	border-radius: 0.25rem;
+	background-color: #ffffff00;
+	color: #d1d7e0;
+	border: 2px solid #92f1e473;
+	transition: border-color 0.2s ease;
+}
