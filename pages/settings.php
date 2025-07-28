@@ -134,10 +134,11 @@ $profile = $stmt->fetch() ?: [];
                     <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
                 <form method="POST" class="profile-settings-form" enctype="multipart/form-data" id="profileForm">
-                    <label>
-                        Аватар:
+                    <label class="file-label">
+                        <span>📁</span> Выбрать аватар
                         <input type="file" name="avatar" accept="image/*" id="avatarInput">
                     </label>
+                    <span class="file-name" id="avatarFileName"></span>
                     <div id="avatarPreview">
                         <?php if (!empty($profile['avatar'])): ?>
                             <?php
@@ -145,13 +146,14 @@ $profile = $stmt->fetch() ?: [];
                             $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatarPath;
                             $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
                             ?>
-                            <img src="<?= $avatarPath ?>?t=<?= $avatarTime ?>" alt="avatar" style="max-height:100px">
+                            <img src="<?= $avatarPath ?>?t=<?= $avatarTime ?>" alt="avatar">
                         <?php endif; ?>
                     </div>
-                    <label>
-                        Фон:
+                    <label class="file-label">
+                        <span>📁</span> Выбрать фон
                         <input type="file" name="bg_img" accept="image/*" id="bgInput">
                     </label>
+                    <span class="file-name" id="bgFileName"></span>
                     <div id="bgPreview">
                         <?php if (!empty($profile['bg_img'])): ?>
                             <?php
@@ -159,7 +161,7 @@ $profile = $stmt->fetch() ?: [];
                             $bgFile = $_SERVER['DOCUMENT_ROOT'] . $bgPath;
                             $bgTime = file_exists($bgFile) ? filemtime($bgFile) : time();
                             ?>
-                            <img src="<?= $bgPath ?>?t=<?= $bgTime ?>" alt="bg" style="max-height:100px">
+                            <img src="<?= $bgPath ?>?t=<?= $bgTime ?>" alt="bg">
                         <?php endif; ?>
                     </div>
                     <label>
@@ -179,7 +181,7 @@ $profile = $stmt->fetch() ?: [];
                         <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
                     </label>
                     <div class="button-with-spinner">
-                        <button type="submit" class="reg-btn anim-hover-box-shadow" id="save-btn">Сохранить</button>
+                        <button type="submit" class="error-btn" id="save-btn">Сохранить</button>
                         <div class="spinner" id="upload-spinner" style="display:none;"></div>
                     </div>
                 </form>
@@ -189,30 +191,34 @@ $profile = $stmt->fetch() ?: [];
     <?php require_once __DIR__ . '/../templates/footer.php'; ?>
 </body>
 <script>
-// Предпросмотр аватара
+// Предпросмотр аватара и имя файла
 const avatarInput = document.getElementById('avatarInput');
 const avatarPreview = document.getElementById('avatarPreview');
+const avatarFileName = document.getElementById('avatarFileName');
 avatarInput.addEventListener('change', function() {
     avatarPreview.innerHTML = '';
+    avatarFileName.textContent = this.files[0] ? this.files[0].name : '';
     if (this.files && this.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            avatarPreview.innerHTML = '<img src="' + e.target.result + '" alt="avatar" style="max-height:100px">';
+            avatarPreview.innerHTML = '<img src="' + e.target.result + '" alt="avatar">';
         };
         reader.readAsDataURL(this.files[0]);
     }
     document.getElementById('upload-spinner').style.display = 'none';
     document.getElementById('save-btn').disabled = false;
 });
-// Предпросмотр фона
+// Предпросмотр фона и имя файла
 const bgInput = document.getElementById('bgInput');
 const bgPreview = document.getElementById('bgPreview');
+const bgFileName = document.getElementById('bgFileName');
 bgInput.addEventListener('change', function() {
     bgPreview.innerHTML = '';
+    bgFileName.textContent = this.files[0] ? this.files[0].name : '';
     if (this.files && this.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            bgPreview.innerHTML = '<img src="' + e.target.result + '" alt="bg" style="max-height:100px">';
+            bgPreview.innerHTML = '<img src="' + e.target.result + '" alt="bg">';
         };
         reader.readAsDataURL(this.files[0]);
     }
