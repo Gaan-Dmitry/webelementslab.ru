@@ -82,9 +82,12 @@ $tags = explode(',', $snippet['tag'] ?? '');
                     </button>
 
                     <?php if ($_SESSION['id'] === (int)$snippet['user_id']): ?>
-                        <a href="/pages/edit_or_create_card.php?id=<?= $snippet['id'] ?>" class="btn-card j-c-center d-flex" style="margin-top: 0.5rem;">✏️ Редактировать</a>
+                        <button class="btn-card j-c-center d-flex" onclick="location.href='/pages/edit_or_create_card.php?id=<?= $snippet['id'] ?>'">
+                            ✏️ Редактировать
+                        </button>
                     <?php endif; ?>
                 <?php endif; ?>
+
                 </div>
 
             </div>
