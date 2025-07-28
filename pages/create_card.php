@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="d-flex gap1 card-page f-d-column">
     <h1 class="card-title">Создать карточку</h1>
         <div class="d-flex j-c-space-between">
-        <input type="text" name="name" placeholder="Название..." required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
             <h2><span class="author-link"><?= htmlspecialchars($_SESSION['username']) ?></span></h2>
         </div>
         <div class="f-d-row d-flex gap1">
@@ -60,8 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if ($error): ?>
                         <div class="form-error" style="color:red;"> <?= htmlspecialchars($error) ?> </div>
                     <?php endif; ?>
-                        <textarea name="description" placeholder="Описание..." title="Описание" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
-                        <input type="text" name="tag" placeholder="Теги (через запятую)" title="Теги (через запятую)" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
+                    <input type="text" name="name" placeholder="Название..." required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                    <textarea name="description" placeholder="Описание..." title="Описание" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
+                    <input type="text" name="tag" placeholder="Теги (через запятую)" title="Теги (через запятую)" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
                     <button type="submit" class="btn-card j-c-center d-flex">Сохранить</button>
                 </form>
             </div>
