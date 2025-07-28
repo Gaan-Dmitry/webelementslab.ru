@@ -78,12 +78,12 @@ if (!empty($_SESSION['username'])) {
 document.getElementById('login-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  let login = document.getElementById('login_field');
-  let password = document.getElementById('password');
-  let loginError = document.getElementById('login-error');
-  let passwordError = document.getElementById('password-error');
-  let submitButton = document.getElementById('submit-button');
-  let spinner = document.getElementById('login-spinner');
+  const login = document.getElementById('login_field');
+  const password = document.getElementById('password');
+  const loginError = document.getElementById('login-error');
+  const passwordError = document.getElementById('password-error');
+  const submitButton = document.getElementById('submit-button');
+  const spinner = document.getElementById('login-spinner');
 
   // Сброс ошибок
   loginError.textContent = '\u00A0';
@@ -106,50 +106,51 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
   if (hasError) return;
 
-
   const formData = new FormData(this);
-
-  // Показываем спиннер и блокируем кнопку
   submitButton.disabled = true;
   spinner.style.display = 'block';
 
+  let result = null;
+
   try {
     const response = await fetch('/handlers/login_handler.php', {
-    method: 'POST',
-    body: formData,
-    credentials: 'include', // ← обязательно!
-  });
+      method: 'POST',
+      body: formData,
+      credentials: 'include'
+    });
 
-
-    const result = await response.json();
+    result = await response.json();
 
     if (result.success) {
       window.location.href = '/';
     } else if (result.errors && result.errors.length > 0) {
       const errorText = result.errors[0].toLowerCase();
 
-      if (errorText.includes('почт')) {
+      if (errorText.includes('почт') || errorText.includes('пользовател')) {
         login.classList.add('invalid');
         loginError.textContent = result.errors[0];
       } else if (errorText.includes('парол')) {
         password.classList.add('invalid');
         passwordError.textContent = result.errors[0];
       } else {
-        alert(result.errors.join('\n'));
+        // Остальные ошибки — можно вывести, например, под полем почты
+        login.classList.add('invalid');
+        loginError.textContent = result.errors[0];
       }
     }
   } catch (err) {
     console.error('Ошибка при входе:', err);
+    loginError.textContent = 'Ошибка соединения с сервером.';
+    login.classList.add('invalid');
   } finally {
-    // Скрываем спиннер и разблокируем кнопку только если произошла ошибка
-    // В случае успешного входа пользователь будет перенаправлен
-    if (!result?.success) {
+    if (!result || !result.success) {
       submitButton.disabled = false;
       spinner.style.display = 'none';
     }
   }
 });
 </script>
+
 </main>
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
