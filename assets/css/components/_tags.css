@@ -1,9 +1,5 @@
 :root {
 	--tag-radius: 999px;
-	--tooltip-bg: #222;
-	--tooltip-color: #fff;
-	--tooltip-padding: 0.4em 1em;
-	--tooltip-font-size: 1em;
 }
 
 .tags {
@@ -25,14 +21,11 @@
 	box-shadow: 0 0.125rem 0.5rem rgba(255, 179, 71, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 	transition: all 0.3s ease;
-	max-width: 10em;
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	z-index: 1;
 }
 
-/* Градиентная вспышка */
+/* Градиентная вспышка при наведении */
 .tag-pill::before {
 	content: '';
 	position: absolute;
@@ -53,35 +46,6 @@
 
 .tag-pill:hover::before {
 	left: 100%;
-}
-
-/* Подсказка при наведении */
-.tag-pill::after {
-	content: attr(data-full);
-	position: absolute;
-	opacity: 0;
-	transition: opacity 0.2s;
-	pointer-events: none;
-	background: var(--tooltip-bg);
-	color: var(--tooltip-color);
-	padding: var(--tooltip-padding);
-	border-radius: 0.7em;
-	font-size: var(--tooltip-font-size);
-	text-align: center;
-	white-space: normal;
-	word-break: break-word;
-	bottom: -2.5em;
-	left: 50%;
-	transform: translateX(-50%);
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-	z-index: 100;
-	max-width: 90vw;
-	min-width: max-content;
-}
-
-.tag-pill:hover::after,
-.tag-pill:focus::after {
-	opacity: 1;
 }
 
 /* Вариативные цвета */
@@ -122,7 +86,7 @@
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Ограничение ширины блока тегов */
+/* Ограничение ширины всего блока тегов, если нужно */
 .block-tag {
-	max-width: 14rem;
+	max-width: 60rem;
 }

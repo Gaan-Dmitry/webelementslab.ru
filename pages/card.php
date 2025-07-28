@@ -64,6 +64,11 @@ $tags = explode(',', $snippet['tag'] ?? '');
         <h1 class="card-title"><?= htmlspecialchars($snippet['name']) ?></h1>
         <h2><a href="/pages/profile.php?id=<?= urlencode($snippet['user_id']) ?>" class="author-link"><?= htmlspecialchars($snippet['username']) ?></a></h2>
         </div>
+        <div class="block-tag">
+            <?php foreach ($tags as $tag): ?>
+                <span class="tag-pill" data-full="<?= htmlspecialchars(trim($tag)) ?>"><?= htmlspecialchars(trim($tag)) ?></span>
+            <?php endforeach; ?>
+        </div>
         <div class="f-d-row d-flex gap1">
             <!-- Preview -->
             <div class="left-card-page d-flex gap1 f-d-column">
@@ -76,11 +81,6 @@ $tags = explode(',', $snippet['tag'] ?? '');
                         <?= $is_favorite ? '💖 В избранном' : '🤍 В избранное' ?>
                     </button>
                 <?php endif; ?>
-                    <div class="block-tag">
-                        <?php foreach ($tags as $tag): ?>
-                            <span class="tag-pill" data-full="<?= htmlspecialchars(trim($tag)) ?>"><?= htmlspecialchars(trim($tag)) ?></span>
-                        <?php endforeach; ?>
-                    </div>
                 </div>
 
             </div>
