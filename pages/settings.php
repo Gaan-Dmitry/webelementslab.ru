@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="wrapper">
 <main>
 <section class="block-main">
-    <h1>Настройки профиля</h1>
+    <h1 class="t-a-center m-bottom1">Настройки профиля</h1>
     <?php if (!empty($success)): ?>
         <p class="success">Профиль успешно обновлён ✅</p>
     <?php endif; ?>
@@ -144,13 +144,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="avatar-block">
-            <img id="avatarImage" src="<?= $profile['avatar'] ?? '' ?>" alt="Аватар">
-            <div class="avatar-actions">
+            <div class="avatar-trigger" id="avatarTrigger">
+                <img id="avatarImage" src="<?= $profile['avatar'] ?? '/assets/img/default-avatar.png' ?>" alt="Аватар">
+            </div>
+            <div class="dropdown-menu" id="avatarMenu">
                 <button type="button" onclick="document.getElementById('avatarInput').click()">Обновить</button>
                 <button type="button" onclick="removeImage('avatar')">Удалить</button>
                 <button type="button" onclick="openCropper('avatar')">Обрезать</button>
             </div>
         </div>
+
     </div>
 
     <input type="file" name="avatar" id="avatarInput" accept="image/*" hidden>

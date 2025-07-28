@@ -1,15 +1,13 @@
 /* Стили для страницы настроек профиля в стиле login */
 .wrapper-profile-editor {
-	max-width: 800px;
-	margin: 2rem auto;
-	padding: 1rem;
+	margin: auto;
 }
 .bg-cover {
 	position: relative;
-	width: 100%;
+	width: 55rem;
 	height: 15.25rem;
 	overflow: hidden;
-	border-radius: 1rem;
+	border-radius: 1rem 1rem 0 0;
 	background: #f0f0f0;
 }
 .bg-cover img {
@@ -35,18 +33,50 @@
 }
 .avatar-block {
 	position: relative;
-	width: 8rem;
-	height: 8rem;
+	width: 11rem;
+	height: 11rem;
 	border-radius: 50%;
+	margin-left: 2rem;
 	overflow: hidden;
-	margin-top: -4rem;
+	margin-top: -6rem;
 	border: 4px solid white;
 }
 .avatar-block img {
-	width: 100%;
-	height: 100%;
+	width: 100px;
+	height: 100px;
 	object-fit: cover;
+	border-radius: 50%;
+	cursor: pointer;
 }
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 110%; /* немного ниже аватарки */
+	left: 50%;
+	transform: translateX(-50%);
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	z-index: 1000;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu button {
+	display: block;
+	width: 100%;
+	padding: 0.4rem 1rem;
+	border: none;
+	background: none;
+	text-align: left;
+	cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+	background-color: #f0f0f0;
+}
+
 .avatar-actions {
 	position: absolute;
 	inset: 0;

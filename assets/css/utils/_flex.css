@@ -1,22 +1,30 @@
 /* Утилиты flexbox и выравнивания */
-.d-flex{
-  display: flex;
+.d-flex {
+	display: flex;
 }
-.a-i-center{
-  align-items: center;
+.a-i-center {
+	align-items: center;
 }
-.j-c-center{
-  justify-content: center;
+.j-c-center {
+	justify-content: center;
 }
-.j-c-space-between{
-  justify-content: space-between;
+.j-c-space-between {
+	justify-content: space-between;
 }
-.f-d-column{
-  flex-direction: column;
+.f-d-column {
+	flex-direction: column;
 }
-.f-d-row{
-  flex-direction: row;
+.f-d-row {
+	flex-direction: row;
 }
-.gap1{
-  gap: 1rem;
+.gap1 {
+	gap: 1rem;
+}
+
+.t-a-center {
+	text-align: center;
+}
+
+.m-bottom1 {
+	margin-bottom: 1rem;
 }
