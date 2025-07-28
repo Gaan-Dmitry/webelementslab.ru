@@ -38,38 +38,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="robots" content="noindex, nofollow">
     <title>Создать карточку | WebElementsLab</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 </head>
 <body>
 <?php require_once __DIR__ . '/../templates/header.php'; ?>
 <div class="wrapper">
 <main class="block-main">
-    <h1>Создать карточку</h1>
-    <?php if ($error): ?>
-        <div class="form-error" style="color:red;"><?= htmlspecialchars($error) ?></div>
-    <?php endif; ?>
-    <form method="post" class="form-card-create d-flex f-d-column gap1">
-        <label>Название*:<br>
-            <input type="text" name="name" required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
-        </label>
-        <label>Описание:<br>
-            <textarea name="description" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
-        </label>
-        <label>Теги (через запятую):<br>
-            <input type="text" name="tag" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
-        </label>
-        <label>HTML*:<br>
-            <textarea name="html" required rows="8" style="font-family:monospace;"><?= htmlspecialchars($_POST['html'] ?? '') ?></textarea>
-        </label>
-        <label>CSS:<br>
-            <textarea name="css" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['css'] ?? '') ?></textarea>
-        </label>
-        <label>JS:<br>
-            <textarea name="js" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['js'] ?? '') ?></textarea>
-        </label>
-        <button type="submit" class="reg-btn anim-hover-box-shadow">Создать</button>
-    </form>
+    <div class="d-flex gap1 card-page f-d-column">
+        <div class="d-flex j-c-space-between">
+            <h1 class="card-title">Создать карточку</h1>
+            <h2><span class="author-link"><?= htmlspecialchars($_SESSION['username']) ?></span></h2>
+        </div>
+        <div class="f-d-row d-flex gap1">
+            <!-- Preview & Meta -->
+            <div class="left-card-page d-flex gap1 f-d-column">
+                <div class="block-element d-flex j-c-center a-i-center">
+                    <iframe id="snippet-frame" style="width:100%;min-height:200px;border:none;"></iframe>
+                </div>
+                <form method="post" class="d-flex f-d-column gap1" id="snippet-form" autocomplete="off">
+                    <?php if ($error): ?>
+                        <div class="form-error" style="color:red;"> <?= htmlspecialchars($error) ?> </div>
+                    <?php endif; ?>
+                    <label>Название*:<br>
+                        <input type="text" name="name" required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                    </label>
+                    <label>Описание:<br>
+                        <textarea name="description" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
+                    </label>
+                    <label>Теги (через запятую):<br>
+                        <input type="text" name="tag" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
+                    </label>
+                    <button type="submit" class="btn-card j-c-center d-flex">Сохранить</button>
+                </form>
+            </div>
+            <!-- Code Tabs -->
+            <div class="block-code">
+                <div class="tabs d-flex">
+                    <button class="tab-btn active" data-tab="html">HTML</button>
+                    <button class="tab-btn" data-tab="css">CSS</button>
+                    <button class="tab-btn" data-tab="js">JS</button>
+                </div>
+                <div class="tab-content active" id="html">
+                    <label>HTML*:</label>
+                    <textarea name="html" id="html-input" required rows="8" style="font-family:monospace;"><?= htmlspecialchars($_POST['html'] ?? '') ?></textarea>
+                    <pre><code class="language-html" id="html-preview"></code></pre>
+                </div>
+                <div class="tab-content" id="css">
+                    <label>CSS:</label>
+                    <textarea name="css" id="css-input" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['css'] ?? '') ?></textarea>
+                    <pre><code class="language-css" id="css-preview"></code></pre>
+                </div>
+                <div class="tab-content" id="js">
+                    <label>JS:</label>
+                    <textarea name="js" id="js-input" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['js'] ?? '') ?></textarea>
+                    <pre><code class="language-js" id="js-preview"></code></pre>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>
+                Как правильно подключать CSS и JS? Подробнее — в <a href="/pages/guide.php" target="_blank">гайде по подключению стилей и скриптов</a>.<br>
+                В инструкции: примеры подключения через <code>&lt;link&gt;</code> и <code>&lt;script&gt;</code>, а также варианты вставки кода прямо в HTML-файл.
+            </p>
+        </div>
+    </div>
 </main>
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js" defer></script>
+<script>
+// Вкладки
+window.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const id = btn.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === id);
+            });
+        });
+    });
+
+    // Prism live highlight
+    function updatePrism(id, value) {
+        const code = document.getElementById(id + '-preview');
+        code.textContent = value;
+        if (window.Prism) Prism.highlightElement(code);
+    }
+    ['html', 'css', 'js'].forEach(type => {
+        const input = document.getElementById(type + '-input');
+        input.addEventListener('input', function () {
+            updatePrism(type, input.value);
+            updatePreview();
+        });
+        // Первичная инициализация
+        updatePrism(type, input.value);
+    });
+
+    // Live preview
+    function updatePreview() {
+        const html = document.getElementById('html-input').value;
+        const css = document.getElementById('css-input').value;
+        const js = document.getElementById('js-input').value;
+        const iframe = document.getElementById('snippet-frame');
+        if (iframe) {
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(`<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`);
+            doc.close();
+        }
+    }
+    updatePreview();
+});
+</script>
 </body>
 </html> 
