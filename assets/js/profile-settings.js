@@ -123,23 +123,3 @@ document.addEventListener('DOMContentLoaded', () => {
 		saveBtn.disabled = true;
 	});
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-	const avatarTrigger = document.getElementById('avatarTrigger');
-	const avatarMenu = document.getElementById('avatarMenu');
-
-	avatarTrigger.addEventListener('click', e => {
-		e.stopPropagation();
-		avatarMenu.style.display =
-			avatarMenu.style.display === 'block' ? 'none' : 'block';
-	});
-
-	document.addEventListener('click', e => {
-		if (
-			!avatarTrigger.contains(e.target) &&
-			!avatarMenu.contains(e.target)
-		) {
-			avatarMenu.style.display = 'none';
-		}
-	});
-});

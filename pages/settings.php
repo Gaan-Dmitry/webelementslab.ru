@@ -144,16 +144,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="avatar-block">
-            <div class="avatar-trigger" id="avatarTrigger">
-                <img id="avatarImage" src="<?= $profile['avatar'] ?? '/assets/img/default-avatar.png' ?>" alt="Аватар">
-            </div>
-            <div class="dropdown-menu" id="avatarMenu">
+            <img id="avatarImage" src="<?= $profile['avatar'] ?? '' ?>" alt="Аватар">
+            <div class="avatar-actions">
                 <button type="button" onclick="document.getElementById('avatarInput').click()">Обновить</button>
                 <button type="button" onclick="removeImage('avatar')">Удалить</button>
                 <button type="button" onclick="openCropper('avatar')">Обрезать</button>
             </div>
         </div>
-
     </div>
 
     <input type="file" name="avatar" id="avatarInput" accept="image/*" hidden>
