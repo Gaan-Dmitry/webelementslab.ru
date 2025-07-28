@@ -126,7 +126,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
         <div class="bg-cover">
             <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
             <div class="bg-actions">
-                <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Обновить</button>
+                <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Загрузить</button>
                 <button type="button" class="error-btn" onclick="openCropper('bg', true)">Обрезать</button>
                 <button type="button" class="error-btn" onclick="removeImage('bg')">Удалить</button>
             </div>
@@ -134,7 +134,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
         <div class="avatar-block">
             <img id="avatarImage" src="<?= $avatar_url ?>" alt="Аватар">
             <div class="avatar-actions">
-                <button type="button" class="error-btn" onclick="document.getElementById('avatarInput').click()">Обновить</button>
+                <button type="button" class="error-btn" onclick="document.getElementById('avatarInput').click()">Загрузить</button>
                 <button type="button" class="error-btn" onclick="openCropper('avatar', true)">Обрезать</button>
                 <button type="button" class="error-btn" onclick="removeImage('avatar')">Удалить</button>
             </div>
