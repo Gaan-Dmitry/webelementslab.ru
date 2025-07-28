@@ -111,6 +111,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
   spinner.style.display = 'block';
 
   let result = null;
+  let countdownTimer = null;
 
   try {
     const response = await fetch('/handlers/login_handler.php', {
@@ -123,6 +124,22 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
     if (result.success) {
       window.location.href = '/';
+    } else if (result.blocked) {
+      login.classList.add('invalid');
+
+      let wait = result.wait;
+      loginError.textContent = `Слишком много попыток. Повторите через ${wait} сек.`;
+
+      countdownTimer = setInterval(() => {
+        wait--;
+        if (wait <= 0) {
+          clearInterval(countdownTimer);
+          loginError.textContent = '\u00A0';
+          submitButton.disabled = false;
+        } else {
+          loginError.textContent = `Слишком много попыток. Повторите через ${wait} сек.`;
+        }
+      }, 1000);
     } else if (result.errors && result.errors.length > 0) {
       const errorText = result.errors[0].toLowerCase();
 
@@ -133,18 +150,23 @@ document.getElementById('login-form').addEventListener('submit', async function 
         password.classList.add('invalid');
         passwordError.textContent = result.errors[0];
       } else {
-        // Остальные ошибки — можно вывести, например, под полем почты
         login.classList.add('invalid');
         loginError.textContent = result.errors[0];
       }
     }
   } catch (err) {
     console.error('Ошибка при входе:', err);
-    loginError.textContent = 'Ошибка соединения с сервером.';
     login.classList.add('invalid');
+    loginError.textContent = 'Ошибка соединения с сервером.';
   } finally {
-    if (!result || !result.success) {
+    // В случае блокировки — кнопка останется отключенной до конца таймера
+    if (!result || (!result.success && !result.blocked)) {
       submitButton.disabled = false;
+      spinner.style.display = 'none';
+    }
+
+    // Если блокировка — просто прячем спиннер, кнопку не разблокируем
+    if (result?.blocked) {
       spinner.style.display = 'none';
     }
   }
