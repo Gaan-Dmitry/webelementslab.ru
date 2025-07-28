@@ -16,19 +16,16 @@
 	object-fit: cover;
 }
 .bg-actions {
+	padding: 1rem 1rem 1rem 38.03rem;
+	background-color: #000000bd;
 	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
+	top: 0;
+	right: 0;
 	display: flex;
 	gap: 0.5rem;
 }
 .bg-actions button {
-	padding: 0.25rem 0.5rem;
-	font-size: 0.9rem;
 	background: rgb(33 33 33);
-	color: #fff;
-	border-radius: 4px;
-	cursor: pointer;
 }
 .avatar-block {
 	position: relative;
