@@ -46,8 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main class="block-main">
     <div class="d-flex gap1 card-page f-d-column">
     <h1 class="card-title">Создать карточку</h1>
-        <div class="d-flex j-c-space-between">
-            <h2><span class="author-link"><?= htmlspecialchars($_SESSION['username']) ?></span></h2>
+    <form method="post" id="snippet-form" autocomplete="off">
+        <div class="d-flex j-c-space-between gap1">
+        <input type="text" name="name" placeholder="Название..." required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+        <h2><span class="author-link"><?= htmlspecialchars($_SESSION['username']) ?></span></h2>
         </div>
         <div class="f-d-row d-flex gap1">
             <!-- Preview & Meta -->
@@ -55,15 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="block-element d-flex j-c-center a-i-center">
                     <iframe id="snippet-frame" style="width:100%;min-height:200px;border:none;"></iframe>
                 </div>
-                <form method="post" class="d-flex f-d-column gap1" id="snippet-form" autocomplete="off">
                     <?php if ($error): ?>
                         <div class="form-error" style="color:red;"> <?= htmlspecialchars($error) ?> </div>
                     <?php endif; ?>
-                    <input type="text" name="name" placeholder="Название..." required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
                     <textarea name="description" placeholder="Описание..." title="Описание" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
                     <input type="text" name="tag" placeholder="Теги (через запятую)" title="Теги (через запятую)" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
                     <button type="submit" class="btn-card j-c-center d-flex">Сохранить</button>
-                </form>
             </div>
             <!-- Code Tabs -->
             <div class="block-code">
@@ -86,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </main>
 </div>
