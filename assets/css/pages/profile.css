@@ -94,6 +94,17 @@
 	z-index: 3;
 }
 
+/* ================= USER ================= */
+.profile-avatar.user::before {
+	content: '';
+	position: absolute;
+	inset: -8px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #ffffff, #c0c0c0);
+	z-index: 1;
+	pointer-events: none;
+}
+
 /* ================= АНИМАЦИИ ================= */
 @keyframes pulseGlow {
 	0%,
