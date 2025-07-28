@@ -1,64 +1,38 @@
-/* Стили для тегов и блоков тегов */
+:root {
+	--tag-radius: 999px;
+	--tooltip-bg: #222;
+	--tooltip-color: #fff;
+	--tooltip-padding: 0.4em 1em;
+	--tooltip-font-size: 1em;
+}
+
 .tags {
+	display: flex;
 	flex-wrap: wrap;
 }
 
 .tag-pill {
+	position: relative;
 	display: inline-block;
 	background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
 	color: #222;
 	padding: 0.25rem 0.8rem;
-	border-radius: 999px;
+	border-radius: var(--tag-radius);
 	font-size: 0.95rem;
-	margin-right: 0.3rem;
-	margin-bottom: 0.3rem;
 	font-weight: 500;
+	margin: 0 0.3rem 0.3rem 0;
+	cursor: pointer;
 	box-shadow: 0 0.125rem 0.5rem rgba(255, 179, 71, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
-	border: none;
-	cursor: pointer;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s;
-	position: relative;
-	overflow: hidden;
-	will-change: transform, box-shadow, background;
+	transition: all 0.3s ease;
 	max-width: 10em;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	vertical-align: middle;
-	word-break: break-all;
 	z-index: 1;
 }
 
-/* Tooltip для полного текста тега */
-.tag-pill::after {
-	content: '';
-	opacity: 0;
-	transition: opacity 0.2s;
-}
-
-.tag-pill:hover::after,
-.tag-pill:focus::after {
-	content: attr(data-full);
-	position: absolute;
-	left: 50%;
-	top: 120%;
-	transform: translateX(-50%);
-	background: #222;
-	color: #fff;
-	padding: 0.4em 1em;
-	border-radius: 0.7em;
-	white-space: normal;
-	word-break: break-word;
-	z-index: 100;
-	box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.25);
-	font-size: 1em;
-	opacity: 1;
-	min-width: max-content;
-	max-width: 90vw;
-	text-align: center;
-}
-
+/* Градиентная вспышка */
 .tag-pill::before {
 	content: '';
 	position: absolute;
@@ -73,99 +47,82 @@
 		transparent
 	);
 	transition: left 0.5s ease;
+	z-index: 0;
+	pointer-events: none;
 }
 
 .tag-pill:hover::before {
-	left: 1;
+	left: 100%;
 }
 
+/* Подсказка при наведении */
+.tag-pill::after {
+	content: attr(data-full);
+	position: absolute;
+	opacity: 0;
+	transition: opacity 0.2s;
+	pointer-events: none;
+	background: var(--tooltip-bg);
+	color: var(--tooltip-color);
+	padding: var(--tooltip-padding);
+	border-radius: 0.7em;
+	font-size: var(--tooltip-font-size);
+	text-align: center;
+	white-space: normal;
+	word-break: break-word;
+	bottom: -2.5em;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+	z-index: 100;
+	max-width: 90vw;
+	min-width: max-content;
+}
+
+.tag-pill:hover::after,
+.tag-pill:focus::after {
+	opacity: 1;
+}
+
+/* Вариативные цвета */
 .tag-pill:nth-child(2n) {
-	background: linear-gradient(135deg, #87e0fd 0%, #53cbf1 100%);
-	color: #222;
+	background: linear-gradient(135deg, #87e0fd, #53cbf1);
 	box-shadow: 0 0.125rem 0.5rem rgba(135, 224, 253, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(3n) {
-	background: linear-gradient(135deg, #fcb1ff 0%, #b47cff 100%);
-	color: #222;
+	background: linear-gradient(135deg, #fcb1ff, #b47cff);
 	box-shadow: 0 0.125rem 0.5rem rgba(252, 177, 255, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(4n) {
-	background: linear-gradient(135deg, #b6ffb1 0%, #4cff7c 100%);
-	color: #222;
+	background: linear-gradient(135deg, #b6ffb1, #4cff7c);
 	box-shadow: 0 0.125rem 0.5rem rgba(182, 255, 177, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(5n) {
-	background: linear-gradient(135deg, #ffd6b1 0%, #ff7c4c 100%);
-	color: #222;
+	background: linear-gradient(135deg, #ffd6b1, #ff7c4c);
 	box-shadow: 0 0.125rem 0.5rem rgba(255, 214, 177, 0.3),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Hover / Active эффекты */
 .tag-pill:hover {
 	transform: translateY(-0.125rem) scale(1.05);
-	box-shadow: 0 0.25rem 1rem rgba(255, 179, 71, 0.4),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.3),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
 	filter: brightness(1.1) saturate(1.1);
-}
-
-.tag-pill:nth-child(2n):hover {
-	box-shadow: 0 0.25rem 1rem rgba(135, 224, 253, 0.4),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.3),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
-}
-
-.tag-pill:nth-child(3n):hover {
-	box-shadow: 0 0.25rem 1rem rgba(252, 177, 255, 0.4),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.3),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
-}
-
-.tag-pill:nth-child(4n):hover {
-	box-shadow: 0 0.25rem 1rem rgba(182, 255, 177, 0.4),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.3),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
-}
-
-.tag-pill:nth-child(5n):hover {
-	box-shadow: 0 0.25rem 1rem rgba(255, 214, 177, 0.4),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.3),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
+	z-index: 2;
 }
 
 .tag-pill:active {
-	transform: translateY(0) scale(0.95);
-	transition: all 0.1s ease;
-	box-shadow: 0 0.0625rem 0.25rem rgba(255, 179, 71, 0.2),
+	transform: scale(0.95);
+	box-shadow: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.2),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
 }
 
-.tag-pill:nth-child(2n):active {
-	box-shadow: 0 0.0625rem 0.25rem rgba(135, 224, 253, 0.2),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
-}
-
-.tag-pill:nth-child(3n):active {
-	box-shadow: 0 0.0625rem 0.25rem rgba(252, 177, 255, 0.2),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
-}
-
-.tag-pill:nth-child(4n):active {
-	box-shadow: 0 0.0625rem 0.25rem rgba(182, 255, 177, 0.2),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
-}
-
-.tag-pill:nth-child(5n):active {
-	box-shadow: 0 0.0625rem 0.25rem rgba(255, 214, 177, 0.2),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
-}
-
+/* Ограничение ширины блока тегов */
 .block-tag {
 	max-width: 14rem;
 }
