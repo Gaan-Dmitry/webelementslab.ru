@@ -140,7 +140,12 @@ $profile = $stmt->fetch() ?: [];
                     </label>
                     <div id="avatarPreview">
                         <?php if (!empty($profile['avatar'])): ?>
-                            <img src="<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar" style="max-height:100px">
+                            <?php
+                            $avatarPath = htmlspecialchars($profile['avatar']);
+                            $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatarPath;
+                            $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
+                            ?>
+                            <img src="<?= $avatarPath ?>?t=<?= $avatarTime ?>" alt="avatar" style="max-height:100px">
                         <?php endif; ?>
                     </div>
                     <label>
@@ -149,7 +154,12 @@ $profile = $stmt->fetch() ?: [];
                     </label>
                     <div id="bgPreview">
                         <?php if (!empty($profile['bg_img'])): ?>
-                            <img src="<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
+                            <?php
+                            $bgPath = htmlspecialchars($profile['bg_img']);
+                            $bgFile = $_SERVER['DOCUMENT_ROOT'] . $bgPath;
+                            $bgTime = file_exists($bgFile) ? filemtime($bgFile) : time();
+                            ?>
+                            <img src="<?= $bgPath ?>?t=<?= $bgTime ?>" alt="bg" style="max-height:100px">
                         <?php endif; ?>
                     </div>
                     <label>
@@ -168,11 +178,11 @@ $profile = $stmt->fetch() ?: [];
                         GitHub:
                         <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
                     </label>
-                    <button type="submit" class="reg-btn anim-hover-box-shadow">Сохранить</button>
+                    <div class="button-with-spinner">
+                        <button type="submit" class="reg-btn anim-hover-box-shadow" id="save-btn">Сохранить</button>
+                        <div class="spinner" id="upload-spinner" style="display:none;"></div>
+                    </div>
                 </form>
-                <div class="loader" id="loader" style="display:none;margin:20px auto;text-align:center;">
-                    <span>Загрузка...</span>
-                </div>
             </section>
         </main>
     </div>
@@ -191,6 +201,8 @@ avatarInput.addEventListener('change', function() {
         };
         reader.readAsDataURL(this.files[0]);
     }
+    document.getElementById('upload-spinner').style.display = 'none';
+    document.getElementById('save-btn').disabled = false;
 });
 // Предпросмотр фона
 const bgInput = document.getElementById('bgInput');
@@ -204,12 +216,16 @@ bgInput.addEventListener('change', function() {
         };
         reader.readAsDataURL(this.files[0]);
     }
+    document.getElementById('upload-spinner').style.display = 'none';
+    document.getElementById('save-btn').disabled = false;
 });
-// Loader при отправке формы
+// Loader-спиннер при отправке формы
 const form = document.getElementById('profileForm');
-const loader = document.getElementById('loader');
+const spinner = document.getElementById('upload-spinner');
+const saveBtn = document.getElementById('save-btn');
 form.addEventListener('submit', function() {
-    loader.style.display = 'block';
+    spinner.style.display = 'block';
+    saveBtn.disabled = true;
 });
 </script>
 </html>
