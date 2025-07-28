@@ -40,6 +40,8 @@
 .tab-content.active {
 	margin: 0;
 	display: block;
+	font-size: 0.8rem;
+	line-height: normal;
 }
 
 .preview-frame {

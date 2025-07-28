@@ -75,8 +75,3 @@
 	font-size: var(--font-size-card-title);
 	color: #6493a7;
 }
-
-code[class*='language-'] {
-	font-size: 0.8rem;
-	line-height: normal;
-}
