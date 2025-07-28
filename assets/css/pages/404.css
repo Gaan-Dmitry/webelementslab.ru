@@ -56,7 +56,6 @@
 }
 
 .error-btn {
-	background-color: transparent;
 	color: white;
 	padding: 0.4rem 1.2rem;
 	border: 0.0625rem white solid;
@@ -68,7 +67,7 @@
 	line-height: 1;
 	transform-origin: center;
 	height: 2.25rem;
-	background: #595264d3;
+	background: rgb(33 33 33);
 	will-change: transform;
 	transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
 		box-shadow 0.25s ease, border-color 0.2s;

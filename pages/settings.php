@@ -150,7 +150,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
             <button type="button" class="error-btn red-btn" onclick="closeCropper()">Отмена</button>
         </div>
     </div>
-    <div class="predit_form">
+    <div class="d-flex j-c-center">
         <div class="d-flex f-d-column gap1">
             <div class="edit_block">
                 <div class="edit_label">О себе:</div>

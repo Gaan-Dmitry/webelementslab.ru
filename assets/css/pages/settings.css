@@ -1,6 +1,9 @@
 /* Стили для страницы настроек профиля в стиле login */
 .wrapper-profile-editor {
 	margin: auto;
+	border-radius: 1rem;
+	background-color: var(--main-bg);
+	padding-bottom: 1rem;
 }
 .bg-cover {
 	position: relative;
@@ -208,8 +211,4 @@
 
 .edit_label {
 	padding-top: 0.5rem;
-}
-
-.predit_form {
-	display: flex;
 }
