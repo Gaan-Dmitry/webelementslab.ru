@@ -48,6 +48,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
     <link rel="stylesheet" href="/assets/css/layout/_header.css">
     <link rel="stylesheet" href="/assets/css/components/_dropdown-menu.css">
     <link rel="stylesheet" href="/assets/css/base/_links.css">
+    <link rel="stylesheet" href="/assets/css/layout/_main.css">
     
     <link rel="stylesheet" href="/assets/css/base/_reset.css">
     <link rel="stylesheet" href="/assets/css/base/_variables.css">

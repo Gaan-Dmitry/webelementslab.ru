@@ -15,6 +15,7 @@ if (!is_dir($upload_dir)) {
 }
 
 $success = false;
+$error = '';
 
 // Обработка формы
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,18 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Аватар
     if (!empty($_FILES['avatar']['tmp_name'])) {
-        $avatar_ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
-        $avatar_path = '/uploads/avatar_' . $user_id . '.' . $avatar_ext;
-        move_uploaded_file($_FILES['avatar']['tmp_name'], __DIR__ . '/../' . $avatar_path);
-        $avatar = $avatar_path;
+        if ($_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+            $avatar_ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+            $avatar_path = '/uploads/avatar_' . $user_id . '.' . $avatar_ext;
+            if (move_uploaded_file($_FILES['avatar']['tmp_name'], __DIR__ . '/../' . $avatar_path)) {
+                $avatar = $avatar_path;
+            } else {
+                $error .= 'Ошибка загрузки аватара. ';
+            }
+        } else {
+            $error .= 'Ошибка загрузки аватара. ';
+        }
     }
 
     // Фон
     if (!empty($_FILES['bg_img']['tmp_name'])) {
-        $bg_ext = pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION);
-        $bg_path = '/uploads/bg_' . $user_id . '.' . $bg_ext;
-        move_uploaded_file($_FILES['bg_img']['tmp_name'], __DIR__ . '/../' . $bg_path);
-        $bg_img = $bg_path;
+        if ($_FILES['bg_img']['error'] === UPLOAD_ERR_OK) {
+            $bg_ext = pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION);
+            $bg_path = '/uploads/bg_' . $user_id . '.' . $bg_ext;
+            if (move_uploaded_file($_FILES['bg_img']['tmp_name'], __DIR__ . '/../' . $bg_path)) {
+                $bg_img = $bg_path;
+            } else {
+                $error .= 'Ошибка загрузки фона. ';
+            }
+        } else {
+            $error .= 'Ошибка загрузки фона. ';
+        }
     }
 
     // Проверка существования профиля
@@ -85,7 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
     }
 
-    $success = true;
+    if (empty($error)) {
+        $success = true;
+    }
 }
 
 // Получаем текущие данные профиля
@@ -113,52 +130,86 @@ $profile = $stmt->fetch() ?: [];
                 <?php if (!empty($success)): ?>
                     <p class="success">Профиль успешно обновлён ✅</p>
                 <?php endif; ?>
-
-                <form method="POST" class="profile-settings-form" enctype="multipart/form-data">
+                <?php if (!empty($error)): ?>
+                    <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
+                <?php endif; ?>
+                <form method="POST" class="profile-settings-form" enctype="multipart/form-data" id="profileForm">
                     <label>
                         Аватар:
-                        <input type="file" name="avatar" accept="image/*">
+                        <input type="file" name="avatar" accept="image/*" id="avatarInput">
                     </label>
-
+                    <div id="avatarPreview">
                         <?php if (!empty($profile['avatar'])): ?>
                             <img src="<?= htmlspecialchars($profile['avatar']) ?>" alt="avatar" style="max-height:100px">
                         <?php endif; ?>
-
+                    </div>
                     <label>
                         Фон:
-                        <input type="file" name="bg_img" accept="image/*">
+                        <input type="file" name="bg_img" accept="image/*" id="bgInput">
                     </label>
-
-                    <?php if (!empty($profile['bg_img'])): ?>
-                        <img src="<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
-                    <?php endif; ?>
-
+                    <div id="bgPreview">
+                        <?php if (!empty($profile['bg_img'])): ?>
+                            <img src="<?= htmlspecialchars($profile['bg_img']) ?>" alt="bg" style="max-height:100px">
+                        <?php endif; ?>
+                    </div>
                     <label>
                         О себе:
                         <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
                     </label>
-
                     <label>
                         VK:
                         <input type="text" name="vk" placeholder="username" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>">
                     </label>
-
                     <label>
                         Telegram:
                         <input type="text" name="tg" placeholder="username" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>">
                     </label>
-
                     <label>
                         GitHub:
                         <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
                     </label>
-
                     <button type="submit" class="reg-btn anim-hover-box-shadow">Сохранить</button>
                 </form>
-
+                <div class="loader" id="loader" style="display:none;margin:20px auto;text-align:center;">
+                    <span>Загрузка...</span>
+                </div>
             </section>
         </main>
     </div>
     <?php require_once __DIR__ . '/../templates/footer.php'; ?>
 </body>
+<script>
+// Предпросмотр аватара
+const avatarInput = document.getElementById('avatarInput');
+const avatarPreview = document.getElementById('avatarPreview');
+avatarInput.addEventListener('change', function() {
+    avatarPreview.innerHTML = '';
+    if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            avatarPreview.innerHTML = '<img src="' + e.target.result + '" alt="avatar" style="max-height:100px">';
+        };
+        reader.readAsDataURL(this.files[0]);
+    }
+});
+// Предпросмотр фона
+const bgInput = document.getElementById('bgInput');
+const bgPreview = document.getElementById('bgPreview');
+bgInput.addEventListener('change', function() {
+    bgPreview.innerHTML = '';
+    if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            bgPreview.innerHTML = '<img src="' + e.target.result + '" alt="bg" style="max-height:100px">';
+        };
+        reader.readAsDataURL(this.files[0]);
+    }
+});
+// Loader при отправке формы
+const form = document.getElementById('profileForm');
+const loader = document.getElementById('loader');
+form.addEventListener('submit', function() {
+    loader.style.display = 'block';
+});
+</script>
 </html>
