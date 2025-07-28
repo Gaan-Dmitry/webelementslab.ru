@@ -126,17 +126,17 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
         <div class="bg-cover">
             <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
             <div class="bg-actions">
-                <button type="button" onclick="document.getElementById('bgInput').click()">Обновить</button>
-                <button type="button" onclick="removeImage('bg')">Удалить</button>
-                <button type="button" onclick="openCropper('bg')">Обрезать</button>
+                <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Обновить</button>
+                <button type="button" class="error-btn" onclick="removeImage('bg')">Удалить</button>
+                <button type="button" class="error-btn" onclick="openCropper('bg')">Обрезать</button>
             </div>
         </div>
         <div class="avatar-block">
             <img id="avatarImage" src="<?= $avatar_url ?>" alt="Аватар">
             <div class="avatar-actions">
-                <button type="button" onclick="document.getElementById('avatarInput').click()">Обновить</button>
-                <button type="button" onclick="removeImage('avatar')">Удалить</button>
-                <button type="button" onclick="openCropper('avatar')">Обрезать</button>
+                <button type="button" class="error-btn" onclick="document.getElementById('avatarInput').click()">Обновить</button>
+                <button type="button" class="error-btn" onclick="removeImage('avatar')">Удалить</button>
+                <button type="button" class="error-btn" onclick="openCropper('avatar')">Обрезать</button>
             </div>
         </div>
     </div>
@@ -146,8 +146,8 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
         <div style="background:#fff; padding:1rem; max-width:90vw; max-height:90vh;">
             <h3>Обрезка изображения</h3>
             <div><img id="cropperImage" style="max-width:100%; max-height:70vh;"></div>
-            <button type="button" onclick="applyCrop()">Сохранить</button>
-            <button type="button" onclick="closeCropper()">Отмена</button>
+            <button type="button" class="error-btn" onclick="applyCrop()">Сохранить</button>
+            <button type="button" class="error-btn" onclick="closeCropper()">Отмена</button>
         </div>
     </div>
     <div class="predit_form">
