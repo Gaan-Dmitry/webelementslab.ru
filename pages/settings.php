@@ -164,22 +164,38 @@ $profile = $stmt->fetch() ?: [];
                             <img src="<?= $bgPath ?>?t=<?= $bgTime ?>" alt="bg">
                         <?php endif; ?>
                     </div>
-                    <label>
-                        О себе:
-                        <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
-                    </label>
-                    <label>
-                        VK:
-                        <input type="text" name="vk" placeholder="username" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>">
-                    </label>
-                    <label>
-                        Telegram:
-                        <input type="text" name="tg" placeholder="username" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>">
-                    </label>
-                    <label>
-                        GitHub:
-                        <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
-                    </label>
+                    <div class="edit_block">
+                        <div class="edit_label">
+                            О себе:
+                        </div>
+                        <div class="edit_input">
+                            <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
+                        </div>
+                    </div>
+                    <div class="edit_block">
+                        <div class="edit_label">
+                            VK:
+                        </div>
+                        <div class="edit_input">
+                            <input type="text" name="vk" placeholder="username" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>">
+                        </div>
+                    </div>
+                    <div class="edit_block">
+                        <div class="edit_label">
+                            Telegram:
+                        </div>
+                        <div class="edit_input">
+                            <input type="text" name="tg" placeholder="username" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>">
+                        </div>
+                    </div>
+                    <div class="edit_block">
+                        <div class="edit_label">
+                            GitHub:
+                        </div>
+                        <div class="edit_input">
+                            <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
+                        </div>
+                    </div>
                     <div class="button-with-spinner">
                         <button type="submit" class="error-btn" id="save-btn">Сохранить</button>
                         <div class="spinner" id="upload-spinner" style="display:none;"></div>

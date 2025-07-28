@@ -40,7 +40,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
     <title><?= htmlspecialchars($snippet['name']) ?> — сниппет от <?= htmlspecialchars($snippet['username']) ?> | WebElementsLab</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <meta property="og:title" content="<?= htmlspecialchars($snippet['name']) ?> — сниппет для веба">
-    <meta property="og:description" content="<?= htmlspecialchars($snippet['description'] ?? $snippet['name']) ?>. Автор: <?= htmlspecialchars($snippet['username']) ?>. Теги: <?= htmlspecialchars($snippet['tag']) ?>.">
+    <meta property="og:description" content="<?= htmlspecialchars($snippet['description'] ?? $snippet['name']) ?>">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
     <meta property="og:url" content="https://webelementslab.ru/card.php?id=<?= $snippet['id'] ?>">
     <meta property="og:type" content="article">
