@@ -128,7 +128,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
             <div class="bg-actions">
                 <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Загрузить</button>
                 <button type="button" class="error-btn" onclick="openCropper('bg', true)">Обрезать</button>
-                <button type="button" class="error-btn" onclick="removeImage('bg')">Удалить</button>
+                <button type="button" class="error-btn red-btn" onclick="removeImage('bg')">Удалить</button>
             </div>
         </div>
         <div class="avatar-block">
@@ -136,7 +136,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
             <div class="avatar-actions">
                 <button type="button" class="error-btn" onclick="document.getElementById('avatarInput').click()">Загрузить</button>
                 <button type="button" class="error-btn" onclick="openCropper('avatar', true)">Обрезать</button>
-                <button type="button" class="error-btn" onclick="removeImage('avatar')">Удалить</button>
+                <button type="button" class="error-btn red-btn" onclick="removeImage('avatar')">Удалить</button>
             </div>
         </div>
     </div>
@@ -147,7 +147,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
             <h3>Обрезка изображения</h3>
             <div><img id="cropperImage" style="max-width:100%; max-height:70vh;"></div>
             <button type="button" class="error-btn" onclick="applyCrop()">Сохранить</button>
-            <button type="button" class="error-btn error" onclick="closeCropper()">Отмена</button>
+            <button type="button" class="error-btn red-btn" onclick="closeCropper()">Отмена</button>
         </div>
     </div>
     <div class="predit_form">
