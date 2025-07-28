@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Code Tabs -->
             <div class="block-code">
                 <div class="tabs d-flex">
-                    <button class="tab-btn active" data-tab="html">HTML</button>
-                    <button class="tab-btn" data-tab="css">CSS</button>
-                    <button class="tab-btn" data-tab="js">JS</button>
+                    <button type="button" class="tab-btn active" data-tab="html">HTML</button>
+                    <button type="button" class="tab-btn" data-tab="css">CSS</button>
+                    <button type="button" class="tab-btn" data-tab="js">JS</button>
                 </div>
                 <div class="tab-content active" id="html">
                     <textarea name="html" id="html-input" required rows="8" style="font-family:monospace;"><?= htmlspecialchars($_POST['html'] ?? '') ?></textarea>
