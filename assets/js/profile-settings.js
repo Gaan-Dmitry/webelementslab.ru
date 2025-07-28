@@ -12,7 +12,6 @@ function openCropper(type, useCurrent = false) {
 
 		if (src && !src.includes('placeholder')) {
 			document.getElementById('cropperImage').src = src;
-			image.classList.toggle('round-avatar', type === 'avatar'); //тут я в сомнениях #error
 			document.getElementById('cropModal').style.display = 'flex';
 			cropper = new Cropper(document.getElementById('cropperImage'), {
 				aspectRatio: type === 'avatar' ? 1 : 4 / 1,
