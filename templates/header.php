@@ -6,6 +6,9 @@ if (isset($_SESSION['id'])) {
     $user_profile = $stmt->fetch();
     $avatar = !empty($user_profile['avatar']) ? 
     htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
+    $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatar;
+    $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
+    $avatar .= '?t=' . $avatarTime;
 }
 ?>
 

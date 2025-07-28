@@ -60,14 +60,24 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
         <section class="block-main">
             <!-- Фон -->
             <div class="profile-bg"
-                 style="background-image: url('<?= !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : '/uploads/default-bg.jpg' ?>');">
+                 style="background-image: url('<?php
+                     $bgPath = !empty($profile['bg_img']) ? htmlspecialchars($profile['bg_img']) : '/uploads/default-bg.jpg';
+                     $bgFile = $_SERVER['DOCUMENT_ROOT'] . $bgPath;
+                     $bgTime = file_exists($bgFile) ? filemtime($bgFile) : time();
+                     echo $bgPath . '?t=' . $bgTime;
+                 ?>');">
             </div>
 
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
                 <div class="avatar-inner">
+                    <?php
+                        $avatarPath = !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png';
+                        $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatarPath;
+                        $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
+                    ?>
                     <img class="avatar" loading="lazy"
-                        src="<?= !empty($profile['avatar']) ? htmlspecialchars($profile['avatar']) : '/uploads/default-avatar.png' ?>"
+                        src="<?= $avatarPath ?>?t=<?= $avatarTime ?>"
                         alt="Аватар" />
                 </div>
             </div>
