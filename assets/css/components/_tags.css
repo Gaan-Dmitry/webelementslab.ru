@@ -34,7 +34,6 @@
 .tag-pill::after {
 	content: '';
 	opacity: 0;
-	pointer-events: none;
 	transition: opacity 0.2s;
 }
 
@@ -49,11 +48,11 @@
 	color: #fff;
 	padding: 0.4em 1em;
 	border-radius: 0.7em;
-	white-space: pre;
+	white-space: normal;
+	word-break: break-word;
 	z-index: 100;
 	box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.25);
 	font-size: 1em;
-	pointer-events: none;
 	opacity: 1;
 	min-width: max-content;
 	max-width: 90vw;
@@ -77,7 +76,7 @@
 }
 
 .tag-pill:hover::before {
-	left: 100%;
+	left: 1;
 }
 
 .tag-pill:nth-child(2n) {
