@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="position-relative">
                     <label for="password">Пароль:</label>
                     <input type="password" name="password" id="password" placeholder="Придумайте пароль" autocomplete="new-password" required>
-                    <span id="password-error" class="form-error"></span>
+                    <span id="password-error" class="error-message"></span>
                 </div>
                 <label class="f-s-09rem d-flex a-i-center gap1">
                     <input type="checkbox" id="agree-privacy" name="agree-privacy" required="required">
