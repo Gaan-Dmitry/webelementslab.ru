@@ -148,3 +148,7 @@
 .edit_label {
 	padding-top: 0.5rem;
 }
+
+.predit_form {
+	display: flex;
+}

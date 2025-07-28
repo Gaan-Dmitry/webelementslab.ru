@@ -165,8 +165,8 @@ $profile = $stmt->fetch() ?: [];
                         <?php endif; ?>
                     </div>
                     <div class="predit_form">
-                    <div class="predit_form">
-                    <div class="d-flex f-d-column">
+                    <div class="d-flex f-d-column gap1">
+                    <div class="edit_block">
                         <div class="edit_label">
                             О себе:
                         </div>
