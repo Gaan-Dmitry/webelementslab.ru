@@ -12,9 +12,10 @@ function openCropper(type, useCurrent = false) {
 
 		if (src && !src.includes('placeholder')) {
 			document.getElementById('cropperImage').src = src;
+			image.classList.toggle('round-avatar', type === 'avatar'); //тут я в сомнениях #error
 			document.getElementById('cropModal').style.display = 'flex';
 			cropper = new Cropper(document.getElementById('cropperImage'), {
-				aspectRatio: type === 'avatar' ? 1 : NaN,
+				aspectRatio: type === 'avatar' ? 1 : 4 / 1,
 				viewMode: 1,
 			});
 		} else {
@@ -33,7 +34,7 @@ function openCropper(type, useCurrent = false) {
 				document.getElementById('cropperImage').src = e.target.result;
 				document.getElementById('cropModal').style.display = 'flex';
 				cropper = new Cropper(document.getElementById('cropperImage'), {
-					aspectRatio: type === 'avatar' ? 1 : NaN,
+					aspectRatio: type === 'avatar' ? 1 : 4 / 1,
 					viewMode: 1,
 				});
 			};
@@ -52,6 +53,8 @@ function closeCropper() {
 
 function applyCrop() {
 	if (cropper && currentTarget) {
+		closeCropper(); // Скрываем модалку сразу
+
 		cropper.getCroppedCanvas().toBlob(blob => {
 			const file = new File([blob], `${currentTarget}.png`, {
 				type: 'image/png',
@@ -78,9 +81,7 @@ function applyCrop() {
 				document.getElementById('bgFileName').textContent = file.name;
 				document.getElementById('remove_bg').value = '0';
 			}
-
-			closeCropper();
-		});
+		}, 'image/png');
 	}
 }
 
