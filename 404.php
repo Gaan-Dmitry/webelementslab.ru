@@ -13,7 +13,6 @@ session_start();
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title>404 - Страница не найдена | WebElementsLab</title>
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/pages/404.css">
 </head>
 <body>
         <main class="block-main">

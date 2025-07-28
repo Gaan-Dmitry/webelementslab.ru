@@ -28,3 +28,5 @@
 @import url('./utils/_flex.css');
 @import url('./utils/_font.css');
 @import url('./utils/_position.css');
+/*===== Pages ======*/
+@import url('/assets/css/pages/404.css');
