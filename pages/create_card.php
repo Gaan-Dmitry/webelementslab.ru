@@ -45,8 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="wrapper">
 <main class="block-main">
     <div class="d-flex gap1 card-page f-d-column">
+    <h1 class="card-title">Создать карточку</h1>
         <div class="d-flex j-c-space-between">
-            <h1 class="card-title">Создать карточку</h1>
+        <input type="text" name="name" placeholder="Название..." required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
             <h2><span class="author-link"><?= htmlspecialchars($_SESSION['username']) ?></span></h2>
         </div>
         <div class="f-d-row d-flex gap1">
@@ -59,15 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if ($error): ?>
                         <div class="form-error" style="color:red;"> <?= htmlspecialchars($error) ?> </div>
                     <?php endif; ?>
-                    <label>Название*:<br>
-                        <input type="text" name="name" required maxlength="100" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
-                    </label>
-                    <label>Описание:<br>
-                        <textarea name="description" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
-                    </label>
-                    <label>Теги (через запятую):<br>
-                        <input type="text" name="tag" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
-                    </label>
+                        <textarea name="description" placeholder="Описание..." title="Описание" maxlength="255"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
+                        <input type="text" name="tag" placeholder="Теги (через запятую)" title="Теги (через запятую)" maxlength="100" value="<?= htmlspecialchars($_POST['tag'] ?? '') ?>">
                     <button type="submit" class="btn-card j-c-center d-flex">Сохранить</button>
                 </form>
             </div>
@@ -79,27 +73,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button class="tab-btn" data-tab="js">JS</button>
                 </div>
                 <div class="tab-content active" id="html">
-                    <label>HTML*:</label>
                     <textarea name="html" id="html-input" required rows="8" style="font-family:monospace;"><?= htmlspecialchars($_POST['html'] ?? '') ?></textarea>
                     <pre><code class="language-html" id="html-preview"></code></pre>
                 </div>
                 <div class="tab-content" id="css">
-                    <label>CSS:</label>
                     <textarea name="css" id="css-input" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['css'] ?? '') ?></textarea>
                     <pre><code class="language-css" id="css-preview"></code></pre>
                 </div>
                 <div class="tab-content" id="js">
-                    <label>JS:</label>
                     <textarea name="js" id="js-input" rows="6" style="font-family:monospace;"><?= htmlspecialchars($_POST['js'] ?? '') ?></textarea>
                     <pre><code class="language-js" id="js-preview"></code></pre>
                 </div>
             </div>
-        </div>
-        <div>
-            <p>
-                Как правильно подключать CSS и JS? Подробнее — в <a href="/pages/guide.php" target="_blank">гайде по подключению стилей и скриптов</a>.<br>
-                В инструкции: примеры подключения через <code>&lt;link&gt;</code> и <code>&lt;script&gt;</code>, а также варианты вставки кода прямо в HTML-файл.
-            </p>
         </div>
     </div>
 </main>
