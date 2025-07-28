@@ -164,6 +164,7 @@ $profile = $stmt->fetch() ?: [];
                             <img src="<?= $bgPath ?>?t=<?= $bgTime ?>" alt="bg">
                         <?php endif; ?>
                     </div>
+                    <div class="predit_form">
                     <div class="edit_block">
                         <div class="edit_label">
                             О себе:
@@ -195,6 +196,7 @@ $profile = $stmt->fetch() ?: [];
                         <div class="edit_input">
                             <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
                         </div>
+                    </div>
                     </div>
                     <div class="button-with-spinner">
                         <button type="submit" class="error-btn" id="save-btn">Сохранить</button>
