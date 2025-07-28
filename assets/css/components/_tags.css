@@ -30,6 +30,36 @@
 	z-index: 1;
 }
 
+/* Tooltip для полного текста тега */
+.tag-pill::after {
+	content: '';
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s;
+}
+
+.tag-pill:hover::after,
+.tag-pill:focus::after {
+	content: attr(data-full);
+	position: absolute;
+	left: 50%;
+	top: 120%;
+	transform: translateX(-50%);
+	background: #222;
+	color: #fff;
+	padding: 0.4em 1em;
+	border-radius: 0.7em;
+	white-space: pre;
+	z-index: 100;
+	box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.25);
+	font-size: 1em;
+	pointer-events: none;
+	opacity: 1;
+	min-width: max-content;
+	max-width: 90vw;
+	text-align: center;
+}
+
 /* Показывать полный тег при наведении */
 .tag-pill:hover,
 .tag-pill:focus {
