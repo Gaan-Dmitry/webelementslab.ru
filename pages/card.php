@@ -108,6 +108,11 @@ $tags = explode(',', $snippet['tag'] ?? '');
             </div>   
         </div>
         <div>
+            <?php if (!empty($snippet['description'])): ?>
+                <div class="snippet-description" style="margin-bottom:1.2em;font-size:1.1em;color:#e0e0e0;line-height:1.5;word-break:break-word;">
+                    <?= nl2br(htmlspecialchars($snippet['description'])) ?>
+                </div>
+            <?php endif; ?>
             <p>
                 Как правильно подключать CSS и JS? Подробнее — в <a href="/pages/guide.php" target="_blank">гайде по подключению стилей и скриптов</a>.<br>
                 В инструкции: примеры подключения через <code>&lt;link&gt;</code> и <code>&lt;script&gt;</code>, а также варианты вставки кода прямо в HTML-файл.

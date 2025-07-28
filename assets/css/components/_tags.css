@@ -21,6 +21,12 @@
 	position: relative;
 	overflow: hidden;
 	will-change: transform, box-shadow, background;
+	max-width: 10em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	word-break: break-all;
 }
 
 .tag-pill::before {
