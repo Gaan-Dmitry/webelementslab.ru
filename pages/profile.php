@@ -44,16 +44,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
     <meta name="robots" content="index, follow">
     <meta name="description" content="Профиль пользователя WebElementsLab">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png">
-    <link rel="stylesheet" href="/assets/css/layout/_footer.css">
-    <link rel="stylesheet" href="/assets/css/layout/_header.css">
-    <link rel="stylesheet" href="/assets/css/components/_dropdown-menu.css">
-    <link rel="stylesheet" href="/assets/css/base/_links.css">
-    <link rel="stylesheet" href="/assets/css/layout/_main.css">
-    
-    <link rel="stylesheet" href="/assets/css/base/_reset.css">
-    <link rel="stylesheet" href="/assets/css/base/_variables.css">
-    <link rel="stylesheet" href="/assets/css/utils/_font.css">
-    <link rel="stylesheet" href="/assets/css/utils/_flex.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/pages/profile.css">
     <meta property="og:title" content="WebElementsLab — HTML/CSS/JS элементы">
     <meta property="og:description" content="Готовые сниппеты и UI для твоих проектов.">
