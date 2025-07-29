@@ -110,12 +110,12 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                         </a>
                     <?php endif; ?>
                 </div>
-                <div>
-                    <?php if ($is_own_profile): ?>
-                        <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
-                        <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
-                    <?php endif; ?>
-                </div>
+            </div>
+            <div>
+                <?php if ($is_own_profile): ?>
+                    <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
+                    <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
+                <?php endif; ?>
             </div>
             </div>
         </section>
