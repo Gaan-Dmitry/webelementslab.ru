@@ -1,14 +1,12 @@
 /* Стили для страницы настроек профиля в стиле login */
 .wrapper-profile-editor {
-	margin: auto;
 	border-radius: 1rem;
 	background-color: var(--main-bg);
 	padding-bottom: 1rem;
 }
 .bg-cover {
 	position: relative;
-	width: 55rem;
-	height: 15.25rem;
+	aspect-ratio: 4/1;
 	overflow: hidden;
 	border-radius: 1rem 1rem 0 0;
 	background: #f0f0f0;
@@ -19,7 +17,7 @@
 	object-fit: cover;
 }
 .bg-actions {
-	padding: 1rem 1rem 1rem 38.03rem;
+	padding: 1rem 1rem 1rem 38.73rem;
 	background-color: #000000bd;
 	position: absolute;
 	top: 0;
@@ -87,7 +85,9 @@
 	flex-direction: column;
 	gap: 1rem;
 	align-items: stretch;
-	padding: 1rem;
+	padding-bottom: 1rem;
+	box-shadow: 0 2px 19px rgb(0 0 0 / 50%);
+	background: #2b2b2b;
 }
 
 .profile-settings-form label {
@@ -219,4 +219,12 @@
 
 .edit-title {
 	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0.8rem 3rem;
+	z-index: 1;
+}
+
+.er-suc {
+	height: 2.5rem;
 }

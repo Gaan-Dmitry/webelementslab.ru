@@ -112,12 +112,6 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
 <div class="wrapper">
 <main>
 <section class="block-main">
-    <?php if (!empty($success)): ?>
-        <p class="success">Профиль успешно обновлён ✅</p>
-    <?php endif; ?>
-    <?php if (!empty($error)): ?>
-        <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
 <form method="POST" class="profile-settings-form a-i-center" enctype="multipart/form-data" id="profileForm">
     <input type="hidden" name="remove_avatar" id="remove_avatar" value="0">
     <input type="hidden" name="remove_bg" id="remove_bg" value="0">
@@ -151,6 +145,14 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
             <button type="button" class="error-btn" onclick="applyCrop()">Сохранить</button>
             <button type="button" class="error-btn red-btn" onclick="closeCropper()">Отмена</button>
         </div>
+    </div>
+    <div class="er-suc">
+        <?php if (!empty($success)): ?>
+            <p class="success">Профиль успешно обновлён ✅</p>
+        <?php endif; ?>
+        <?php if (!empty($error)): ?>
+            <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
     </div>
     <div class="d-flex j-c-center">
         <div class="d-flex f-d-column gap1">
