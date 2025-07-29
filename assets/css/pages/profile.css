@@ -173,7 +173,6 @@
 .profile-socials {
 	display: flex;
 	gap: 14px;
-	margin: 10px 0 18px 0;
 }
 .profile-social {
 	width: 32px;

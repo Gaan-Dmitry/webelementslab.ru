@@ -28,3 +28,15 @@
 .m-bottom1 {
 	margin-bottom: 1rem;
 }
+
+.m-a0 {
+	margin: auto 0;
+}
+
+.m-1a {
+	margin: 1rem auto;
+}
+
+.m-r1 {
+	margin-right: 1rem;
+}

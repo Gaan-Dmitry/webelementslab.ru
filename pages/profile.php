@@ -67,7 +67,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                      echo $bgPath . '?t=' . $bgTime;
                  ?>');">
             </div>
-            <div class="profile-info-block d-flex f-d-row gap1">
+            <div class="j-c-space-between d-flex f-d-row m-1a">
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
                 <div class="avatar-inner">
@@ -111,7 +111,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                     <?php endif; ?>
                 </div>
             </div>
-            <div>
+            <div class="d-flex f-d-column gap1 m-a0 m-r1"">
                 <?php if ($is_own_profile): ?>
                     <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
                     <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
