@@ -112,7 +112,6 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
 <div class="wrapper">
 <main>
 <section class="block-main">
-    <h1 class="t-a-center m-bottom1">Настройки профиля</h1>
     <?php if (!empty($success)): ?>
         <p class="success">Профиль успешно обновлён ✅</p>
     <?php endif; ?>
@@ -125,6 +124,9 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
     <div class="wrapper-profile-editor">
         <div class="bg-cover">
             <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
+            
+            <h1 class="edit-title">Настройки профиля</h1>
+
             <div class="bg-actions">
                 <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Загрузить</button>
                 <button type="button" class="error-btn" onclick="openCropper('bg', true)">Обрезать</button>
