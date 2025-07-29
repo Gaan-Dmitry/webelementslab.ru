@@ -67,7 +67,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                      echo $bgPath . '?t=' . $bgTime;
                  ?>');">
             </div>
-
+            <div class="profile-info-block d-flex f-d-row gap1">
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
                 <div class="avatar-inner">
@@ -84,10 +84,10 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
 
 
             <div class="profile-info">
-                <h1><?= htmlspecialchars($user['username'] ?? 'Гость') ?></h1>
-                <p class="profile-email">Email: <span><?= htmlspecialchars($user['email'] ?? '') ?></span></p>
-                <p class="profile-bio">О себе: <span><?= htmlspecialchars($profile['bio'] ?? '') ?></span></p>
-
+                <div>
+                    <h1><?= htmlspecialchars($user['username'] ?? 'Гость') ?></h1>
+                    <p class="profile-bio">О себе: <span><?= htmlspecialchars($profile['bio'] ?? '') ?></span></p>
+                </div>
                 <div class="profile-socials">
                     <?php if (!empty($profile['vk'])): ?>
                         <a href="https://vk.com/<?= htmlspecialchars($profile['vk']) ?>" class="profile-social vk" title="VK" target="_blank" rel="noopener">
@@ -110,10 +110,13 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                         </a>
                     <?php endif; ?>
                 </div>
-
-                <?php if ($is_own_profile): ?>
-                    <a href="/pages/logout.php" class="reg-btn anim-hover-box-shadow">Выход</a>
-                <?php endif; ?>
+                <div>
+                    <?php if ($is_own_profile): ?>
+                        <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
+                        <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
+                    <?php endif; ?>
+                </div>
+            </div>
             </div>
         </section>
 
