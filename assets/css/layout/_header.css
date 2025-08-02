@@ -113,18 +113,41 @@ header {
 	gap: 1.5rem;
 }
 
+.nav-left a,
+.nav-right a,
 .main-nav a {
-	text-decoration: none;
+	position: relative;
 	color: var(--text-color);
 	font-weight: 500;
-	font-size: 0.95rem;
 	transition: color 0.2s ease;
 }
 
+.nav-left a:hover,
+.nav-right a:hover,
 .main-nav a:hover {
 	color: var(--accent);
 }
 
+.nav-left a::after,
+.nav-right a::after,
+.main-nav a::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -3px;
+	width: 0;
+	height: 2px;
+	background-color: var(--accent-hover);
+	transition: width 0.3s ease;
+}
+
+.nav-left a:hover::after,
+.nav-right a:hover::after,
+.main-nav a:hover::after {
+	width: 100%;
+}
+
+ 
 /* Кнопка поиска (лупа) */
 .search-btn {
 	background: none;
