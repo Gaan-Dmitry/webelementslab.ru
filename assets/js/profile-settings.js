@@ -1,11 +1,11 @@
 let cropper = null;
 let currentTarget = null;
+let croppingInProgress = false;
 
 function openCropper(type, useCurrent = false) {
 	currentTarget = type;
 	const input = document.getElementById(type + 'Input');
 
-	// Если обрезаем уже выбранное изображение (без выбора нового файла)
 	if (useCurrent) {
 		const img = document.getElementById(type + 'Image');
 		const src = img?.src;
@@ -23,7 +23,6 @@ function openCropper(type, useCurrent = false) {
 		return;
 	}
 
-	// Иначе — загружаем новый файл
 	input.click();
 
 	input.onchange = function () {
@@ -52,7 +51,7 @@ function closeCropper() {
 
 function applyCrop() {
 	if (cropper && currentTarget) {
-		closeCropper(); // Скрываем модалку сразу
+		croppingInProgress = true;
 
 		cropper.getCroppedCanvas().toBlob(blob => {
 			const file = new File([blob], `${currentTarget}.png`, {
@@ -66,20 +65,18 @@ function applyCrop() {
 			const imgURL = URL.createObjectURL(blob);
 			if (currentTarget === 'avatar') {
 				document.getElementById('avatarImage').src = imgURL;
-				document.getElementById(
-					'avatarPreview'
-				).innerHTML = `<img src="${imgURL}" alt="avatar">`;
-				document.getElementById('avatarFileName').textContent =
-					file.name;
+				document.getElementById('avatarPreview').innerHTML = `<img src="${imgURL}" alt="avatar">`;
+				document.getElementById('avatarFileName').textContent = file.name;
 				document.getElementById('remove_avatar').value = '0';
 			} else {
 				document.getElementById('bgImage').src = imgURL;
-				document.getElementById(
-					'bgPreview'
-				).innerHTML = `<img src="${imgURL}" alt="bg">`;
+				document.getElementById('bgPreview').innerHTML = `<img src="${imgURL}" alt="bg">`;
 				document.getElementById('bgFileName').textContent = file.name;
 				document.getElementById('remove_bg').value = '0';
 			}
+
+			closeCropper();
+			croppingInProgress = false;
 		}, 'image/png');
 	}
 }
@@ -102,23 +99,20 @@ function removeImage(type) {
 	}
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
 	const avatarInput = document.getElementById('avatarInput');
 	const bgInput = document.getElementById('bgInput');
 	const spinner = document.getElementById('upload-spinner');
 	const saveBtn = document.getElementById('save-btn');
+	const form = document.getElementById('profileForm');
 
 	avatarInput.addEventListener('change', () => {
 		const file = avatarInput.files[0];
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = e => {
-				document.getElementById(
-					'avatarPreview'
-				).innerHTML = `<img src="${e.target.result}" alt="avatar">`;
-				document.getElementById('avatarFileName').textContent =
-					file.name;
+				document.getElementById('avatarPreview').innerHTML = `<img src="${e.target.result}" alt="avatar">`;
+				document.getElementById('avatarFileName').textContent = file.name;
 				document.getElementById('remove_avatar').value = '0';
 			};
 			reader.readAsDataURL(file);
@@ -130,9 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = e => {
-				document.getElementById(
-					'bgPreview'
-				).innerHTML = `<img src="${e.target.result}" alt="bg">`;
+				document.getElementById('bgPreview').innerHTML = `<img src="${e.target.result}" alt="bg">`;
 				document.getElementById('bgFileName').textContent = file.name;
 				document.getElementById('remove_bg').value = '0';
 			};
@@ -140,8 +132,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	const form = document.getElementById('profileForm');
-	form.addEventListener('submit', () => {
+	form.addEventListener('submit', e => {
+		if (croppingInProgress) {
+			e.preventDefault();
+			alert('Пожалуйста, дождитесь завершения обрезки изображения!');
+			return;
+		}
+
+		console.log('Перед отправкой формы:');
+		console.log('Аватар:', avatarInput.files[0]);
+		console.log('Фон:', bgInput.files[0]);
+
 		spinner.style.display = 'block';
 		saveBtn.disabled = true;
 	});
