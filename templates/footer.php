@@ -1,6 +1,5 @@
 <footer>
-    <a href="/">Главная</a>
-    <a href="/login.php">Вход</a>
-    <a href="/register.php">Регистрация</a>
-    <a href="/card.php">Карточка</a>
+    <a href="#">GitHub</a>
+    <p>&copy; <?php echo date("Y"); ?>Все права защищены.</p>
+    <a href="/page/privacy.php">Политика конфиденциальности</a>
 </footer>

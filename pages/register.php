@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="auth-footer">
             <div class="auth-down">
                 <p>Есть аккаунт?</p>
-                <a class="link-form" href="/login.php">Войти</a>
+                <a class="link-form" href="/pages/login.php">Войти</a>
             </div>
         </div>
     </div>

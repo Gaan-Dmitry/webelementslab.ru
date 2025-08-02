@@ -1,17 +1,16 @@
 <?php
-if (isset($_SESSION['id'])) {
-    require_once __DIR__ . '/../includes/db.php';
-    $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
-    $stmt->execute([$_SESSION['id']]);
-    $user_profile = $stmt->fetch();
-    $avatar = !empty($user_profile['avatar']) ? 
-    htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
-    $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatar;
-    $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
-    $avatar .= '?t=' . $avatarTime;
-}
+    if (isset($_SESSION['id'])) {
+        require_once __DIR__ . '/../includes/db.php';
+        $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
+        $stmt->execute([$_SESSION['id']]);
+        $user_profile = $stmt->fetch();
+        $avatar = !empty($user_profile['avatar']) ? 
+        htmlspecialchars($user_profile['avatar']) : '/uploads/default-avatar.png';
+        $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatar;
+        $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
+        $avatar .= '?t=' . $avatarTime;
+    }
 ?>
-
 
 <header>
     <div class="nav-left">
@@ -21,7 +20,7 @@ if (isset($_SESSION['id'])) {
         <a href="/">Главная</a>
         <a href="/pages/login.php">Вход</a>
         <a href="/pages/register.php">Регистрация</a>
-        <a href="/pages/card.php">Карточка</a>
+        <a href="/pages/random_snippet.php">Случайный</a>
     </div>
     <div class="nav-right">
         <?php if (isset($_SESSION['username'])): ?>
@@ -32,11 +31,9 @@ if (isset($_SESSION['id'])) {
                     <a href="/pages/profile.php">Профиль</a>
                     <a href="/pages/settings.php">Настройки</a>
                     <a href="/pages/favorites.php">Избранное</a>
-                    <a href="/pages/logout.php" class="logout-link">Выход</a>
+                    <a href="/pages/logout.php" class="red-btn">Выход</a>
                 </div>
             </div>
-
-
         <?php else: ?>
             <a href="/pages/login.php">Вход</a>
             <a class="reg-btn anim-hover-box-shadow" href="/pages/register.php">Регистрация</a>
@@ -44,53 +41,53 @@ if (isset($_SESSION['id'])) {
     </div>
 </header>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const avatarToggle = document.getElementById('avatarToggle');
-    const profileMenu = document.getElementById('profileMenu');
-    const profileWrapper = document.getElementById('profileWrapper');
+    document.addEventListener('DOMContentLoaded', () => {
+        const avatarToggle = document.getElementById('avatarToggle');
+        const profileMenu = document.getElementById('profileMenu');
+        const profileWrapper = document.getElementById('profileWrapper');
 
-    let menuOpen = false;
+        let menuOpen = false;
 
-    function toggleMenu(forceClose = false) {
-        if (forceClose || menuOpen) {
-            profileMenu.classList.remove('show');
-            menuOpen = false;
-        } else {
-            profileMenu.classList.add('show');
-            menuOpen = true;
+        function toggleMenu(forceClose = false) {
+            if (forceClose || menuOpen) {
+                profileMenu.classList.remove('show');
+                menuOpen = false;
+            } else {
+                profileMenu.classList.add('show');
+                menuOpen = true;
+            }
         }
-    }
 
-    avatarToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
+        avatarToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // Закрытие при клике вне
+        document.addEventListener('click', (e) => {
+            if (!profileWrapper.contains(e.target)) {
+                toggleMenu(true);
+            }
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleMenu(true);
+            }
+        });
+
+        // Закрытие, если мышка ушла с меню и аватарки
+        let hoverTimeout;
+
+        profileWrapper.addEventListener('mouseleave', () => {
+            hoverTimeout = setTimeout(() => {
+                toggleMenu(true);
+            }, 400);
+        });
+
+        profileWrapper.addEventListener('mouseenter', () => {
+            clearTimeout(hoverTimeout);
+        });
     });
-
-    // Закрытие при клике вне
-    document.addEventListener('click', (e) => {
-        if (!profileWrapper.contains(e.target)) {
-            toggleMenu(true);
-        }
-    });
-
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            toggleMenu(true);
-        }
-    });
-
-    // Закрытие, если мышка ушла с меню и аватарки
-    let hoverTimeout;
-
-    profileWrapper.addEventListener('mouseleave', () => {
-        hoverTimeout = setTimeout(() => {
-            toggleMenu(true);
-        }, 400);
-    });
-
-    profileWrapper.addEventListener('mouseenter', () => {
-        clearTimeout(hoverTimeout);
-    });
-});
 </script>
