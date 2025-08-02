@@ -17,11 +17,6 @@
 	gap: 1rem;
 }
 
-.footer-col.center {
-	justify-content: center;
-	flex: 1;
-	flex-wrap: wrap;
-}
 
 .footer a {
 	color: var(--text-color);
