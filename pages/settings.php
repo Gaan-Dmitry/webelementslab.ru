@@ -93,15 +93,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $profile = $stmt->fetch() ?: [];
 }
 
-$avatar_url = !empty($profile['avatar']) ? $profile['avatar'] : '/assets/img/avatar-placeholder.png';
-$bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-placeholder.jpg';
+$avatar_url = !empty($profile['avatar']) ? $profile['avatar'] : '/uploads/default-avatar.png';
+$bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg.jpg';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Настройки профиля — WebElementsLab</title>
-    <link rel="apple-touch-icon" href="/assets/img/logo192.png">
+    <link rel="apple-touch-icon" href="/uploads/logo192.png">
     <link rel="icon" href="/assets/img/favicon.ico">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/pages/settings.css">
