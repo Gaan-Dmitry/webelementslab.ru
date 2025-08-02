@@ -3,7 +3,7 @@
 		<a href="/" class="logo">Главная</a>
 	</div>
 	<div class="footer-col center">
-		<a href="#">GitHub</a>
+		<a href="https://github.com/Verefer">GitHub</a>
 		<a href="/page/privacy.php">Политика конфиденциальности</a>
 	</div>
 	<div class="footer-col right">
