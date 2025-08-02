@@ -1,26 +1,108 @@
-/* Стили для header и навигации */
+/* Header */
 header {
-	padding: 1rem 0;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background-color: var(--layot-bg);
-}
-
-.logo-header {
-	width: 2.2rem;
-	height: 2.2rem;
-	border-radius: 50%;
-	box-shadow: 0 0 8px var(--accent-hover);
-	object-fit: cover;
-	transition: box-shadow 0.3s ease;
-	cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--layot-bg);
+    border-bottom: 1px solid #333;
 }
 
 .nav-left,
 .nav-right {
-	margin: 0 1rem;
-	gap: 2rem;
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-left a,
+.nav-right a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-left a:hover,
+.nav-right a:hover {
+    color: var(--accent);
+}
+
+.logo-header {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 8px var(--accent-hover);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Аватар + выпадающее меню */
+.profile-menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.username-label {
+    color: var(--main-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
+.avatar {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    object-fit: cover;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.avatar:hover {
+    box-shadow: 0 0 8px var(--accent-hover);
+}
+
+/* Меню профиля */
+.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    display: none;
+    background-color: var(--layot-bg);
+    border: 1px solid #444;
+    border-radius: 8px;
+    min-width: 10rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--accent);
+    color: #000;
+}
+
+.red-btn {
+    color: var(--error);
 }

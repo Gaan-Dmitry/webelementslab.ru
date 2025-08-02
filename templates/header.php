@@ -13,81 +13,41 @@
 ?>
 
 <header>
-    <div class="nav-left">
-        <a href="/">
-            <img src="/assets/img/logo.svg" class="logo-header" alt="logo">
-        </a>
-        <a href="/">Главная</a>
-        <a href="/pages/login.php">Вход</a>
-        <a href="/pages/register.php">Регистрация</a>
-        <a href="/pages/random_snippet.php">Случайный</a>
-    </div>
-    <div class="nav-right">
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="profile-menu-wrapper" id="profileWrapper">
-                <span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
-                <img src="<?= $avatar ?>" alt="avatar" class="avatar" id="avatarToggle">
-                <div class="dropdown-menu" id="profileMenu">
-                    <a href="/pages/profile.php">Профиль</a>
-                    <a href="/pages/settings.php">Настройки</a>
-                    <a href="/pages/favorites.php">Избранное</a>
-                    <a href="/pages/logout.php" class="red-btn">Выход</a>
-                </div>
-            </div>
-        <?php else: ?>
-            <a href="/pages/login.php">Вход</a>
-            <a class="reg-btn anim-hover-box-shadow" href="/pages/register.php">Регистрация</a>
-        <?php endif; ?>
-    </div>
+	<div class="nav-left">
+		<a href="/">
+			<img src="/assets/img/logo.svg" class="logo-header" alt="logo">
+		</a>
+		<nav class="main-nav">
+			<a href="/">Главная</a>
+			<a href="/pages/random_snippet.php">Случайный</a>
+			<a href="#">Категории</a>
+			<a href="#">Коллекции</a>
+		</nav>
+	</div>
+	<div class="nav-right">
+		<button class="search-btn" aria-label="Поиск">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+				<circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+				<line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+			</svg>
+		</button>
+		<?php if (isset($_SESSION['username'])): ?>
+			<div class="profile-menu-wrapper" id="profileWrapper">
+				<span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
+				<img src="<?= $avatar ?>" alt="avatar" class="avatar" id="avatarToggle">
+				<div class="dropdown-menu" id="profileMenu">
+					<a href="/pages/profile.php">Профиль</a>
+					<a href="/pages/settings.php">Настройки</a>
+					<a href="/pages/favorites.php">Избранное</a>
+					<a href="/pages/logout.php" class="red-btn">Выход</a>
+				</div>
+			</div>
+		<?php else: ?>
+			<a href="/pages/login.php">Вход</a>
+			<a class="reg-btn anim-hover-box-shadow" href="/pages/register.php">Регистрация</a>
+		<?php endif; ?>
+	</div>
 </header>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const avatarToggle = document.getElementById('avatarToggle');
-        const profileMenu = document.getElementById('profileMenu');
-        const profileWrapper = document.getElementById('profileWrapper');
 
-        let menuOpen = false;
+<script src="/assets/js/profile-header.js"></script>
 
-        function toggleMenu(forceClose = false) {
-            if (forceClose || menuOpen) {
-                profileMenu.classList.remove('show');
-                menuOpen = false;
-            } else {
-                profileMenu.classList.add('show');
-                menuOpen = true;
-            }
-        }
-
-        avatarToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        // Закрытие при клике вне
-        document.addEventListener('click', (e) => {
-            if (!profileWrapper.contains(e.target)) {
-                toggleMenu(true);
-            }
-        });
-
-        // Закрытие по Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                toggleMenu(true);
-            }
-        });
-
-        // Закрытие, если мышка ушла с меню и аватарки
-        let hoverTimeout;
-
-        profileWrapper.addEventListener('mouseleave', () => {
-            hoverTimeout = setTimeout(() => {
-                toggleMenu(true);
-            }, 400);
-        });
-
-        profileWrapper.addEventListener('mouseenter', () => {
-            clearTimeout(hoverTimeout);
-        });
-    });
-</script>
