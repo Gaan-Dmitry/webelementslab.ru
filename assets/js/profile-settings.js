@@ -86,19 +86,22 @@ function applyCrop() {
 
 function removeImage(type) {
 	if (type === 'avatar') {
-		document.getElementById('avatarImage').src = '';
-		document.getElementById('avatarPreview').innerHTML = '';
-		document.getElementById('avatarFileName').textContent = '';
+		const defaultAvatar = '/assets/img/default-avatar.png';
+		document.getElementById('avatarImage').src = defaultAvatar;
+		document.getElementById('avatarPreview').innerHTML = `<img src="${defaultAvatar}" alt="avatar">`;
+		document.getElementById('avatarFileName').textContent = '/uploads/default-avatar.png';
 		document.getElementById('avatarInput').value = '';
 		document.getElementById('remove_avatar').value = '1';
 	} else {
-		document.getElementById('bgImage').src = '';
-		document.getElementById('bgPreview').innerHTML = '';
-		document.getElementById('bgFileName').textContent = '';
+		const defaultBg = '/assets/img/default-bg.jpg';
+		document.getElementById('bgImage').src = defaultBg;
+		document.getElementById('bgPreview').innerHTML = `<img src="${defaultBg}" alt="bg">`;
+		document.getElementById('bgFileName').textContent = '/uploads/default-bg.jpg';
 		document.getElementById('bgInput').value = '';
 		document.getElementById('remove_bg').value = '1';
 	}
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
 	const avatarInput = document.getElementById('avatarInput');
