@@ -51,7 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role;
 
-            header('Location: /');
+            $redirect = $_SERVER['HTTP_REFERER'] ?? '/';
+            header("Location: $redirect");
+
             exit;
         }
     }
