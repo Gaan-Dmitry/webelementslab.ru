@@ -1,10 +1,35 @@
-/* Стили для футера */
-footer {
+footer.footer {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	gap: 2rem;
-	width: 100%;
 	justify-content: center;
-	padding: 1.5rem;
-	background-color: var(--layot-bg);
+	padding: 2rem 1rem;
+	background-color: var(--layout-bg);
+	color: var(--text-color);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	font-size: 0.9rem;
+	gap: 1rem;
+}
+
+.footer-links {
+	display: flex;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.footer-links a {
+	color: var(--text-color);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+	color: var(--accent-color);
+	text-decoration: underline;
+}
+
+.footer-copy {
+	margin: 0;
+	opacity: 0.7;
 }
