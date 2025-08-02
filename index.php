@@ -29,13 +29,12 @@ session_start();
             <section class="slogan">
                 <h1>WebElementsLab — <br>Готовые HTML, CSS и JS решения</h1><br>
                 <h2>Подпишитесь на обновления и получайте свежие сниппеты первыми</h2>
+                <div class="sub-block">
+                    <input class="inp-sub" type="email" name="subcribeemail" id="subcribeemail" autocomplete="email" placeholder="Ваша почта...">
+                    <button class="sub-btn" id="sub-btn">Подписаться</button>
+                </div>
             </section>
         <?php endif; ?>
-
-        <div class="sub-block">
-            <input class="inp-sub" type="email" name="subcribeemail" id="subcribeemail" autocomplete="email" placeholder="Ваша почта...">
-            <button class="sub-btn" id="sub-btn">Подписаться</button>
-        </div>
          <h1 class="ldp-admin-title">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?></h1>
         <!-- Лента карточек -->
         <div id="snippets-list"></div>
