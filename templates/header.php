@@ -54,6 +54,6 @@
 		<?php endif; ?>
 	</div>
 </header>
-
+<script src="/assets/js/search-dropdown.js"></script>
 <script src="/assets/js/profile-header.js"></script>
 

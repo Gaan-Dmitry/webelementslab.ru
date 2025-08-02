@@ -25,10 +25,13 @@ session_start();
     <?php require_once __DIR__ . '/templates/header.php'; ?>
     <div class="wrapper">
         <main>
-        <section class="slogan">
-            <h1>WebElementsLab — <br>Готовые HTML, CSS и JS решения</h1><br>
-            <h2>Подпишитесь на обновления и получайте свежие сниппеты первыми</h2>
-        </section>
+        <?php if (!isset($_SESSION['id'])): ?>
+            <section class="slogan">
+                <h1>WebElementsLab — <br>Готовые HTML, CSS и JS решения</h1><br>
+                <h2>Подпишитесь на обновления и получайте свежие сниппеты первыми</h2>
+            </section>
+        <?php endif; ?>
+
         <div class="sub-block">
             <input class="inp-sub" type="email" name="subcribeemail" id="subcribeemail" autocomplete="email" placeholder="Ваша почта...">
             <button class="sub-btn" id="sub-btn">Подписаться</button>
