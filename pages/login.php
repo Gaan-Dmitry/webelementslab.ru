@@ -123,7 +123,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
     result = await response.json();
 
     if (result.success) {
-      window.location.href = '/';
+      window.location.href = document.referrer || '/';
     } else if (result.blocked) {
       login.classList.add('invalid');
 
