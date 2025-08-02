@@ -33,11 +33,6 @@ session_start();
             <input class="inp-sub" type="email" name="subcribeemail" id="subcribeemail" autocomplete="email" placeholder="Ваша почта...">
             <button class="sub-btn" id="sub-btn">Подписаться</button>
         </div>
-        <!-- тут будет лента с карточками -->
-        <!-- <div>
-                <a href="/card.php">Карточка</a>
-                <a href="/card.php?id=2">Карточка с id 2</a>
-        </div> -->
          <h1 class="ldp-admin-title">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?></h1>
         <!-- Лента карточек -->
         <div id="snippets-list"></div>
