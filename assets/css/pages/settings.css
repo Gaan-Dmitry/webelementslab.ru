@@ -1,7 +1,7 @@
 /* Стили для страницы настроек профиля в стиле login */
 .wrapper-profile-editor {
 	border-radius: 1rem;
-	background-color: var(--main-bg);
+	background-color: var(--layot-bg);
 	padding-bottom: 1rem;
 }
 .bg-cover {
@@ -86,7 +86,6 @@
 	gap: 1rem;
 	align-items: stretch;
 	padding-bottom: 1rem;
-	box-shadow: 0 2px 19px rgb(0 0 0 / 50%);
 	background: #2b2b2b;
 }
 

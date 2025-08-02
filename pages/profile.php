@@ -58,6 +58,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
 <div class="wrapper">
     <main>
         <section class="block-main">
+            <div class="b-shadow b-radius1 b--main-bg">
             <!-- Фон -->
             <div class="profile-bg"
                  style="background-image: url('<?php
@@ -67,7 +68,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                      echo $bgPath . '?t=' . $bgTime;
                  ?>');">
             </div>
-            <div class="j-c-space-between d-flex f-d-row m-1a">
+            <div class="j-c-space-between d-flex f-d-row .p1-0 block-profile-info">
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
                 <div class="avatar-inner">
@@ -111,7 +112,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="d-flex f-d-column gap1 m-a0 m-r1">
+            <div class="d-flex f-d-column gap1 m-a0 m-r1 btn-profile-up">
                 <?php if ($is_own_profile): ?>
                     <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
                     <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
@@ -124,14 +125,16 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
             </div>
 
             </div>
-        </section>
+            <script>
+                document.querySelectorAll('.profile-social').forEach(btn => {
+                    btn.addEventListener('mouseup', e => btn.blur());
+                    btn.addEventListener('mouseleave', e => btn.blur());
+                });
+            </script>
+            </div>
 
-        <script>
-            document.querySelectorAll('.profile-social').forEach(btn => {
-                btn.addEventListener('mouseup', e => btn.blur());
-                btn.addEventListener('mouseleave', e => btn.blur());
-            });
-        </script>
+
+        </section>
     </main>
 </div>
 

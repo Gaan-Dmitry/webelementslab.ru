@@ -40,3 +40,19 @@
 .m-r1 {
 	margin-right: 1rem;
 }
+
+.p1-0{
+	padding: 1rem 0;
+}
+
+.b-shadow{
+	box-shadow: 0 2px 19px rgb(0 0 0 / 50%);
+}
+
+.b-radius1{
+	border-radius: 1rem;
+}
+
+.b--main-bg{
+	background: var(--main-bg);
+}

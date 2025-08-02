@@ -151,6 +151,15 @@
 	height: 100%;
 	object-fit: cover;
 }
+
+.btn-profile-up{
+	min-width: 13.8rem;
+}
+
+.profile-info{
+	width: 23.75rem;
+}
+
 .profile-info h1 {
 	font-size: 1.6rem;
 	margin: 0 0 6px 0;
@@ -210,4 +219,9 @@
 	background: #9c9c9c;
 	box-shadow: 0 2px 8px rgba(150, 154, 158, 0.18);
 	transform: scale(0.96);
+}
+
+.block-profile-info{
+	background: var(--main-bg);
+    border-radius: 0 0 1rem 1rem;
 }
