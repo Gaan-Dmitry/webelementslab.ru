@@ -45,7 +45,7 @@
 					<a href="/pages/profile.php">Профиль</a>
 					<a href="/pages/settings.php">Настройки</a>
 					<a href="/pages/favorites.php">Избранное</a>
-					<a href="/pages/logout.php" class="red-btn">Выход</a>
+					<a href="/pages/logout.php" class="red-link">Выход</a>
 				</div>
 			</div>
 		<?php else: ?>

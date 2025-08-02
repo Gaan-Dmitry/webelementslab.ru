@@ -42,3 +42,8 @@ input[type='submit'] a:focus,
 input[type='reset'] a:focus {
 	outline: none;
 }
+
+.red-link:hover{
+	text-shadow: 0 0 1rem rgba(255, 76, 76, 0.6) !important;
+	animation: none !important;
+}

@@ -95,10 +95,6 @@ header {
     padding: 10px 16px;
 }
 
-.red-btn {
-    color: var(--error);
-}
-
 /* Главное меню (ссылки в центре) */
 .main-nav {
 	display: flex;
@@ -117,28 +113,8 @@ header {
 .nav-left a:hover,
 .nav-right a:hover,
 .main-nav a:hover {
-	color: var(--accent);
+	color: var(--text-color);
 }
-
-.nav-left a::after,
-.nav-right a::after,
-.main-nav a::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	bottom: -3px;
-	width: 0;
-	height: 2px;
-	background-color: var(--accent-hover);
-	transition: width 0.3s ease;
-}
-
-.nav-left a:hover::after,
-.nav-right a:hover::after,
-.main-nav a:hover::after {
-	width: 100%;
-}
-
  
 /* Кнопка поиска (лупа) */
 .search-btn {
