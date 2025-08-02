@@ -68,6 +68,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                      echo $bgPath . '?t=' . $bgTime;
                  ?>');">
             </div>
+            <!-- Блок с аватаром, социальными сетями, информацией о пользователе и кнопками -->
             <div class="j-c-space-between d-flex f-d-row p1-0 block-profile-info">
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
@@ -83,7 +84,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                 </div>
             </div>
 
-
+            <!-- Блок с информацией о пользователе -->
             <div class="profile-info">
                 <div>
                     <h1><?= htmlspecialchars($user['username'] ?? 'Гость') ?></h1>
@@ -112,6 +113,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                     <?php endif; ?>
                 </div>
             </div>
+            <!-- Кнопки настройки профиля, выхода и возможно подписки -->
             <div class="d-flex f-d-column gap1 m-a0 m-r1 btn-profile-up">
                 <?php if ($is_own_profile): ?>
                     <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
@@ -123,7 +125,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                         >Спасибо</button>
                 <?php endif; ?>
             </div>
-
+            
             </div>
             <script>
                 document.querySelectorAll('.profile-social').forEach(btn => {
