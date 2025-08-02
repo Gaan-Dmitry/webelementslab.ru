@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileMenu = document.getElementById('profileMenu');
     const profileWrapper = document.getElementById('profileWrapper');
 
+    if (!avatarToggle || !profileMenu || !profileWrapper) return;
+
     let menuOpen = false;
 
     function toggleMenu(forceClose = false) {
