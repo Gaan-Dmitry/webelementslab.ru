@@ -93,14 +93,6 @@ header {
 .dropdown-menu a {
     display: block;
     padding: 10px 16px;
-    color: var(--text-color);
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.dropdown-menu a:hover {
-    background-color: var(--accent);
-    color: #000;
 }
 
 .red-btn {
