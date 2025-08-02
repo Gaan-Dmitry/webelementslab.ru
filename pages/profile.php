@@ -111,12 +111,18 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="d-flex f-d-column gap1 m-a0 m-r1"">
+            <div class="d-flex f-d-column gap1 m-a0 m-r1">
                 <?php if ($is_own_profile): ?>
                     <button onclick="window.location.href='/pages/settings.php'" class="error-btn">Редактировать профиль</button>
                     <button onclick="window.location.href='/pages/logout.php'" class="error-btn red-btn">Выход</button>
+                <?php else: ?>
+                    <button 
+                        class="error-btn"
+                        onclick="<?= isset($_SESSION['id']) ? "alert('Спасибо!')" : "window.location.href='/pages/login.php'" ?>"
+                        >Спасибо</button>
                 <?php endif; ?>
             </div>
+
             </div>
         </section>
 
