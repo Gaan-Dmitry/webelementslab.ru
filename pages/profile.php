@@ -68,7 +68,7 @@ $is_own_profile = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
                      echo $bgPath . '?t=' . $bgTime;
                  ?>');">
             </div>
-            <div class="j-c-space-between d-flex f-d-row .p1-0 block-profile-info">
+            <div class="j-c-space-between d-flex f-d-row p1-0 block-profile-info">
             <!-- Аватар с ролью как дополнительным классом -->
             <div class="profile-avatar <?= htmlspecialchars($user['role'] ?? 'user') ?>">
                 <div class="avatar-inner">

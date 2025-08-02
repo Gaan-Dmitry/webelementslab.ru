@@ -112,7 +112,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/assets/img/bg-plac
 <div class="wrapper">
 <main>
 <section class="block-main">
-<form method="POST" class="profile-settings-form a-i-center b-shadow b-radius1 b--main-bg" enctype="multipart/form-data" id="profileForm">
+<form method="POST" class="profile-settings-form a-i-center b-shadow b-radius1" enctype="multipart/form-data" id="profileForm">
     <input type="hidden" name="remove_avatar" id="remove_avatar" value="0">
     <input type="hidden" name="remove_bg" id="remove_bg" value="0">
     <div class="wrapper-profile-editor">
