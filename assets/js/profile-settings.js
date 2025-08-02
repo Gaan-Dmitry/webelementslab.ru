@@ -86,14 +86,14 @@ function applyCrop() {
 
 function removeImage(type) {
 	if (type === 'avatar') {
-		const defaultAvatar = '/assets/img/default-avatar.png';
+		const defaultAvatar = '/uploads/default-avatar.png';
 		document.getElementById('avatarImage').src = defaultAvatar;
 		document.getElementById('avatarPreview').innerHTML = `<img src="${defaultAvatar}" alt="avatar">`;
 		document.getElementById('avatarFileName').textContent = '/uploads/default-avatar.png';
 		document.getElementById('avatarInput').value = '';
 		document.getElementById('remove_avatar').value = '1';
 	} else {
-		const defaultBg = '/assets/img/default-bg.jpg';
+		const defaultBg = '/uploads/default-bg.jpg';
 		document.getElementById('bgImage').src = defaultBg;
 		document.getElementById('bgPreview').innerHTML = `<img src="${defaultBg}" alt="bg">`;
 		document.getElementById('bgFileName').textContent = '/uploads/default-bg.jpg';
