@@ -147,7 +147,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
                 <input type="hidden" name="remove_bg" id="remove_bg" value="0">
                 <div class="wrapper-profile-editor">
                     <div class="bg-cover">
-                        <img id="bgImage" src="<?= \$bg_url ?>" alt="Фон">
+                        <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
                         <div class="bg-actions">
                             <button type="button" onclick="document.getElementById('bgInput').click()">Загрузить</button>
                             <button type="button" onclick="openCropper('bg', true)">Обрезать</button>
@@ -155,7 +155,7 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
                         </div>
                     </div>
                     <div class="avatar-block">
-                        <img id="avatarImage" src="<?= \$avatar_url ?>" alt="Аватар">
+                        <img id="avatarImage" src="<?= $avatar_url ?>" alt="Аватар">
                         <div class="avatar-actions">
                             <button type="button" onclick="document.getElementById('avatarInput').click()">Загрузить</button>
                             <button type="button" onclick="openCropper('avatar', true)">Обрезать</button>
@@ -171,11 +171,11 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
                     <button type="button" onclick="closeCropper()">Отмена</button>
                 </div>
                 <?php if ($success): ?><p>Профиль обновлён!</p><?php endif; ?>
-                <?php if ($error): ?><p><?=$error?></p><?php endif; ?>
-                <textarea name="bio" rows="4"><?= htmlspecialchars(\$profile['bio'] ?? '') ?></textarea>
-                <input type="text" name="vk" value="<?= htmlspecialchars(\$profile['vk'] ?? '') ?>" placeholder="VK">
-                <input type="text" name="tg" value="<?= htmlspecialchars(\$profile['tg'] ?? '') ?>" placeholder="Telegram">
-                <input type="text" name="github" value="<?= htmlspecialchars(\$profile['github'] ?? '') ?>" placeholder="GitHub">
+                <?php if ($error): ?><p><?= htmlspecialchars($error) ?></p><?php endif; ?>
+                <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
+                <input type="text" name="vk" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>" placeholder="VK">
+                <input type="text" name="tg" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>" placeholder="Telegram">
+                <input type="text" name="github" value="<?= htmlspecialchars($profile['github'] ?? '') ?>" placeholder="GitHub">
                 <button type="submit" id="save-btn">Сохранить</button>
                 <div id="upload-spinner" style="display:none;"></div>
             </form>
