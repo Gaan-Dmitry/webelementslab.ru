@@ -10,7 +10,6 @@ if (!isset($_SESSION['id'])) {
 $user_id = $_SESSION['id'];
 $upload_dir = __DIR__ . '/../uploads/';
 
-// Ensure upload directory exists
 if (!is_dir($upload_dir)) {
     mkdir($upload_dir, 0775, true);
 }
@@ -18,7 +17,6 @@ if (!is_dir($upload_dir)) {
 $success = false;
 $error = '';
 
-// Fetch current profile
 $stmt = $pdo->prepare("SELECT * FROM user_profiles WHERE user_id = ?");
 $stmt->execute([$user_id]);
 $profile = $stmt->fetch() ?: [];
@@ -38,70 +36,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $avatar = $existingAvatar;
     $bg_img = $existingBg;
 
-    // Remove avatar if requested
-    if ($remove_avatar === '1' && $existingAvatar) {
-        $path = $upload_dir . basename($existingAvatar);
-        if (file_exists($path)) {
-            unlink($path);
-        }
+    if ($remove_avatar === '1' && $existingAvatar && file_exists(__DIR__ . '/../' . $existingAvatar)) {
+        unlink(__DIR__ . '/../' . $existingAvatar);
         $avatar = null;
     }
-    // Remove background if requested
-    if ($remove_bg === '1' && $existingBg) {
-        $path = $upload_dir . basename($existingBg);
-        if (file_exists($path)) {
-            unlink($path);
-        }
+
+    if ($remove_bg === '1' && $existingBg && file_exists(__DIR__ . '/../' . $existingBg)) {
+        unlink(__DIR__ . '/../' . $existingBg);
         $bg_img = null;
     }
 
-    // Handle avatar upload
     if (!empty($_FILES['avatar']['tmp_name']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','gif'])) {
-            $filename = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
-            $fullPath = $upload_dir . $filename;
-            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $fullPath)) {
-                // Delete old file
-                if ($existingAvatar) {
-                    $oldPath = $upload_dir . basename($existingAvatar);
-                    if (file_exists($oldPath)) {
-                        unlink($oldPath);
-                    }
-                }
-                $avatar = '/uploads/' . $filename;
-            } else {
-                $error .= 'Ошибка сохранения аватара. ';
+        $avatar_ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+        $avatar_path = '/uploads/avatar_' . $user_id . '_' . time() . '.' . $avatar_ext;
+        if (move_uploaded_file($_FILES['avatar']['tmp_name'], __DIR__ . '/../' . $avatar_path)) {
+            if ($existingAvatar && file_exists(__DIR__ . '/../' . $existingAvatar)) {
+                unlink(__DIR__ . '/../' . $existingAvatar);
             }
+            $avatar = $avatar_path;
         } else {
-            $error .= 'Недопустимый тип файла для аватара. ';
+            $error .= 'Ошибка загрузки аватара. ';
         }
     }
 
-    // Handle background upload
     if (!empty($_FILES['bg_img']['tmp_name']) && $_FILES['bg_img']['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','gif'])) {
-            $filename = 'bg_' . $user_id . '_' . time() . '.' . $ext;
-            $fullPath = $upload_dir . $filename;
-            if (move_uploaded_file($_FILES['bg_img']['tmp_name'], $fullPath)) {
-                // Delete old file
-                if ($existingBg) {
-                    $oldPath = $upload_dir . basename($existingBg);
-                    if (file_exists($oldPath)) {
-                        unlink($oldPath);
-                    }
-                }
-                $bg_img = '/uploads/' . $filename;
-            } else {
-                $error .= 'Ошибка сохранения фона. ';
+        $bg_ext = pathinfo($_FILES['bg_img']['name'], PATHINFO_EXTENSION);
+        $bg_path = '/uploads/bg_' . $user_id . '_' . time() . '.' . $bg_ext;
+        if (move_uploaded_file($_FILES['bg_img']['tmp_name'], __DIR__ . '/../' . $bg_path)) {
+            if ($existingBg && file_exists(__DIR__ . '/../' . $existingBg)) {
+                unlink(__DIR__ . '/../' . $existingBg);
             }
+            $bg_img = $bg_path;
         } else {
-            $error .= 'Недопустимый тип файла для фона. ';
+            $error .= 'Ошибка загрузки фона. ';
         }
     }
 
-    // Insert or update profile
     $stmt = $pdo->prepare("SELECT id FROM user_profiles WHERE user_id = ?");
     $stmt->execute([$user_id]);
     $exists = $stmt->fetch();
@@ -118,13 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = true;
     }
 
-    // Refresh profile data
     $stmt = $pdo->prepare("SELECT * FROM user_profiles WHERE user_id = ?");
     $stmt->execute([$user_id]);
     $profile = $stmt->fetch() ?: [];
 }
 
-// Set URLs for display
 $avatar_url = !empty($profile['avatar']) ? $profile['avatar'] : '/uploads/default-avatar.png';
 $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg.jpg';
 ?>
@@ -133,6 +101,8 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
 <head>
     <meta charset="UTF-8">
     <title>Настройки профиля — WebElementsLab</title>
+    <link rel="apple-touch-icon" href="/uploads/logo192.png">
+    <link rel="icon" href="/assets/img/favicon.ico">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/pages/settings.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css">
@@ -140,47 +110,85 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
 <body>
 <?php require_once __DIR__ . '/../templates/header.php'; ?>
 <div class="wrapper">
-    <main>
-        <section class="block-main">
-            <form method="POST" class="profile-settings-form" enctype="multipart/form-data" id="profileForm">
-                <input type="hidden" name="remove_avatar" id="remove_avatar" value="0">
-                <input type="hidden" name="remove_bg" id="remove_bg" value="0">
-                <div class="wrapper-profile-editor">
-                    <div class="bg-cover">
-                        <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
-                        <div class="bg-actions">
-                            <button type="button" onclick="document.getElementById('bgInput').click()">Загрузить</button>
-                            <button type="button" onclick="openCropper('bg', true)">Обрезать</button>
-                            <button type="button" onclick="removeImage('bg')">Удалить</button>
-                        </div>
-                    </div>
-                    <div class="avatar-block">
-                        <img id="avatarImage" src="<?= $avatar_url ?>" alt="Аватар">
-                        <div class="avatar-actions">
-                            <button type="button" onclick="document.getElementById('avatarInput').click()">Загрузить</button>
-                            <button type="button" onclick="openCropper('avatar', true)">Обрезать</button>
-                            <button type="button" onclick="removeImage('avatar')">Удалить</button>
-                        </div>
-                    </div>
+<main>
+<section class="block-main">
+<form method="POST" class="profile-settings-form a-i-center b-shadow b-radius1" enctype="multipart/form-data" id="profileForm">
+    <input type="hidden" name="remove_avatar" id="remove_avatar" value="0">
+    <input type="hidden" name="remove_bg" id="remove_bg" value="0">
+    <div class="wrapper-profile-editor">
+        <div class="bg-cover">
+            <img id="bgImage" src="<?= $bg_url ?>" alt="Фон">
+            
+            <h1 class="edit-title">Настройки профиля</h1>
+
+            <div class="bg-actions">
+                <button type="button" class="error-btn" onclick="document.getElementById('bgInput').click()">Загрузить</button>
+                <button type="button" class="error-btn" onclick="openCropper('bg', true)">Обрезать</button>
+                <button type="button" class="error-btn red-btn" onclick="removeImage('bg')">Удалить</button>
+            </div>
+        </div>
+        <div class="avatar-block">
+            <img id="avatarImage" src="<?= $avatar_url ?>" alt="Аватар">
+            <div class="avatar-actions">
+                <button type="button" class="error-btn" onclick="document.getElementById('avatarInput').click()">Загрузить</button>
+                <button type="button" class="error-btn" onclick="openCropper('avatar', true)">Обрезать</button>
+                <button type="button" class="error-btn red-btn" onclick="removeImage('avatar')">Удалить</button>
+            </div>
+        </div>
+    </div>
+    <input type="file" name="avatar" id="avatarInput" accept="image/*" hidden>
+    <input type="file" name="bg_img" id="bgInput" accept="image/*" hidden>
+    <div id="cropModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center;">
+        <div style="background:#fff; padding:1rem; max-width:90vw; max-height:90vh;">
+            <h3>Обрезка изображения</h3>
+            <div><img id="cropperImage" style="max-width:100%; max-height:70vh;"></div>
+            <button type="button" class="error-btn" onclick="applyCrop()">Сохранить</button>
+            <button type="button" class="error-btn red-btn" onclick="closeCropper()">Отмена</button>
+        </div>
+    </div>
+    <div class="er-suc">
+        <?php if (!empty($success)): ?>
+            <p class="success">Профиль успешно обновлён ✅</p>
+        <?php endif; ?>
+        <?php if (!empty($error)): ?>
+            <p class="error" style="color:red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+    </div>
+    <div class="d-flex j-c-center">
+        <div class="d-flex f-d-column gap1">
+            <div class="edit_block">
+                <div class="edit_label">О себе:</div>
+                <div class="edit_input">
+                    <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
                 </div>
-                <input type="file" name="avatar" id="avatarInput" accept="image/*" hidden>
-                <input type="file" name="bg_img" id="bgInput" accept="image/*" hidden>
-                <div id="cropModal" style="display:none;">
-                    <img id="cropperImage" style="max-width:100%; max-height:70vh;">
-                    <button type="button" onclick="applyCrop()">Сохранить</button>
-                    <button type="button" onclick="closeCropper()">Отмена</button>
+            </div>
+            <div class="edit_block">
+                <div class="edit_label">VK:</div>
+                <div class="edit_input">
+                    <input type="text" name="vk" placeholder="username" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>">
                 </div>
-                <?php if ($success): ?><p>Профиль обновлён!</p><?php endif; ?>
-                <?php if ($error): ?><p><?= htmlspecialchars($error) ?></p><?php endif; ?>
-                <textarea name="bio" rows="4"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
-                <input type="text" name="vk" value="<?= htmlspecialchars($profile['vk'] ?? '') ?>" placeholder="VK">
-                <input type="text" name="tg" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>" placeholder="Telegram">
-                <input type="text" name="github" value="<?= htmlspecialchars($profile['github'] ?? '') ?>" placeholder="GitHub">
-                <button type="submit" id="save-btn">Сохранить</button>
-                <div id="upload-spinner" style="display:none;"></div>
-            </form>
-        </section>
-    </main>
+            </div>
+            <div class="edit_block">
+                <div class="edit_label">Telegram:</div>
+                <div class="edit_input">
+                    <input type="text" name="tg" placeholder="username" value="<?= htmlspecialchars($profile['tg'] ?? '') ?>">
+                </div>
+            </div>
+            <div class="edit_block">
+                <div class="edit_label">GitHub:</div>
+                <div class="edit_input">
+                    <input type="text" name="github" placeholder="username" value="<?= htmlspecialchars($profile['github'] ?? '') ?>">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button-with-spinner">
+        <button type="submit" class="error-btn" id="save-btn">Сохранить</button>
+        <div class="spinner" id="upload-spinner" style="display:none;"></div>
+    </div>
+</form>
+</section>
+</main>
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
