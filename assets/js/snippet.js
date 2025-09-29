@@ -57,6 +57,38 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
+	// Удаление из избранного на странице избранного
+	document.querySelectorAll('.btn-remove-fav').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const id = btn.dataset.id;
+			btn.disabled = true;
+			fetch('/handlers/toggle_fav.php', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ id })
+			})
+				.then(r => r.json())
+				.then(data => {
+					if (data.status === 'removed') {
+						const card = btn.closest('.snippet-card');
+						if (card) card.remove();
+						// Если карточек не осталось — показать пустое состояние без перезагрузки
+						const list = document.querySelector('.favorites-list');
+						if (list && list.children.length === 0) {
+							const empty = document.createElement('div');
+							empty.className = 'empty-favorites';
+							empty.innerHTML = '<div class="empty-favorites__icon">💤</div><h2 class="empty-favorites__title">Пусто</h2><p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p><a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>';
+							list.parentElement.replaceWith(empty);
+						}
+					} else if (data.error) {
+						alert('Ошибка: ' + data.error);
+					}
+				})
+				.catch(() => alert('Ошибка соединения с сервером'))
+				.finally(() => (btn.disabled = false));
+		});
+	});
+
 	// Iframe для превью сниппета (если есть)
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {

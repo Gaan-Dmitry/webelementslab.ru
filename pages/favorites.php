@@ -38,14 +38,22 @@ $favorites = $stmt->fetchAll();
         <section class="block-main">
             <h1>Избранное</h1>
             <?php if (empty($favorites)): ?>
-                <p>Вы ещё не добавили ни одного сниппета в избранное.</p>
+                <div class="empty-favorites">
+                    <div class="empty-favorites__icon">💤</div>
+                    <h2 class="empty-favorites__title">Пусто</h2>
+                    <p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p>
+                    <a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>
+                </div>
             <?php else: ?>
                 <div class="favorites-list">
                     <?php foreach ($favorites as $snippet): ?>
                         <div class="snippet-card">
-                            <h3><?= htmlspecialchars($snippet['name']) ?></h3>
-                            <p><?= htmlspecialchars($snippet['tag']) ?></p>
-                            <a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="reg-btn anim-hover-box-shadow">Открыть</a>
+                            <h3 class="snippet-card__title"><?= htmlspecialchars($snippet['name']) ?></h3>
+                            <span class="snippet-card__badge"><?= htmlspecialchars($snippet['tag']) ?></span>
+                            <div class="snippet-card__actions">
+                                <a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="reg-btn anim-hover-box-shadow">Открыть</a>
+                                <button class="btn-remove-fav" data-id="<?= $snippet['id'] ?>" aria-label="Удалить из избранного">✕</button>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -55,4 +63,5 @@ $favorites = $stmt->fetchAll();
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
 </body>
+<script src="/assets/js/snippet.js"></script>
 </html>

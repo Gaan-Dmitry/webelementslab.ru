@@ -73,6 +73,48 @@
 	border-radius: 10px;
 }
 
+.snippet-card__actions {
+	display: flex;
+	gap: 10px;
+	margin-top: auto;
+	align-items: center;
+}
+
+.btn-remove-fav {
+	appearance: none;
+	border: 1px solid rgba(255,255,255,0.12);
+	background: transparent;
+	color: var(--text-secondary, #b7c0ce);
+	padding: 8px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: color .18s ease, border-color .18s ease, background .18s ease;
+}
+.btn-remove-fav:hover {
+	color: #ff8b8b;
+	border-color: rgba(255, 139, 139, 0.6);
+	background: rgba(255, 139, 139, 0.08);
+}
+
+/* Пустое состояние */
+.empty-favorites {
+	max-width: 560px;
+	margin: 48px auto;
+	text-align: center;
+}
+.empty-favorites__icon {
+	font-size: 48px;
+	margin-bottom: 8px;
+}
+.empty-favorites__title {
+	margin: 0 0 6px 0;
+	font-size: 28px;
+}
+.empty-favorites__desc {
+	margin: 0 0 16px 0;
+	color: var(--text-secondary, #b7c0ce);
+}
+
 /* Пустое состояние */
 .block-main p {
 	color: var(--text-secondary, #b7c0ce);
