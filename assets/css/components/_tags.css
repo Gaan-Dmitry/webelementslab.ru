@@ -9,31 +9,26 @@
 
 .tag-pill {
 	position: relative;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.25rem;
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-	color: #f4f7ff;
-	padding: 0.35rem 0.85rem;
+	display: inline-block;
+	background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
+	color: #222;
+	padding: 0.25rem 0.8rem;
 	border-radius: var(--tag-radius);
-	font-size: 0.85rem;
-	font-weight: 600;
-	text-transform: lowercase;
-	letter-spacing: 0.02em;
-	margin: 0 0.35rem 0.35rem 0;
+	font-size: 0.95rem;
+	font-weight: 500;
+	margin: 0 0.3rem 0.3rem 0;
 	cursor: pointer;
-	box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.35);
-	transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+	box-shadow: 0 0.125rem 0.5rem rgba(255, 179, 71, 0.3),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
+	transition: all 0.3s ease;
 	white-space: nowrap;
 	overflow: hidden;
-	border: 1px solid rgba(255, 255, 255, 0.12);
+	z-index: 1;
 }
 
 .tag-pill--compact {
-	padding: 0.2rem 0.6rem;
-	font-size: 0.7rem;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
+	padding: 0.15rem 0.55rem;
+	font-size: 0.75rem;
 }
 
 /* Градиентная вспышка при наведении */
@@ -61,29 +56,33 @@
 
 /* Вариативные цвета */
 .tag-pill:nth-child(2n) {
-	background: linear-gradient(135deg, rgba(135, 224, 253, 0.35), rgba(83, 203, 241, 0.35));
-	border-color: rgba(135, 224, 253, 0.45);
+	background: linear-gradient(135deg, #87e0fd, #53cbf1);
+	box-shadow: 0 0.125rem 0.5rem rgba(135, 224, 253, 0.3),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(3n) {
-	background: linear-gradient(135deg, rgba(252, 177, 255, 0.35), rgba(180, 124, 255, 0.35));
-	border-color: rgba(180, 124, 255, 0.45);
+	background: linear-gradient(135deg, #fcb1ff, #b47cff);
+	box-shadow: 0 0.125rem 0.5rem rgba(252, 177, 255, 0.3),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(4n) {
-	background: linear-gradient(135deg, rgba(182, 255, 177, 0.35), rgba(76, 255, 124, 0.35));
-	border-color: rgba(76, 255, 124, 0.45);
+	background: linear-gradient(135deg, #b6ffb1, #4cff7c);
+	box-shadow: 0 0.125rem 0.5rem rgba(182, 255, 177, 0.3),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag-pill:nth-child(5n) {
-	background: linear-gradient(135deg, rgba(255, 214, 177, 0.35), rgba(255, 124, 76, 0.35));
-	border-color: rgba(255, 124, 76, 0.45);
+	background: linear-gradient(135deg, #ffd6b1, #ff7c4c);
+	box-shadow: 0 0.125rem 0.5rem rgba(255, 214, 177, 0.3),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Hover / Active эффекты */
 .tag-pill:hover {
-	transform: translateY(-0.15rem) scale(1.04);
-	filter: brightness(1.15) saturate(1.1);
+	transform: translateY(-0.125rem) scale(1.05);
+	filter: brightness(1.1) saturate(1.1);
 	z-index: 2;
 }
 
