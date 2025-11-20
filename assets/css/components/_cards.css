@@ -186,7 +186,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.35rem;
-	justify-content: flex-end;
+	justify-content: center;
 }
 /* 
 .snippet-card__tags .tag-pill {
@@ -203,6 +203,10 @@
 	font-weight: 600;
 	margin: 0;
 	color: #f7f9ff;
+	text-align: center;
+	min-height: 3.4rem;
+	display: flex;
+	align-items: center;
 }
 
 .snippet-card__desc {
@@ -235,7 +239,7 @@
 	border-radius: inherit;
 	background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
 	background-size: 18px 18px;
-	opacity: 0.35;
+	opacity: 0.1;
 	pointer-events: none;
 }
 
@@ -248,7 +252,7 @@
 	background: linear-gradient(120deg, rgba(124, 143, 255, 0.5), rgba(99, 255, 210, 0.3)) border-box;
 	mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
 	mask-composite: exclude;
-	opacity: 0.4;
+	opacity: 0.1;
 	pointer-events: none;
 }
 
@@ -288,7 +292,7 @@
 	color: #0a0f1a;
 	box-shadow: 0 1rem 2rem rgba(102, 140, 255, 0.35);
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+	transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
 }
 
 .snippet-card__btn:hover {
