@@ -10,7 +10,7 @@
 	position: relative;
 	width: var(--avatar-size);
 	height: var(--avatar-size);
-	margin-left: 3rem;
+	margin-left: 1rem;
 	margin-top: -6rem;
 }
 
@@ -138,12 +138,21 @@
 	}
 }
 
+/* Общий контейнер профиля */
+.block-main > .b-shadow.b-radius1.b--main-bg {
+    width: 24rem;
+    margin: 0 auto;
+    padding: 0;
+}
+
 .profile-bg {
-	position: relative;
-	aspect-ratio: 4/1;
-	overflow: hidden;
-	border-radius: 1rem 1rem 0 0;
-	background: #f0f0f0;
+    position: relative;
+    aspect-ratio: 4/1;
+    overflow: hidden;
+    border-radius: 1rem 1rem 0 0;
+    background: #f0f0f0;
+    width: 100%;
+    margin: 0;
 }
 
 .profile-avatar img {
@@ -153,11 +162,11 @@
 }
 
 .btn-profile-up{
-	min-width: 13.8rem;
+	min-width: 10rem;
 }
 
 .profile-info{
-	width: 23.75rem;
+	width: 100%;
 }
 
 .profile-info h1 {
@@ -224,4 +233,6 @@
 .block-profile-info{
 	background: var(--main-bg);
     border-radius: 0 0 1rem 1rem;
+    width: 100%;
+    padding: 1.5rem;
 }
