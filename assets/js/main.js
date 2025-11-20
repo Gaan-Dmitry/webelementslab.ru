@@ -56,27 +56,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		const primaryTag = snippet.primary_tag || tags[0] || null;
 		const extraTags = primaryTag ? tags.slice(1) : tags;
 
-		const description = snippet.description
-			? `<p class="snippet-card__desc">${escapeHtml(snippet.description)}</p>`
-			: '';
+		const descriptionText =
+			(snippet.description && snippet.description.trim() !== '' ? snippet.description : 'Описание появится совсем скоро.');
 
-		const previewText =
-			snippet.preview && snippet.preview.trim() !== ''
-				? snippet.preview
-				: 'Нет HTML-кода для предпросмотра';
+		const metaBlock =
+			primaryTag || extraTags.length
+				? `
+					<div class="snippet-card__meta">
+						${primaryTag ? `<span class="snippet-card__badge">${escapeHtml(primaryTag)}</span>` : ''}
+						${extraTags.length ? `<div class="snippet-card__tags">${renderExtraTags(extraTags)}</div>` : ''}
+					</div>
+				  `
+				: '';
 
 		card.innerHTML = `
-			<div class="snippet-card__head">
-				${primaryTag ? `<span class="snippet-card__badge">${escapeHtml(primaryTag)}</span>` : ''}
-				${extraTags.length ? `<div class="snippet-card__tags">${renderExtraTags(extraTags)}</div>` : ''}
-			</div>
 			<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
-			${description}
-			<div class="snippet-card__preview">
-				<pre><code>${escapeHtml(previewText)}</code></pre>
+			<div class="snippet-card__description">
+				<p>${escapeHtml(descriptionText)}</p>
 			</div>
+			${metaBlock}
 			<div class="snippet-card__actions">
-				<a href="/pages/card.php?id=${snippet.id}" class="reg-btn anim-hover-box-shadow">Открыть</a>
+				<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
 			</div>
 		`;
 

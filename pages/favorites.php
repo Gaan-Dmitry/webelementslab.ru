@@ -7,28 +7,11 @@ if (!isset($_SESSION['id'])) {
 	exit;
 }
 
-function buildSnippetPreview(?string $html, int $limit = 220): string
-{
-	$html = trim($html ?? '');
-
-	if ($html === '') {
-		return 'Нет HTML-кода для предпросмотра';
-	}
-
-	$normalized = preg_replace('/\s+/', ' ', $html);
-
-	if (mb_strlen($normalized) <= $limit) {
-		return $normalized;
-	}
-
-	return mb_substr($normalized, 0, $limit) . '…';
-}
-
 $user_id = $_SESSION['id'];
 
 // Получаем избранные сниппеты с дополнительными полями
 $stmt = $pdo->prepare('
-	SELECT s.id, s.name, s.tag, s.description, s.html
+	SELECT s.id, s.name, s.tag, s.description
 	FROM favorites f
 	JOIN snippets s ON s.id = f.snippet_id
 	WHERE f.user_id = ?
@@ -56,7 +39,7 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			<h1>Избранное</h1>
 			<?php if (empty($favorites)): ?>
 				<div class="empty-favorites">
-					<div class="empty-favorites__icon">💤</div>
+					<div class="empty-favorites__icon">Z-z-z-z</div>
 					<h2 class="empty-favorites__title">Пусто</h2>
 					<p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p>
 					<a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>
@@ -66,31 +49,32 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					<?php foreach ($favorites as $snippet): ?>
 						<?php
 							$tags = array_values(array_filter(array_map('trim', explode(',', $snippet['tag'] ?? ''))));
-							$preview = buildSnippetPreview($snippet['html'] ?? '');
+							$primaryTag = $tags[0] ?? null;
+							$extraTags = $primaryTag ? array_slice($tags, 1, 3) : array_slice($tags, 0, 3);
+							$descriptionText = trim($snippet['description'] ?? '') !== '' ? $snippet['description'] : 'Описание появится совсем скоро.';
 						?>
 						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>">
-							<div class="snippet-card__head">
-								<?php if (!empty($tags)): ?>
-									<span class="snippet-card__badge"><?= htmlspecialchars($tags[0]) ?></span>
-								<?php endif; ?>
-								<?php if (count($tags) > 1): ?>
-									<div class="snippet-card__tags">
-										<?php foreach (array_slice($tags, 1, 3) as $tag): ?>
-											<span class="tag-pill tag-pill--compact"><?= htmlspecialchars($tag) ?></span>
-										<?php endforeach; ?>
-									</div>
-								<?php endif; ?>
-							</div>
 							<h3 class="snippet-card__title"><?= htmlspecialchars($snippet['name']) ?></h3>
-							<?php if (!empty($snippet['description'])): ?>
-								<p class="snippet-card__desc"><?= htmlspecialchars($snippet['description']) ?></p>
-							<?php endif; ?>
-							<div class="snippet-card__preview">
-								<pre><code><?= htmlspecialchars($preview) ?></code></pre>
+							<div class="snippet-card__description">
+								<p><?= htmlspecialchars($descriptionText) ?></p>
 							</div>
+							<?php if ($primaryTag || !empty($extraTags)): ?>
+								<div class="snippet-card__meta">
+									<?php if ($primaryTag): ?>
+										<span class="snippet-card__badge"><?= htmlspecialchars($primaryTag) ?></span>
+									<?php endif; ?>
+									<?php if (!empty($extraTags)): ?>
+										<div class="snippet-card__tags">
+											<?php foreach ($extraTags as $tag): ?>
+												<span class="tag-pill tag-pill--compact"><?= htmlspecialchars($tag) ?></span>
+											<?php endforeach; ?>
+										</div>
+									<?php endif; ?>
+								</div>
+							<?php endif; ?>
 							<div class="snippet-card__actions">
-								<a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="reg-btn anim-hover-box-shadow">Открыть</a>
-								<button class="btn-remove-fav" data-id="<?= $snippet['id'] ?>" aria-label="Удалить из избранного">Удалить</button>
+								<a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="snippet-card__btn">Открыть</a>
+								<button class="btn-remove-fav snippet-card__btn snippet-card__btn--ghost" data-id="<?= $snippet['id'] ?>" aria-label="Удалить из избранного">Удалить</button>
 							</div>
 						</article>
 					<?php endforeach; ?>

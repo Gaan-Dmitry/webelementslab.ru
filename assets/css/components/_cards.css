@@ -157,13 +157,6 @@
 	opacity: 0.55;
 }
 
-.snippet-card__head {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	gap: 0.6rem;
-}
-
 .snippet-card__badge {
 	display: inline-flex;
 	align-items: center;
@@ -178,6 +171,14 @@
 	box-shadow: 0 0.65rem 1.5rem rgba(101, 140, 255, 0.5);
 	text-transform: uppercase;
 	white-space: nowrap;
+}
+
+.snippet-card__meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
 }
 
 .snippet-card__tags {
@@ -210,17 +211,16 @@
 	line-height: 1.5;
 }
 
-.snippet-card__preview {
+.snippet-card__description {
 	position: relative;
-	background: linear-gradient(135deg, rgba(32, 37, 54, 0.98), rgba(11, 13, 19, 0.95));
-	border: 1px solid rgba(99, 126, 255, 0.18);
-	border-radius: 0.95rem;
-	padding: 1rem;
-	max-height: 11rem;
-	overflow: hidden;
+	background: linear-gradient(135deg, rgba(26, 30, 48, 0.95), rgba(14, 17, 27, 0.95));
+	border: 1px solid rgba(118, 143, 255, 0.2);
+	border-radius: 1rem;
+	padding: 1.1rem;
+	min-height: 6rem;
 }
 
-.snippet-card__preview::before {
+.snippet-card__description::before {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -231,7 +231,7 @@
 	pointer-events: none;
 }
 
-.snippet-card__preview::after {
+.snippet-card__description::after {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -244,15 +244,16 @@
 	pointer-events: none;
 }
 
-.snippet-card__preview pre {
+.snippet-card__desc {
+	position: relative;
+}
+
+.snippet-card__description p {
 	position: relative;
 	margin: 0;
-	font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-	font-size: 0.84rem;
-	line-height: 1.45;
-	color: #dbe5ff;
-	white-space: pre-wrap;
-	word-break: break-word;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #dae2ff;
 }
 
 .snippet-card__actions {
@@ -263,10 +264,46 @@
 	flex-wrap: wrap;
 }
 
-.snippet-card__actions .reg-btn {
-	padding: 0.65rem 1.2rem;
-	border-radius: 0.95rem;
-	font-size: 0.92rem;
+.snippet-card__btn {
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.65rem 1.4rem;
+	border-radius: 1rem;
+	font-size: 0.9rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: linear-gradient(120deg, rgba(124, 143, 255, 0.9), rgba(99, 255, 210, 0.8));
+	color: #0a0f1a;
+	box-shadow: 0 1rem 2rem rgba(102, 140, 255, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.snippet-card__btn:hover {
+	transform: translateY(-2px) scale(1.01);
+	box-shadow: 0 1.3rem 2.4rem rgba(102, 140, 255, 0.45);
+	filter: brightness(1.08);
+}
+
+.snippet-card__btn:active {
+	transform: scale(0.97);
+	box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.45);
+}
+
+.snippet-card__btn--ghost {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+	color: #ffbfc1;
+	border: 1px solid rgba(255, 138, 155, 0.45);
+	box-shadow: 0 0.8rem 1.5rem rgba(255, 138, 155, 0.2);
+}
+
+.snippet-card__btn--ghost:hover {
+	color: #ffe3e6;
+	box-shadow: 0 1rem 1.8rem rgba(255, 138, 155, 0.3);
 }
 
 .snippets-empty {
