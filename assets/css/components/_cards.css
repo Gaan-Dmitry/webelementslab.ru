@@ -326,22 +326,4 @@
 	grid-column: 1 / -1;
 }
 
-@media (max-width: 640px) {
-	.snippets-grid {
-		grid-template-columns: 1fr;
-	}
 
-	.snippet-card {
-		padding: 1.25rem;
-	}
-}
-
-@media (max-width: 640px) {
-	.snippets-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.snippet-card {
-		padding: 1.25rem;
-	}
-}
