@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$dbname = 'u3015620_webelementslab';
-$user = 'u3015620_admin';
-$password = 'Y2G-kSe-Tfh-3wC'; 
+$dbname = 'u3299512_webelementslab';
+$user = 'u3299512_admin';
+$password = '4RP-ETj-fLm-B84'; 
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
