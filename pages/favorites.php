@@ -36,7 +36,7 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="wrapper">
 	<main>
 		<section class="block-main">
-			<h class="text-center" 1>Избранное</h>
+			<h1>Избранное</h1>
 			<?php if (empty($favorites)): ?>
 				<div class="empty-favorites">
 					<h2 class="empty-favorites__title">Пусто</h2>
