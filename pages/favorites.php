@@ -36,12 +36,12 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="wrapper">
 	<main>
 		<section class="block-main">
-			<h1>Избранное</h1>
+			<h class="text-center" 1>Избранное</h>
 			<?php if (empty($favorites)): ?>
 				<div class="empty-favorites">
-					<div class="empty-favorites__icon">Z-z-z</div>
 					<h2 class="empty-favorites__title">Пусто</h2>
 					<p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p>
+                    <br>
 					<a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>
 				</div>
 			<?php else: ?>

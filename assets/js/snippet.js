@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (list && list.children.length === 0) {
 							const empty = document.createElement('div');
 							empty.className = 'empty-favorites';
-							empty.innerHTML = '<div class="empty-favorites__icon">💤</div><h2 class="empty-favorites__title">Пусто</h2><p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p><a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>';
-							list.parentElement.replaceWith(empty);
+							empty.innerHTML = '<h2 class="empty-favorites__title">Пусто</h2><p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p><br><a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>';
+							list.replaceWith(empty);
 						}
 					} else if (data.error) {
 						alert('Ошибка: ' + data.error);
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// Iframe для превью сниппета (если есть)
+	// Iframe для превью сниппета
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {
 		const doc = iframe.contentDocument || iframe.contentWindow.document;
