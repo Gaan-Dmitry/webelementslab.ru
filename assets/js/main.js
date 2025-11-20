@@ -43,45 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const renderExtraTags = tags =>
 		tags
-			.slice(0, 3)
 			.map(tag => `<span class="tag-pill tag-pill--compact">${escapeHtml(tag)}</span>`)
 			.join('');
 
-	const createSnippetCard = snippet => {
-		const card = document.createElement('article');
-		card.className = 'snippet-card';
-		card.dataset.snippetId = snippet.id;
-
-		const tags = normalizeTags(snippet);
-		const primaryTag = snippet.primary_tag || tags[0] || null;
-		const extraTags = primaryTag ? tags.slice(1) : tags;
-
-		const descriptionText =
-			(snippet.description && snippet.description.trim() !== '' ? snippet.description : 'Описание появится совсем скоро.');
-
-		const metaBlock =
-			primaryTag || extraTags.length
-				? `
-					<div class="snippet-card__meta">
-						${primaryTag ? `<span class="snippet-card__badge">${escapeHtml(primaryTag)}</span>` : ''}
-						${extraTags.length ? `<div class="snippet-card__tags">${renderExtraTags(extraTags)}</div>` : ''}
+			const createSnippetCard = snippet => {
+				const card = document.createElement('article');
+				card.className = 'snippet-card';
+				card.dataset.snippetId = snippet.id;
+			
+				// Получаем все теги единообразно
+				const tags = normalizeTags(snippet).slice(0, 3); // максимум 3 тега
+			
+				const descriptionText =
+					(snippet.description && snippet.description.trim() !== '' ? snippet.description : 'Описание появится совсем скоро.');
+			
+				// Формируем блок мета только если есть теги
+				const metaBlock =
+					tags.length
+						? `
+							<div class="snippet-card__meta">
+								<div class="snippet-card__tags">
+									${renderExtraTags(tags)}
+								</div>
+							</div>
+						  `
+						: '';
+			
+				card.innerHTML = `
+					<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
+					<div class="snippet-card__description">
+						<p>${escapeHtml(descriptionText)}</p>
 					</div>
-				  `
-				: '';
-
-		card.innerHTML = `
-			<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
-			<div class="snippet-card__description">
-				<p>${escapeHtml(descriptionText)}</p>
-			</div>
-			${metaBlock}
-			<div class="snippet-card__actions">
-				<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
-			</div>
-		`;
-
-		return card;
-	};
+					${metaBlock}
+					<div class="snippet-card__actions">
+						<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
+					</div>
+				`;
+			
+				return card;
+			};
 
 	const showEmptyState = () => {
 		if (!list || list.dataset.emptyShown === 'true') return;
