@@ -75,3 +75,119 @@
 	font-size: var(--font-size-card-title);
 	color: #6493a7;
 }
+
+#snippets-list {
+	width: 100%;
+	max-width: 75rem;
+	margin-top: 2.5rem;
+}
+
+.snippets-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+	gap: 1.25rem;
+	width: 100%;
+}
+
+.snippet-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	background: var(--card-bg, #16181d);
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	border-radius: 1rem;
+	padding: 1.25rem;
+	box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.25);
+	transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+	min-height: 17rem;
+}
+
+.snippet-card:hover {
+	transform: translateY(-0.15rem);
+	box-shadow: 0 0.9rem 1.8rem rgba(0, 0, 0, 0.35);
+	border-color: rgba(255, 255, 255, 0.12);
+}
+
+.snippet-card__head {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.snippet-card__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	padding: 0.3rem 0.8rem;
+	border-radius: 999px;
+	background: linear-gradient(135deg, #6b8afd, #7dd6ff);
+	color: #0b1220;
+	box-shadow: 0 0.125rem 0.6rem rgba(109, 170, 255, 0.35);
+	white-space: nowrap;
+}
+
+.snippet-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	justify-content: flex-end;
+}
+
+.snippet-card__title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0;
+	color: var(--text-primary, #fff);
+}
+
+.snippet-card__desc {
+	margin: 0;
+	color: var(--text-secondary, #b7c0ce);
+	font-size: 0.9rem;
+	line-height: 1.4;
+}
+
+.snippet-card__preview {
+	background: #0f1117;
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	border-radius: 0.75rem;
+	padding: 0.9rem;
+	max-height: 10rem;
+	overflow: hidden;
+}
+
+.snippet-card__preview pre {
+	margin: 0;
+	font-family: 'JetBrains Mono', 'Fira Code', monospace;
+	font-size: 0.8rem;
+	line-height: 1.4;
+	color: #d6e1ff;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.snippet-card__actions {
+	margin-top: auto;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.snippet-card__actions .reg-btn {
+	padding: 0.6rem 1rem;
+	border-radius: 0.75rem;
+}
+
+.snippets-empty {
+	width: 100%;
+	text-align: center;
+	padding: 3rem 1rem;
+	color: var(--text-secondary, #b7c0ce);
+	grid-column: 1 / -1;
+}
