@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const shareButton = document.createElement('button');
 		shareButton.type = 'button';
 		shareButton.className = 'btn-card snippet-card__share-btn';
-		shareButton.textContent = '🔗'; // или '📤', '↗️' — на выбор
+		shareButton.textContent = '🔗'; 
 		shareButton.setAttribute('aria-label', 'Поделиться сниппетом');
 		shareButton.addEventListener('click', () => {
 			const shareUrl = `${window.location.origin}/snippet/${snippet.id}`;
