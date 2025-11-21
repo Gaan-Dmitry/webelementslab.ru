@@ -78,14 +78,14 @@
 
 #snippets-list {
 	width: 100%;
-	max-width: 75rem;
+	max-width: 85rem;
 	margin-top: 2.5rem;
 }
 
 .snippets-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
-	gap: 1.5rem;
+	grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+	gap: 0.8rem;
 	width: 100%;
 }
 
@@ -100,7 +100,6 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	line-height: 1;
 	transform-origin: center;
 	flex-direction: column;
 	will-change: transform;
@@ -137,7 +136,7 @@
 	width: 2.75rem;
 	height: 2.75rem;
 	padding: 0;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 .snippet-card__share {
@@ -153,7 +152,7 @@
 	margin: 0;
 	color: #f7f9ff;
 	text-align: center;
-	min-height: 3.4rem;
+	min-height: 5rem;
 	display: flex;
 	align-items: center;
 }
@@ -168,14 +167,13 @@
 }
 
 .snippet-card__preview{
-	flex: 1;
 	position: relative;
 	border: 0.0625rem solid transparent;
     background: linear-gradient(#373737, #373737) padding-box, linear-gradient(270deg, #4fc3f7, #ff6b6b, #4ecdc4, #45b7d1, #4fc3f7) border-box;
     background-size: 200% 200%;
     animation: animated-gradient 6s ease-in-out infinite;
-    width: 14rem;
-    height: 14rem;
+    width: 100%;
+    height: 19rem;
     display: flex;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
 }
