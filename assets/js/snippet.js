@@ -1,3 +1,38 @@
+const buildPreviewDocument = (html = '', css = '', js = '') => {
+	const safeCss = css.replace(/<\/style>/gi, '<\\/style>');
+	const safeJs = js.replace(/<\/script>/gi, '<\\/script>');
+
+	return `
+		<!DOCTYPE html>
+		<html lang="ru">
+		<head>
+			<meta charset="UTF-8" />
+			<style>
+				html, body {
+					height: 100%;
+					margin: 0;
+					padding: 0;
+					background: transparent;
+				}
+				body {
+					min-height: 100vh;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				${safeCss}
+			</style>
+		</head>
+		<body>
+			${html}
+			<script>
+				${safeJs}
+			<\/script>
+		</body>
+		</html>
+	`;
+};
+
 document.addEventListener('DOMContentLoaded', function () {
 	// Вкладки
 	document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -25,7 +60,66 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// Кнопка избранного
+	const updateFavoriteButtonState = (button, isFavorite) => {
+		button.classList.toggle('fav', isFavorite);
+		button.textContent = isFavorite ? '💖' : '🤍';
+		button.setAttribute(
+			'aria-label',
+			isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'
+		);
+	};
+
+	const showFavoritesEmptyState = () => {
+		const list = document.querySelector('.favorites-list');
+		if (list && list.children.length === 0) {
+			const empty = document.createElement('div');
+			empty.className = 'empty-favorites';
+			empty.innerHTML =
+				'<h2 class="empty-favorites__title">Пусто</h2><p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p><br><a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>';
+			list.replaceWith(empty);
+		}
+	};
+
+	const toggleFavorite = button => {
+		const snippetId = button.dataset.id;
+		if (!snippetId) return;
+
+		button.disabled = true;
+		fetch('/handlers/toggle_fav.php', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id: snippetId }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.error === 'unauthorized') {
+					window.location.href = '/pages/login.php';
+					return;
+				}
+
+				if (data.status === 'added') {
+					updateFavoriteButtonState(button, true);
+				} else if (data.status === 'removed') {
+					updateFavoriteButtonState(button, false);
+
+					if (button.dataset.removeOnUnfav === 'true') {
+						const card = button.closest('.snippet-card');
+						if (card) {
+							card.remove();
+							showFavoritesEmptyState();
+						}
+					}
+				} else if (data.error) {
+					alert('Ошибка: ' + data.error);
+				}
+			})
+			.catch(() => alert('Ошибка соединения с сервером'))
+			.finally(() => {
+				button.disabled = false;
+			});
+	};
+
+	// Кнопка избранного на странице сниппета
 	const favBtn = document.getElementById('fav-btn');
 	if (favBtn) {
 		favBtn.addEventListener('click', function () {
@@ -57,68 +151,47 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	// Удаление из избранного на странице избранного
-	document.querySelectorAll('.btn-remove-fav').forEach(btn => {
-		btn.addEventListener('click', () => {
-			const id = btn.dataset.id;
-			btn.disabled = true;
-			fetch('/handlers/toggle_fav.php', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ id })
-			})
-				.then(r => r.json())
-				.then(data => {
-					if (data.status === 'removed') {
-						const card = btn.closest('.snippet-card');
-						if (card) card.remove();
-						// Если карточек не осталось — показать пустое состояние без перезагрузки
-						const list = document.querySelector('.favorites-list');
-						if (list && list.children.length === 0) {
-							const empty = document.createElement('div');
-							empty.className = 'empty-favorites';
-							empty.innerHTML = '<h2 class="empty-favorites__title">Пусто</h2><p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p><br><a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>';
-							list.replaceWith(empty);
-						}
-					} else if (data.error) {
-						alert('Ошибка: ' + data.error);
-					}
-				})
-				.catch(() => alert('Ошибка соединения с сервером'))
-				.finally(() => (btn.disabled = false));
-		});
+	// Делегирование кликов по сердечкам на карточках
+	document.addEventListener('click', event => {
+		const button = event.target.closest('.snippet-card__favorite-btn');
+		if (!button) {
+			return;
+		}
+
+		event.preventDefault();
+		if (button.disabled) {
+			return;
+		}
+		toggleFavorite(button);
 	});
 
-	// Iframe для превью сниппета
+	// Iframe для превью сниппета на странице карточки
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {
-		const doc = iframe.contentDocument || iframe.contentWindow.document;
-		doc.open();
-		doc.write(`
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<style>
-					html, body {
-						height: 100%;
-						margin: 0;
-						padding: 0;
-					}
-					body {
-						min-height: 100vh;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-					}
-				</style>
-				<style>${window.snippetPreviewData.css}</style>
-			</head>
-			<body>
-				${window.snippetPreviewData.html}
-				<script>${window.snippetPreviewData.js}<\/script>
-			</body>
-			</html>
-		`);
-		doc.close();
+		iframe.srcdoc = buildPreviewDocument(
+			window.snippetPreviewData.html ?? '',
+			window.snippetPreviewData.css ?? '',
+			window.snippetPreviewData.js ?? ''
+		);
 	}
+
+	// Рендер превью в карточках, где данные передаются через data-атрибуты
+	document.querySelectorAll('.snippet-card__preview[data-html]').forEach(preview => {
+		if (preview.dataset.previewReady === 'true') {
+			return;
+		}
+
+		const previewIframe = preview.querySelector('iframe');
+		if (!previewIframe) {
+			return;
+		}
+
+		previewIframe.srcdoc = buildPreviewDocument(
+			preview.dataset.html || '',
+			preview.dataset.css || '',
+			preview.dataset.js || ''
+		);
+
+		preview.dataset.previewReady = 'true';
+	});
 });

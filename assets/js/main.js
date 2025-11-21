@@ -18,38 +18,138 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Лента сниппетов
 	const list = document.getElementById('snippets-list');
 
-	const escapeHtml = str =>
-		String(str ?? '')
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '<')
-			.replace(/>/g, '>')
-			.replace(/"/g, '&quot;')
-			.replace(/'/g, '&#39;');
+	const buildPreviewDocument = (snippet = {}) => {
+		const html = snippet.html ?? '';
+		const css = (snippet.css ?? '').replace(/<\/style>/gi, '<\\/style>');
+		const js = (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>');
+
+		return `
+			<!DOCTYPE html>
+			<html lang="ru">
+			<head>
+				<meta charset="UTF-8" />
+				<style>
+					html, body {
+						height: 100%;
+						margin: 0;
+						padding: 0;
+						background: transparent;
+					}
+					body {
+						min-height: 100vh;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+					${css}
+				</style>
+			</head>
+			<body>
+				${html}
+				<script>
+					${js}
+				<\/script>
+			</body>
+			</html>
+		`;
+	};
+
+	const updateFavoriteButtonState = (button, isFavorite) => {
+		button.classList.toggle('fav', isFavorite);
+		button.textContent = isFavorite ? '💖' : '🤍';
+		button.setAttribute(
+			'aria-label',
+			isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'
+		);
+	};
+
+	const toggleFavorite = button => {
+		const snippetId = button.dataset.id;
+		if (!snippetId) return;
+
+		button.disabled = true;
+		fetch('/handlers/toggle_fav.php', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id: snippetId }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.error === 'unauthorized') {
+					window.location.href = '/pages/login.php';
+					return;
+				}
+
+				if (data.status === 'added') {
+					updateFavoriteButtonState(button, true);
+				} else if (data.status === 'removed') {
+					updateFavoriteButtonState(button, false);
+				} else if (data.error) {
+					alert('Ошибка: ' + data.error);
+				}
+			})
+			.catch(() => alert('Ошибка соединения с сервером'))
+			.finally(() => {
+				button.disabled = false;
+			});
+	};
+
+	const createFavoriteButton = snippet => {
+		if (!snippet.can_favorite) {
+			return null;
+		}
+
+		const wrapper = document.createElement('div');
+		wrapper.className = 'snippet-card__favorite';
+
+		const button = document.createElement('button');
+		button.type = 'button';
+		button.className = 'btn-card snippet-card__favorite-btn';
+		button.dataset.id = snippet.id;
+		updateFavoriteButtonState(button, Boolean(snippet.is_favorite));
+		button.addEventListener('click', () => toggleFavorite(button));
+
+		wrapper.appendChild(button);
+		return wrapper;
+	};
 
 	const createSnippetCard = snippet => {
 		const card = document.createElement('article');
 		card.className = 'snippet-card';
 		card.dataset.snippetId = snippet.id;
 
-		const descriptionText = snippet.description || '';
-		const truncatedDesc = descriptionText.length > 100
-			? descriptionText.substring(0, 100) + '…'
-			: descriptionText;
+		const preview = document.createElement('div');
+		preview.className = 'snippet-card__preview';
 
-		card.innerHTML = `
-			<div class="snippet-card__preview">
-				<div class="snippet-card__favorite">
-					<!-- Кнопка "в избранное" будет добавлена позже -->
-				</div>
-			</div>
-			<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
-			<div class="snippet-card__description">
-				<p>${escapeHtml(truncatedDesc)}</p>
-			</div>
-			<div class="snippet-card__actions">
-				<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
-			</div>
-		`;
+		const iframe = document.createElement('iframe');
+		iframe.className = 'snippet-card__iframe';
+		iframe.loading = 'lazy';
+		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
+		iframe.setAttribute('aria-hidden', 'true');
+		iframe.srcdoc = buildPreviewDocument(snippet);
+
+		preview.appendChild(iframe);
+
+		const favoriteButton = createFavoriteButton(snippet);
+		if (favoriteButton) {
+			preview.appendChild(favoriteButton);
+		}
+
+		const title = document.createElement('h3');
+		title.className = 'snippet-card__title';
+		title.textContent = snippet.name ?? '';
+
+		const actions = document.createElement('div');
+		actions.className = 'snippet-card__actions';
+
+		const openLink = document.createElement('a');
+		openLink.href = `/pages/card.php?id=${snippet.id}`;
+		openLink.className = 'snippet-card__btn';
+		openLink.textContent = 'Открыть';
+
+		actions.appendChild(openLink);
+
+		card.append(preview, title, actions);
 
 		return card;
 	};

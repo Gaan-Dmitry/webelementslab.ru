@@ -11,7 +11,7 @@ $user_id = $_SESSION['id'];
 
 // Получаем избранные сниппеты с дополнительными полями
 $stmt = $pdo->prepare('
-	SELECT s.id, s.name, s.tag, s.description
+		SELECT s.id, s.name, s.tag, s.description, s.html, s.css, s.js
 	FROM favorites f
 	JOIN snippets s ON s.id = f.snippet_id
 	WHERE f.user_id = ?
@@ -51,13 +51,30 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							$tags = array_values(array_filter(array_map('trim', explode(',', $snippet['tag'] ?? ''))));
 							$primaryTag = $tags[0] ?? null;
 							$extraTags = $primaryTag ? array_slice($tags, 1, 3) : array_slice($tags, 0, 3);
-							$descriptionText = trim($snippet['description'] ?? '') !== '' ? $snippet['description'] : 'Описание появится совсем скоро.';
+							$previewHtml = htmlspecialchars($snippet['html'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+							$previewCss = htmlspecialchars($snippet['css'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+							$previewJs = htmlspecialchars($snippet['js'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 						?>
 						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>">
-							<h3 class="snippet-card__title"><?= htmlspecialchars($snippet['name']) ?></h3>
-							<div class="snippet-card__description">
-								<p><?= htmlspecialchars($descriptionText) ?></p>
+							<div class="snippet-card__preview"
+								data-html="<?= $previewHtml ?>"
+								data-css="<?= $previewCss ?>"
+								data-js="<?= $previewJs ?>">
+								<iframe
+									class="snippet-card__iframe"
+									loading="lazy"
+									aria-hidden="true"
+									title="Предпросмотр сниппета «<?= htmlspecialchars($snippet['name']) ?>»"></iframe>
+								<div class="snippet-card__favorite">
+									<button
+										type="button"
+										class="btn-card snippet-card__favorite-btn fav"
+										data-id="<?= $snippet['id'] ?>"
+										data-remove-on-unfav="true"
+										aria-label="Убрать из избранного">💖</button>
+								</div>
 							</div>
+							<h3 class="snippet-card__title"><?= htmlspecialchars($snippet['name']) ?></h3>
 							<?php if ($primaryTag || !empty($extraTags)): ?>
 								<div class="snippet-card__meta">
 									<?php if ($primaryTag): ?>
@@ -74,7 +91,6 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<?php endif; ?>
 							<div class="snippet-card__actions">
 								<a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="snippet-card__btn">Открыть</a>
-								<button class="btn-remove-fav snippet-card__btn snippet-card__btn--ghost" data-id="<?= $snippet['id'] ?>" aria-label="Удалить из избранного">Удалить</button>
 							</div>
 						</article>
 					<?php endforeach; ?>

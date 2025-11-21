@@ -49,13 +49,13 @@
     min-height: auto;
   }
   
-  .snippet-card__desc {
-    font-size: 0.8rem;
+  .snippet-card__preview {
+    min-height: 12rem;
   }
   
-  .snippet-card__description {
-    height: auto;
-    min-height: 6rem;
+  .snippet-card__favorite-btn {
+    width: 2.3rem;
+    height: 2.3rem;
   }
   
   .snippet-card__actions {
