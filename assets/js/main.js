@@ -138,21 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const title = document.createElement('h3');
 		title.className = 'snippet-card__title';
 		title.textContent = snippet.name ?? '';
-
-		const actions = document.createElement('div');
-		actions.className = 'snippet-card__actions';
-
-		const openBtn = document.createElement('button');
-		openBtn.className = 'btn-card j-c-center d-flex';
-		openBtn.style.width = '10rem';
-		openBtn.textContent = 'Открыть';
-		openBtn.addEventListener('click', () => {
-			window.location.href = `/pages/card.php?id=${encodeURIComponent(snippet.id)}`;
-		});
-
-		actions.appendChild(openBtn);
-
-		card.append(preview, title, actions);
+		
+		card.append(preview, title);
 
 		return card;
 	};

@@ -143,20 +143,6 @@
 	white-space: nowrap;
 }
 
-.snippet-card__meta {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 0.75rem;
-	flex-wrap: wrap;
-}
-
-.snippet-card__tags {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.35rem;
-	justify-content: center;
-}
 
 .snippet-card__title {
 	font-size: 1.2rem;
