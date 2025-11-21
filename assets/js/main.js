@@ -137,61 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 		const iframe = document.createElement('iframe');
 		iframe.className = 'snippet-card__iframe';
+		iframe.loading = 'lazy';
 		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
 		iframe.setAttribute('aria-hidden', 'true');
 		iframe.srcdoc = buildPreviewDocument(snippet);
 	
-		// === ИНЖЕКТ CSS ДЛЯ ЗАМОРОЗКИ/РАЗМОРОЗКИ АНИМАЦИЙ ===
-		const injectFreezeStyle = (doc, frozen = true) => {
-			let existing = doc.getElementById('__freeze-style');
-			if (existing) existing.remove();
-	
-			const style = doc.createElement('style');
-			style.id = '__freeze-style';
-			style.textContent = `
-				html, body {
-					animation-play-state: ${frozen ? 'paused' : 'running'} !important;
-					transition: none !important;
-				}
-				* {
-					animation-play-state: ${frozen ? 'paused' : 'running'} !important;
-					transition: none !important;
-					will-change: auto !important;
-				}
-			`;
-			doc.head.appendChild(style);
-		};
-	
-		const freezeIframe = () => {
-			try {
-				const doc = iframe.contentDocument || iframe.contentWindow?.document;
-				if (doc && doc.readyState === 'complete' && doc.body) {
-					injectFreezeStyle(doc, true);
-				}
-			} catch (e) {
-				console.warn('Не удалось заморозить iframe', e);
-			}
-		};
-	
-		const unfreezeIframe = () => {
-			try {
-				const doc = iframe.contentDocument || iframe.contentWindow?.document;
-				if (doc && doc.readyState === 'complete' && doc.body) {
-					injectFreezeStyle(doc, false);
-				}
-			} catch (e) {
-				console.warn('Не удалось разморозить iframe', e);
-			}
-		};
-	
-		// Замораживаем сразу после загрузки
-		iframe.addEventListener('load', () => {
-			freezeIframe();
-		});
-	
 		preview.appendChild(iframe);
 	
-		// === КНОПКИ: ИЗБРАННОЕ И ПОДЕЛИТЬСЯ ===
 		const pholder = document.createElement('div');
 		pholder.className = 'pholder';
 	
@@ -207,10 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		const shareButton = document.createElement('button');
 		shareButton.type = 'button';
 		shareButton.className = 'btn-card snippet-card__share-btn';
-		shareButton.textContent = '🔗';
+		shareButton.textContent = '🔗'; 
 		shareButton.setAttribute('aria-label', 'Поделиться сниппетом');
 		shareButton.addEventListener('click', () => {
-			const shareUrl = `${window.location.origin}/snippet/${snippet.id}`;
+			const shareUrl = `${window.location.origin}/pages/card.php?id=${snippet.id}`;
 			if (navigator.share) {
 				navigator.share({
 					title: snippet.name || 'Сниппет',
@@ -221,8 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 				});
 			} else {
+				// fallback: копирование в буфер обмена
 				navigator.clipboard.writeText(shareUrl)
-					.then(() => alert('Ссылка скопирована в буфер обмена!'))
+					.then(() => {
+						alert('Ссылка скопирована в буфер обмена!');
+					})
 					.catch(() => {
 						const tempInput = document.createElement('input');
 						tempInput.value = shareUrl;
@@ -245,10 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		title.textContent = snippet.name ?? '';
 	
 		card.append(preview, title);
-	
-		// === УПРАВЛЕНИЕ ВОСПРОИЗВЕДЕНИЕМ ПРИ НАВЕДЕНИИ ===
-		card.addEventListener('mouseenter', unfreezeIframe);
-		card.addEventListener('mouseleave', freezeIframe);
 	
 		return card;
 	};
