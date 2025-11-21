@@ -117,40 +117,54 @@ document.addEventListener('DOMContentLoaded', () => {
 		const card = document.createElement('article');
 		card.className = 'snippet-card';
 		card.dataset.snippetId = snippet.id;
-
+	
+		const descriptionText = snippet.description || '';
+		const truncatedDesc = descriptionText.length > 100
+			? descriptionText.substring(0, 100) + '…'
+			: descriptionText;
+	
+		// Создаём элементы вручную, чтобы избежать innerHTML + иметь контроль над кнопкой
 		const preview = document.createElement('div');
 		preview.className = 'snippet-card__preview';
-
-		const iframe = document.createElement('iframe');
-		iframe.className = 'snippet-card__iframe';
-		iframe.loading = 'lazy';
-		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
-		iframe.setAttribute('aria-hidden', 'true');
-		iframe.srcdoc = buildPreviewDocument(snippet);
-
-		preview.appendChild(iframe);
-
-		const favoriteButton = createFavoriteButton(snippet);
-		if (favoriteButton) {
-			preview.appendChild(favoriteButton);
-		}
-
+	
+		const favorite = document.createElement('div');
+		favorite.className = 'snippet-card__favorite';
+		// Пока пусто — место под "в избранное"
+	
+		preview.appendChild(favorite);
+	
 		const title = document.createElement('h3');
 		title.className = 'snippet-card__title';
-		title.textContent = snippet.name ?? '';
-
+		title.textContent = snippet.name; // escapeHtml применён ниже
+	
+		const desc = document.createElement('div');
+		desc.className = 'snippet-card__description';
+		const descP = document.createElement('p');
+		descP.innerHTML = escapeHtml(truncatedDesc); // безопасный вывод
+		desc.appendChild(descP);
+	
 		const actions = document.createElement('div');
 		actions.className = 'snippet-card__actions';
-
-		const openLink = document.createElement('a');
-		openLink.href = `/pages/card.php?id=${snippet.id}`;
-		openLink.className = 'snippet-card__btn';
-		openLink.textContent = 'Открыть';
-
-		actions.appendChild(openLink);
-
-		card.append(preview, title, actions);
-
+	
+		const openBtn = document.createElement('button');
+		openBtn.className = 'btn-card j-c-center d-flex';
+		openBtn.style.width = '10rem';
+		openBtn.textContent = 'Открыть';
+		openBtn.addEventListener('click', () => {
+			window.location.href = `/pages/card.php?id=${encodeURIComponent(snippet.id)}`;
+		});
+	
+		actions.appendChild(openBtn);
+	
+		// Собираем карточку
+		card.appendChild(preview);
+		card.appendChild(title);
+		card.appendChild(desc);
+		card.appendChild(actions);
+	
+		// Экранируем название вручную (так как textContent не требует escape, но на всякий случай)
+		title.textContent = snippet.name ?? '';
+	
 		return card;
 	};
 
