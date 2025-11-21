@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const html = snippet.html ?? '';
 		const css = (snippet.css ?? '').replace(/<\/style>/gi, '<\\/style>');
 		const js = (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>');
-	
+
 		return `
 			<!DOCTYPE html>
 			<html lang="ru">
@@ -40,28 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						animation-play-state: paused !important;
-					}
-					body.frozen * {
-						animation-play-state: paused !important;
-						transition: none !important;
-						will-change: auto !important;
-					}
-					body.playing * {
-						animation-play-state: running !important;
 					}
 					${css}
 				</style>
 			</head>
-			<body class="frozen">
+			<body>
 				${html}
 				<script>
-					window.__userScript = function() {
-						${js}
-					};
-					if (!document.body.classList.contains('frozen')) {
-						window.__userScript();
-					}
+					${js}
 				<\/script>
 			</body>
 			</html>
