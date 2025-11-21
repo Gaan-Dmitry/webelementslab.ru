@@ -142,12 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		const actions = document.createElement('div');
 		actions.className = 'snippet-card__actions';
 
-		const openLink = document.createElement('a');
-		openLink.href = `/pages/card.php?id=${snippet.id}`;
-		openLink.className = 'snippet-card__btn';
-		openLink.textContent = 'Открыть';
+		const openBtn = document.createElement('button');
+		openBtn.className = 'btn-card j-c-center d-flex';
+		openBtn.style.width = '10rem';
+		openBtn.textContent = 'Открыть';
+		openBtn.addEventListener('click', () => {
+			window.location.href = `/pages/card.php?id=${encodeURIComponent(snippet.id)}`;
+		});
 
-		actions.appendChild(openLink);
+		actions.appendChild(openBtn);
 
 		card.append(preview, title, actions);
 
