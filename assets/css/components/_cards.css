@@ -87,13 +87,13 @@
 	grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
 	gap: 1.5rem;
 	width: 100%;
-	position: relative;
 }
 
 .snippet-card {
 	background-color: transparent;
 	color: white;
 	padding: 0.3rem;
+	height: 100%;
 	border: 0.0625rem white solid;
 	border-radius: 0.3rem ;
 	cursor: pointer;
@@ -128,8 +128,8 @@
 
 .snippet-card__favorite {
 	position: absolute;
-	top: 0.75rem;
-	right: 0.75rem;
+	bottom: 0.75rem;
+	left: 0.75rem;
 	z-index: 2;
 }
 
@@ -138,6 +138,13 @@
 	height: 2.75rem;
 	padding: 0;
 	font-size: 1.2rem;
+}
+
+.snippet-card__share {
+	position: absolute;
+	bottom: 0.75rem;
+	right: 0.75rem;
+	z-index: 2;
 }
 
 .snippet-card__title {
@@ -161,6 +168,8 @@
 }
 
 .snippet-card__preview{
+	flex: 1;
+	position: relative;
 	border: 0.0625rem solid transparent;
     background: linear-gradient(#373737, #373737) padding-box, linear-gradient(270deg, #4fc3f7, #ff6b6b, #4ecdc4, #45b7d1, #4fc3f7) border-box;
     background-size: 200% 200%;
