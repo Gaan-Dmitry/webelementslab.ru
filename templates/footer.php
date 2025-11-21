@@ -4,7 +4,7 @@
 	</div>
 	<div class="footer-col right">
 		<a href="https://github.com/Verefer">GitHub</a>
-		<a href="/page/privacy.php">Политика конфиденциальности</a>
+		<a href="/pages/privacy.php">Политика конфиденциальности</a>
 	</div>
 
 </footer>

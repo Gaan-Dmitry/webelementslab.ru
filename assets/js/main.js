@@ -21,67 +21,38 @@ document.addEventListener('DOMContentLoaded', () => {
 	const escapeHtml = str =>
 		String(str ?? '')
 			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
+			.replace(/</g, '<')
+			.replace(/>/g, '>')
 			.replace(/"/g, '&quot;')
 			.replace(/'/g, '&#39;');
 
-	const normalizeTags = snippet => {
-		if (Array.isArray(snippet?.tags)) {
-			return snippet.tags;
-		}
+	const createSnippetCard = snippet => {
+		const card = document.createElement('article');
+		card.className = 'snippet-card';
+		card.dataset.snippetId = snippet.id;
 
-		if (typeof snippet?.tag === 'string') {
-			return snippet.tag
-				.split(',')
-				.map(tag => tag.trim())
-				.filter(Boolean);
-		}
+		const descriptionText = snippet.description || '';
+		const truncatedDesc = descriptionText.length > 100
+			? descriptionText.substring(0, 100) + '…'
+			: descriptionText;
 
-		return [];
+		card.innerHTML = `
+			<div class="snippet-card__preview">
+				<div class="snippet-card__favorite">
+					<!-- Кнопка "в избранное" будет добавлена позже -->
+				</div>
+			</div>
+			<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
+			<div class="snippet-card__description">
+				<p>${escapeHtml(truncatedDesc)}</p>
+			</div>
+			<div class="snippet-card__actions">
+				<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
+			</div>
+		`;
+
+		return card;
 	};
-
-	const renderExtraTags = tags =>
-		tags
-			.map(tag => `<span class="tag-pill tag-pill--compact">${escapeHtml(tag)}</span>`)
-			.join('');
-
-			const createSnippetCard = snippet => {
-				const card = document.createElement('article');
-				card.className = 'snippet-card';
-				card.dataset.snippetId = snippet.id;
-			
-				// Получаем все теги единообразно
-				const tags = normalizeTags(snippet).slice(0, 3); // максимум 3 тега
-			
-				const descriptionText =
-					(snippet.description && snippet.description.trim() !== '' ? snippet.description : 'Описание появится совсем скоро.');
-			
-				// Формируем блок мета только если есть теги
-				const metaBlock =
-					tags.length
-						? `
-							<div class="snippet-card__meta">
-								<div class="snippet-card__tags">
-									${renderExtraTags(tags)}
-								</div>
-							</div>
-						  `
-						: '';
-			
-				card.innerHTML = `
-					<h3 class="snippet-card__title">${escapeHtml(snippet.name)}</h3>
-					<div class="snippet-card__description">
-						<p>${escapeHtml(descriptionText)}</p>
-					</div>
-					${metaBlock}
-					<div class="snippet-card__actions">
-						<a href="/pages/card.php?id=${snippet.id}" class="snippet-card__btn">Открыть</a>
-					</div>
-				`;
-			
-				return card;
-			};
 
 	const showEmptyState = () => {
 		if (!list || list.dataset.emptyShown === 'true') return;
