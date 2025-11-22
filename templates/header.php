@@ -20,6 +20,7 @@
 		<nav class="main-nav">
 			<a href="/">Главная</a>
 			<a href="/pages/random_snippet.php">Случайный</a>
+			<a href="/pages/edit_or_create_card.php">Создать</a>
 			<a href="#">Категории</a>
 			<a href="#">Коллекции</a>
 		</nav>
