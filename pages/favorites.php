@@ -11,7 +11,7 @@ $user_id = $_SESSION['id'];
 
 // Получаем избранные сниппеты с дополнительными полями
 $stmt = $pdo->prepare('
-	SELECT s.id, s.name, s.tag, s.description, s.html, s.css, s.js
+		SELECT s.id, s.name, s.tag, s.description, s.html, s.css, s.js
 	FROM favorites f
 	JOIN snippets s ON s.id = f.snippet_id
 	WHERE f.user_id = ?
@@ -26,8 +26,8 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
 	<meta charset="UTF-8">
 	<title>Избранное — WebElementsLab</title>
-	<link rel="apple-touch-icon" href="/assets/img/logo192.png">
-	<link rel="icon" href="/assets/img/favicon.ico">
+	<link rel="apple-touch-icon" href="/assets/img/logo192.png" >
+	<link rel="icon" href="/assets/img/favicon.ico" >
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<link rel="stylesheet" href="/assets/css/pages/favorites.css">
 </head>
@@ -38,105 +38,55 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<section class="block-main">
 			<h1>Избранное</h1>
 			<?php if (empty($favorites)): ?>
-				<div class="snippets-empty">
-					<p>Новых сниппетов пока нет.</p>
+				<div class="empty-favorites">
+					<h2 class="empty-favorites__title">Пусто</h2>
+					<p class="empty-favorites__desc">Добавляйте сниппеты в избранное на странице карточки, чтобы видеть их здесь.</p>
+                    <br>
+					<a class="reg-btn anim-hover-box-shadow" href="/">Перейти к сниппетам</a>
 				</div>
 			<?php else: ?>
-				<div id="snippets-list" class="snippets-grid">
+				<div class="favorites-list snippets-grid">
 					<?php foreach ($favorites as $snippet): ?>
 						<?php
-						// Обрабатываем теги
-						$tags = array_values(array_filter(array_map('trim', explode(',', $snippet['tag'] ?? ''))));
-						$primaryTag = $tags[0] ?? null;
-						$extraTags = $primaryTag ? array_slice($tags, 1, 3) : array_slice($tags, 0, 3);
+							// Подготавливаем данные для data-атрибутов (без экранирования под HTML — snippet.js сам экранирует при вставке в srcdoc)
+							$rawHtml = $snippet['html'] ?? '';
+							$rawCss  = $snippet['css']  ?? '';
+							$rawJs   = $snippet['js']   ?? '';
 
-						// Экранируем HTML для безопасности
-						$previewHtml = htmlspecialchars($snippet['html'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-						$previewCss = htmlspecialchars($snippet['css'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-						$previewJs = htmlspecialchars($snippet['js'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-
-						// Формируем содержимое iframe (аналогично JS-функции buildPreviewDocument)
-						$iframeSrcdoc = <<<HTML
-									<!DOCTYPE html>
-									<html lang="ru">
-									<head>
-										<meta charset="UTF-8" />
-										<style>
-											html, body {
-												height: 100%;
-												margin: 0;
-												padding: 0;
-												background: transparent;
-											}
-											body {
-												min-height: 100vh;
-												display: flex;
-												justify-content: center;
-												align-items: center;
-											}
-											${previewCss}
-										</style>
-									</head>
-									<body>
-										${previewHtml}
-										<script>
-											${previewJs}
-										</script>
-									</body>
-									</html>
-									HTML;
+							// Экранируем только для безопасной вставки в HTML-атрибуты (data-*), используем ENT_QUOTES + ENT_SUBSTITUTE
+							$dataHtml = htmlspecialchars($rawHtml, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+							$dataCss  = htmlspecialchars($rawCss,  ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+							$dataJs   = htmlspecialchars($rawJs,   ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 						?>
-						<article class="snippet-card" data-snippet-id="<?= (int)$snippet['id'] ?>">
-							<div class="snippet-card__preview">
+						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>">
+							<div class="snippet-card__preview"
+								data-html="<?= $dataHtml ?>"
+								data-css="<?= $dataCss ?>"
+								data-js="<?= $dataJs ?>">
 								<iframe
 									class="snippet-card__iframe"
 									loading="lazy"
-									title="Предпросмотр сниппета «<?= htmlspecialchars($snippet['name']) ?>»"
 									aria-hidden="true"
-									srcdoc="<?= htmlspecialchars($iframeSrcdoc, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
-								></iframe>
+									title="Предпросмотр сниппета «<?= htmlspecialchars($snippet['name']) ?>»"></iframe>
 								<div class="pholder">
-									<!-- Кнопка "Избранное" -->
 									<div class="snippet-card__favorite">
 										<button
 											type="button"
 											class="btn-card snippet-card__favorite-btn fav"
-											data-id="<?= $snippet['id'] ?>"
+											data-id="<?= (int) $snippet['id'] ?>"
 											data-remove-on-unfav="true"
 											aria-label="Убрать из избранного">💖</button>
 									</div>
-
-									<!-- Кнопка "Поделиться" -->
 									<div class="snippet-card__share">
 										<button
 											type="button"
 											class="btn-card snippet-card__share-btn"
-											aria-label="Поделиться сниппетом">🔗</button>
+											aria-label="Поделиться сниппетом"
+											onclick="shareSnippet(<?= (int) $snippet['id'] ?>, <?= json_encode(htmlspecialchars($snippet['name'])) ?>)">🔗</button>
 									</div>
 								</div>
 							</div>
-
 							<h3 class="snippet-card__title"><?= htmlspecialchars($snippet['name']) ?></h3>
-
-							<?php if ($primaryTag || !empty($extraTags)): ?>
-								<div class="snippet-card__meta">
-									<?php if ($primaryTag): ?>
-										<span class="snippet-card__badge"><?= htmlspecialchars($primaryTag) ?></span>
-									<?php endif; ?>
-
-									<?php if (!empty($extraTags)): ?>
-										<div class="snippet-card__tags">
-											<?php foreach ($extraTags as $tag): ?>
-												<span class="tag-pill tag-pill--compact"><?= htmlspecialchars($tag) ?></span>
-											<?php endforeach; ?>
-										</div>
-									<?php endif; ?>
-								</div>
-							<?php endif; ?>
-
-							<div class="snippet-card__actions">
-								<a href="/pages/card.php?id=<?= $snippet['id'] ?>" class="snippet-card__btn">Открыть</a>
-							</div>
 						</article>
 					<?php endforeach; ?>
 				</div>
@@ -145,6 +95,27 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	</main>
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
+<script>
+function shareSnippet(id, name) {
+	const shareUrl = `${window.location.origin}/pages/card.php?id=${id}`;
+	if (navigator.share) {
+		navigator.share({ title: name || 'Сниппет', url: shareUrl })
+			.catch(err => { if (err.name !== 'AbortError') console.warn('Web Share error:', err); });
+	} else {
+		navigator.clipboard.writeText(shareUrl)
+			.then(() => alert('Ссылка скопирована!'))
+			.catch(() => {
+				const tmp = document.createElement('input');
+				tmp.value = shareUrl;
+				document.body.appendChild(tmp);
+				tmp.select();
+				document.execCommand('copy');
+				document.body.removeChild(tmp);
+				alert('Ссылка скопирована!');
+			});
+	}
+}
+</script>
 </body>
 <script src="/assets/js/snippet.js"></script>
 </html>
