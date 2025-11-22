@@ -19,6 +19,7 @@ session_start();
     <?php require_once __DIR__ . '/../templates/header.php'; ?>
     <div class="wrapper">
         <main class="gap1 d-flex f-d-column">
+            <section class="block-main">
         <div class="d-flex a-i-center">
             <h1>Политика конфиденциальности</h1>
         </div>
@@ -49,9 +50,10 @@ session_start();
         <h2>6. Использование файлов cookie</h2>
         <p>Сайт может использовать cookie-файлы для улучшения пользовательского опыта. Вы можете отключить cookies в настройках своего браузера.</p>
         <h2>7. Контакты</h2>
-        <p>По вопросам, связанным с данной Политикой, вы можете связаться с нами по электронной почте: <a href="mailto:verefer@a-sur.ru">verefer@a-sur.ru</a></p>
+        <p>По вопросам, связанным с данной Политикой, вы можете связаться с нами по электронной почте: <a href="mailto:gaandima55@ya.ru">admin@01000100.ru</a></p>
         <p><em>Дата последнего обновления: 22 июля 2025 г.</em></p>
         </div>
+        </section>
     </main>
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

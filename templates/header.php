@@ -44,6 +44,7 @@
 				<div class="dropdown-menu" id="profileMenu">
 					<a href="/pages/profile.php">Профиль</a>
 					<a href="/pages/settings.php">Настройки</a>
+					<a href="/pages/edit_or_create_card.php">Создать</a>
 					<a href="/pages/favorites.php">Избранное</a>
 					<a href="/pages/logout.php" class="red-link">Выход</a>
 				</div>
