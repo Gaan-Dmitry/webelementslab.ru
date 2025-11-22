@@ -138,12 +138,14 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
     </div>
     <input type="file" name="avatar" id="avatarInput" accept="image/*" hidden>
     <input type="file" name="bg_img" id="bgInput" accept="image/*" hidden>
-    <div id="cropModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center;">
-        <div style="background:#fff; padding:1rem; max-width:90vw; max-height:90vh;">
+    <div id="cropModal">
+        <div class="modal-content">
             <h3>Обрезка изображения</h3>
-            <div><img id="cropperImage" style="max-width:100%; max-height:70vh;"></div>
-            <button type="button" class="error-btn" onclick="applyCrop()">Сохранить</button>
-            <button type="button" class="error-btn red-btn" onclick="closeCropper()">Отмена</button>
+            <div><img id="cropperImage" class="round-avatar"></div>
+            <div class="modal-actions">
+                <button type="button" class="apply-btn" onclick="applyCrop()">Сохранить</button>
+                <button type="button" class="cancel-btn" onclick="closeCropper()">Отмена</button>
+            </div>
         </div>
     </div>
     <div class="er-suc">
