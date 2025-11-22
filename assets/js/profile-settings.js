@@ -1,10 +1,9 @@
-let cropper = null;
-let currentTarget = null;
+let avatarCropper = null;
+let bgCropper = null;
 let croppingInProgress = false;
 
 // Open cropper with existing image or file input
 function openCropper(type, useCurrent = false) {
-    currentTarget = type;
     const input = document.getElementById(type + 'Input');
     const imgElement = document.getElementById(type + 'Image');
     const defaultSrc = type === 'avatar' ? '/uploads/default-avatar.png' : '/uploads/default-bg.jpg';
@@ -37,37 +36,99 @@ function showCropper(src, type) {
     const modal = document.getElementById('cropModal');
     const cropImage = document.getElementById('cropperImage');
     modal.style.display = 'block';
+    
+    // Устанавливаем класс для правильного отображения аватара
+    if (type === 'avatar') {
+        cropImage.classList.add('round-avatar');
+    } else {
+        cropImage.classList.remove('round-avatar');
+    }
+    
     cropImage.src = src;
-    cropper = new Cropper(cropImage, {
-        aspectRatio: type === 'avatar' ? 1 : 4,
-        viewMode: 1,
-    });
+    
+    // Уничтожаем предыдущий кроппер, если он существует
+    if (type === 'avatar' && avatarCropper) {
+        avatarCropper.destroy();
+        avatarCropper = null;
+    } else if (type === 'bg' && bgCropper) {
+        bgCropper.destroy();
+        bgCropper = null;
+    }
+    
+    // Создаем новый кроппер в зависимости от типа
+    if (type === 'avatar') {
+        avatarCropper = new Cropper(cropImage, {
+            aspectRatio: 1,
+            viewMode: 1,
+            autoCropArea: 1,
+            responsive: true,
+            checkCrossOrigin: false,
+            zoomable: true,
+            movable: true,
+            rotatable: false,
+            scalable: false
+        });
+    } else {
+        bgCropper = new Cropper(cropImage, {
+            aspectRatio: 4,
+            viewMode: 1,
+            autoCropArea: 1,
+            responsive: true,
+            checkCrossOrigin: false,
+            zoomable: true,
+            movable: true,
+            rotatable: false,
+            scalable: false
+        });
+    }
+    
+    // Сохраняем тип текущего кроппера
+    cropImage.setAttribute('data-type', type);
     croppingInProgress = true;
 }
 
 function closeCropper() {
-    if (cropper) {
-        cropper.destroy();
-        cropper = null;
+    const cropImage = document.getElementById('cropperImage');
+    const type = cropImage.getAttribute('data-type');
+    
+    // Уничтожаем соответствующий кроппер
+    if (type === 'avatar' && avatarCropper) {
+        avatarCropper.destroy();
+        avatarCropper = null;
+    } else if (type === 'bg' && bgCropper) {
+        bgCropper.destroy();
+        bgCropper = null;
     }
+    
     document.getElementById('cropModal').style.display = 'none';
     croppingInProgress = false;
 }
 
 function applyCrop() {
-    if (!cropper || !currentTarget) return;
-    cropper.getCroppedCanvas().toBlob(blob => {
-        const file = new File([blob], currentTarget + '.png', { type: 'image/png' });
+    const cropImage = document.getElementById('cropperImage');
+    const type = cropImage.getAttribute('data-type');
+    
+    let cropperInstance = null;
+    if (type === 'avatar') {
+        cropperInstance = avatarCropper;
+    } else if (type === 'bg') {
+        cropperInstance = bgCropper;
+    }
+    
+    if (!cropperInstance) return;
+    
+    cropperInstance.getCroppedCanvas().toBlob(blob => {
+        const file = new File([blob], type + '.png', { type: 'image/png' });
         const data = new DataTransfer();
         data.items.add(file);
-        const input = document.getElementById(currentTarget + 'Input');
+        const input = document.getElementById(type + 'Input');
         input.files = data.files;
 
         const imgURL = URL.createObjectURL(blob);
-        const preview = document.getElementById(currentTarget + 'Image');
+        const preview = document.getElementById(type + 'Image');
         preview.src = imgURL;
 
-        document.getElementById('remove_' + currentTarget).value = '0';
+        document.getElementById('remove_' + type).value = '0';
 
         closeCropper();
     }, 'image/png');
