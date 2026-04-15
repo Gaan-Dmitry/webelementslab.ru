@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Лента сниппетов
 	const list = document.getElementById('snippets-list');
 
-	const buildPreviewDocument = (snippet = {}) => {
+	const buildPreviewDocument = (snippet = {}, { includeScripts = false } = {}) => {
 		const html = snippet.html ?? '';
 		const css = (snippet.css ?? '').replace(/<\/style>/gi, '<\\/style>');
-		const js = (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>');
+		const js = includeScripts
+			? (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>')
+			: '';
 
 		return `
 			<!DOCTYPE html>
