@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Лента сниппетов
 	const list = document.getElementById('snippets-list');
 
-	const buildPreviewDocument = (snippet = {}) => {
+	const buildPreviewDocument = (snippet = {}, { includeScripts = false } = {}) => {
 		const html = snippet.html ?? '';
 		const css = (snippet.css ?? '').replace(/<\/style>/gi, '<\\/style>');
-		const js = (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>');
+		const js = includeScripts
+			? (snippet.js ?? '').replace(/<\/script>/gi, '<\\/script>')
+			: '';
 
 		return `
 			<!DOCTYPE html>
@@ -46,9 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			</head>
 			<body>
 				${html}
-				<script>
-					${js}
-				<\/script>
+				${includeScripts ? `<script>${js}<\/script>` : ''}
 			</body>
 			</html>
 		`;
@@ -126,8 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		iframe.loading = 'lazy';
 		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
 		iframe.setAttribute('aria-hidden', 'true');
-		iframe.srcdoc = buildPreviewDocument(snippet);
-	
+		iframe.sandbox = 'allow-same-origin';
+		iframe.dataset.srcdoc = buildPreviewDocument(snippet, { includeScripts: false });
+
 		preview.appendChild(iframe);
 	
 		const pholder = document.createElement('div');
@@ -206,6 +207,56 @@ document.addEventListener('DOMContentLoaded', () => {
 	let offset = 0;
 	let loading = false;
 	let allLoaded = false;
+	let previewObserver;
+	let loadMoreObserver;
+
+	const hydratePreview = iframe => {
+		if (!iframe || iframe.dataset.hydrated === 'true') return;
+		iframe.srcdoc = iframe.dataset.srcdoc ?? '';
+		iframe.dataset.hydrated = 'true';
+	};
+
+	const observePreview = iframe => {
+		if (!iframe) return;
+
+		if (previewObserver) {
+			previewObserver.observe(iframe);
+			return;
+		}
+
+		hydratePreview(iframe);
+	};
+
+	const ensureObservers = () => {
+		if (!('IntersectionObserver' in window)) {
+			return;
+		}
+
+		if (!previewObserver) {
+			previewObserver = new IntersectionObserver(
+				entries => {
+					entries.forEach(entry => {
+						if (!entry.isIntersecting) return;
+						hydratePreview(entry.target);
+						previewObserver.unobserve(entry.target);
+					});
+				},
+				{
+					rootMargin: '280px 0px',
+				}
+			);
+		}
+
+		if (!loadMoreObserver) {
+			loadMoreObserver = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						loadSnippets();
+					}
+				});
+			}, { rootMargin: '600px 0px' });
+		}
+	};
 
 	const loadSnippets = () => {
 		if (!list || loading || allLoaded) return;
@@ -228,7 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 
 				data.forEach(snippet => {
-					list.appendChild(createSnippetCard(snippet));
+					const card = createSnippetCard(snippet);
+					list.appendChild(card);
+					observePreview(card.querySelector('.snippet-card__iframe'));
 				});
 
 				offset += data.length;
@@ -242,14 +295,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	if (list) {
+		ensureObservers();
 		loadSnippets();
+		if (loadMoreObserver) {
+			const sentinel = document.createElement('div');
+			sentinel.className = 'snippets-sentinel';
+			list.parentNode?.appendChild(sentinel);
+			loadMoreObserver.observe(sentinel);
+		} else {
+			window.addEventListener('scroll', () => {
+				if (allLoaded || loading) return;
 
-		window.addEventListener('scroll', () => {
-			if (allLoaded || loading) return;
-
-			if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 150) {
-				loadSnippets();
-			}
-		});
+				if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 150) {
+					loadSnippets();
+				}
+			});
+		}
 	}
 });
