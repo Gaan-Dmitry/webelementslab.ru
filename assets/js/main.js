@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			<body>
 				${html}
 				<script>
+					document.addEventListener('click', event => {
+						const link = event.target.closest('a');
+						if (link) {
+							event.preventDefault();
+						}
+					}, true);
+
 					${js}
 				<\/script>
 			</body>
@@ -107,7 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		button.className = 'btn-card snippet-card__favorite-btn';
 		button.dataset.id = snippet.id;
 		updateFavoriteButtonState(button, Boolean(snippet.is_favorite));
-		button.addEventListener('click', () => toggleFavorite(button));
+		button.addEventListener('click', event => {
+			event.stopPropagation();
+			toggleFavorite(button);
+		});
 
 		wrapper.appendChild(button);
 		return wrapper;
@@ -126,8 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		iframe.loading = 'lazy';
 		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
 		iframe.setAttribute('aria-hidden', 'true');
-		iframe.srcdoc = buildPreviewDocument(snippet);
-	
+		iframe.tabIndex = -1;
+		iframe.sandbox = 'allow-scripts';
+		iframe.dataset.srcdoc = buildPreviewDocument(snippet);
+
 		preview.appendChild(iframe);
 	
 		const pholder = document.createElement('div');
@@ -175,6 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
 					});
 			}
 		});
+		shareButton.addEventListener('click', event => {
+			event.stopPropagation();
+		});
 	
 		shareWrapper.appendChild(shareButton);
 		pholder.appendChild(shareWrapper);
@@ -184,6 +199,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		const title = document.createElement('h3');
 		title.className = 'snippet-card__title';
 		title.textContent = snippet.name ?? '';
+
+		card.tabIndex = 0;
+		card.setAttribute('role', 'link');
+		card.setAttribute('aria-label', `Открыть карточку «${snippet.name ?? ''}»`);
+		card.addEventListener('click', () => {
+			window.location.href = `/pages/card.php?id=${snippet.id}`;
+		});
+		card.addEventListener('keydown', event => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				event.preventDefault();
+				window.location.href = `/pages/card.php?id=${snippet.id}`;
+			}
+		});
 	
 		card.append(preview, title);
 	
@@ -206,6 +234,56 @@ document.addEventListener('DOMContentLoaded', () => {
 	let offset = 0;
 	let loading = false;
 	let allLoaded = false;
+	let previewObserver;
+	let loadMoreObserver;
+
+	const hydratePreview = iframe => {
+		if (!iframe || iframe.dataset.hydrated === 'true') return;
+		iframe.srcdoc = iframe.dataset.srcdoc ?? '';
+		iframe.dataset.hydrated = 'true';
+	};
+
+	const observePreview = iframe => {
+		if (!iframe) return;
+
+		if (previewObserver) {
+			previewObserver.observe(iframe);
+			return;
+		}
+
+		hydratePreview(iframe);
+	};
+
+	const ensureObservers = () => {
+		if (!('IntersectionObserver' in window)) {
+			return;
+		}
+
+		if (!previewObserver) {
+			previewObserver = new IntersectionObserver(
+				entries => {
+					entries.forEach(entry => {
+						if (!entry.isIntersecting) return;
+						hydratePreview(entry.target);
+						previewObserver.unobserve(entry.target);
+					});
+				},
+				{
+					rootMargin: '280px 0px',
+				}
+			);
+		}
+
+		if (!loadMoreObserver) {
+			loadMoreObserver = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						loadSnippets();
+					}
+				});
+			}, { rootMargin: '600px 0px' });
+		}
+	};
 
 	const loadSnippets = () => {
 		if (!list || loading || allLoaded) return;
@@ -228,7 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 
 				data.forEach(snippet => {
-					list.appendChild(createSnippetCard(snippet));
+					const card = createSnippetCard(snippet);
+					list.appendChild(card);
+					observePreview(card.querySelector('.snippet-card__iframe'));
 				});
 
 				offset += data.length;
@@ -242,14 +322,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	if (list) {
+		ensureObservers();
 		loadSnippets();
+		if (loadMoreObserver) {
+			const sentinel = document.createElement('div');
+			sentinel.className = 'snippets-sentinel';
+			list.parentNode?.appendChild(sentinel);
+			loadMoreObserver.observe(sentinel);
+		} else {
+			window.addEventListener('scroll', () => {
+				if (allLoaded || loading) return;
 
-		window.addEventListener('scroll', () => {
-			if (allLoaded || loading) return;
-
-			if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 150) {
-				loadSnippets();
-			}
-		});
+				if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 150) {
+					loadSnippets();
+				}
+			});
+		}
 	}
 });

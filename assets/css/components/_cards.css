@@ -107,6 +107,8 @@
 	backdrop-filter: blur(0.5rem);
 	position: relative;
 	overflow: hidden;
+	content-visibility: auto;
+	contain-intrinsic-size: 24rem;
 }
 
 .snippet-card:hover {
@@ -124,6 +126,12 @@
 	border: none;
 	border-radius: inherit;
 	background: #05070c;
+	pointer-events: none;
+}
+
+.snippets-sentinel {
+	width: 100%;
+	height: 1px;
 }
 
 .pholder {
