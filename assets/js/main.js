@@ -117,53 +117,50 @@ document.addEventListener('DOMContentLoaded', () => {
 		const card = document.createElement('article');
 		card.className = 'snippet-card';
 		card.dataset.snippetId = snippet.id;
-
+	
 		const preview = document.createElement('div');
 		preview.className = 'snippet-card__preview';
-
+	
 		const iframe = document.createElement('iframe');
 		iframe.className = 'snippet-card__iframe';
 		iframe.loading = 'lazy';
 		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
 		iframe.setAttribute('aria-hidden', 'true');
 		iframe.srcdoc = buildPreviewDocument(snippet);
-
+	
 		preview.appendChild(iframe);
-
+	
 		const pholder = document.createElement('div');
 		pholder.className = 'pholder';
-
+	
 		const favoriteButton = createFavoriteButton(snippet);
 		if (favoriteButton) {
 			pholder.appendChild(favoriteButton);
 		}
-
+	
 		// Кнопка "Поделиться"
 		const shareWrapper = document.createElement('div');
 		shareWrapper.className = 'snippet-card__share';
-
+	
 		const shareButton = document.createElement('button');
 		shareButton.type = 'button';
 		shareButton.className = 'btn-card snippet-card__share-btn';
-		shareButton.textContent = '🔗';
+		shareButton.textContent = '🔗'; 
 		shareButton.setAttribute('aria-label', 'Поделиться сниппетом');
 		shareButton.addEventListener('click', () => {
 			const shareUrl = `${window.location.origin}/pages/card.php?id=${snippet.id}`;
 			if (navigator.share) {
-				navigator
-					.share({
-						title: snippet.name || 'Сниппет',
-						url: shareUrl,
-					})
-					.catch(err => {
-						if (err.name !== 'AbortError') {
-							console.warn('Ошибка при использовании Web Share API:', err);
-						}
-					});
+				navigator.share({
+					title: snippet.name || 'Сниппет',
+					url: shareUrl,
+				}).catch(err => {
+					if (err.name !== 'AbortError') {
+						console.warn('Ошибка при использовании Web Share API:', err);
+					}
+				});
 			} else {
 				// fallback: копирование в буфер обмена
-				navigator.clipboard
-					.writeText(shareUrl)
+				navigator.clipboard.writeText(shareUrl)
 					.then(() => {
 						alert('Ссылка скопирована в буфер обмена!');
 					})
@@ -178,27 +175,27 @@ document.addEventListener('DOMContentLoaded', () => {
 					});
 			}
 		});
-
+	
 		shareWrapper.appendChild(shareButton);
 		pholder.appendChild(shareWrapper);
-
+	
 		preview.appendChild(pholder);
-
+	
 		const title = document.createElement('h3');
 		title.className = 'snippet-card__title';
 		title.textContent = snippet.name ?? '';
-
+	
 		card.append(preview, title);
-
+	
 		return card;
 	};
 
-	const showEmptyState = message => {
-		if (!list) return;
+	const showEmptyState = () => {
+		if (!list || list.dataset.emptyShown === 'true') return;
 		list.dataset.emptyShown = 'true';
 		const empty = document.createElement('div');
 		empty.className = 'snippets-empty';
-		empty.textContent = message;
+		empty.textContent = 'Новых сниппетов пока нет.';
 		list.appendChild(empty);
 	};
 
@@ -209,31 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	let offset = 0;
 	let loading = false;
 	let allLoaded = false;
-	let currentQuery = '';
-
-	const buildRequestUrl = () => {
-		const params = new URLSearchParams({ offset: String(offset) });
-		if (currentQuery) {
-			params.set('q', currentQuery);
-		}
-		return `/handlers/load_snippets.php?${params.toString()}`;
-	};
-
-	const resetFeedAndReload = query => {
-		if (!list) return;
-		currentQuery = query;
-		offset = 0;
-		allLoaded = false;
-		list.innerHTML = '';
-		delete list.dataset.emptyShown;
-		loadSnippets();
-	};
 
 	const loadSnippets = () => {
 		if (!list || loading || allLoaded) return;
 		loading = true;
 
-		fetch(buildRequestUrl())
+		fetch(`/handlers/load_snippets.php?offset=${offset}`)
 			.then(res => {
 				if (!res.ok) {
 					throw new Error(`Request failed with status ${res.status}`);
@@ -244,10 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (!Array.isArray(data) || data.length === 0) {
 					allLoaded = true;
 					if (!list.children.length) {
-						const message = currentQuery
-							? 'По вашему запросу ничего не найдено.'
-							: 'Новых сниппетов пока нет.';
-						showEmptyState(message);
+						showEmptyState();
 					}
 					return;
 				}
@@ -268,14 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	if (list) {
 		loadSnippets();
-
-		document.addEventListener('snippets:search', event => {
-			const nextQuery = event.detail?.query ?? '';
-			if (nextQuery === currentQuery) {
-				return;
-			}
-			resetFeedAndReload(nextQuery);
-		});
 
 		window.addEventListener('scroll', () => {
 			if (allLoaded || loading) return;
