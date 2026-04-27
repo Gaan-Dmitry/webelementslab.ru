@@ -34,13 +34,6 @@ session_start();
                 </div>
             </section>
         <?php endif; ?>
-        <div class="welcome-modal" id="greetingModal" aria-hidden="true" role="dialog" aria-labelledby="greetingTitle">
-            <div class="welcome-modal__card">
-                <button type="button" class="welcome-modal__close" id="greetingClose" aria-label="Закрыть окно">×</button>
-                <h2 id="greetingTitle">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?>!</h2>
-                <p>Добро пожаловать в WebElementsLab. Найдите нужный сниппет через поиск вверху страницы.</p>
-            </div>
-        </div>
         <div id="snippets-list"></div>
     </div>
     <?php require_once __DIR__ . '/templates/footer.php'; ?>
