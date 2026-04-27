@@ -26,6 +26,16 @@ const buildPreviewDocument = (html = '', css = '', js = '') => {
 		<body>
 			${html}
 			<script>
+				document.addEventListener('click', event => {
+					if (event.target.closest('a, button')) {
+						event.preventDefault();
+					}
+				}, true);
+				document.addEventListener('submit', event => {
+					event.preventDefault();
+				}, true);
+			<\/script>
+			<script>
 				${safeJs}
 			<\/script>
 		</body>
@@ -168,6 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Iframe для превью сниппета на странице карточки
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {
+		iframe.setAttribute('sandbox', 'allow-scripts');
+		iframe.setAttribute('referrerpolicy', 'no-referrer');
 		iframe.srcdoc = buildPreviewDocument(
 			window.snippetPreviewData.html ?? '',
 			window.snippetPreviewData.css ?? '',
@@ -186,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			return;
 		}
 
+		previewIframe.setAttribute('sandbox', 'allow-scripts');
+		previewIframe.setAttribute('referrerpolicy', 'no-referrer');
 		previewIframe.srcdoc = buildPreviewDocument(
 			preview.dataset.html || '',
 			preview.dataset.css || '',

@@ -66,6 +66,8 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<iframe
 									class="snippet-card__iframe"
 									loading="lazy"
+									sandbox="allow-scripts"
+									referrerpolicy="no-referrer"
 									aria-hidden="true"
 									title="Предпросмотр сниппета «<?= htmlspecialchars($snippet['name']) ?>»"></iframe>
 								<div class="pholder">
