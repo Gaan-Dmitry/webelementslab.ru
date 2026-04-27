@@ -2,9 +2,6 @@
 session_start();
 require_once __DIR__ . '/../includes/db.php';
 
-/**
- * Формирует короткий текстовый превью-фрагмент HTML-кода.
- */
 function buildSnippetPreview(?string $html, int $limit = 220): string
 {
 	$html = trim($html ?? '');
@@ -22,12 +19,23 @@ function buildSnippetPreview(?string $html, int $limit = 220): string
 	return mb_substr($normalized, 0, $limit) . '…';
 }
 
-$offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+$offset = isset($_GET['offset']) ? max((int) $_GET['offset'], 0) : 0;
 $limit = 10;
+$query = trim($_GET['q'] ?? '');
+$like = '%' . $query . '%';
 
-$stmt = $pdo->prepare("SELECT id, name, tag, description, html, css, js FROM snippets ORDER BY created_at DESC LIMIT ? OFFSET ?");
-$stmt->bindValue(1, $limit, PDO::PARAM_INT);
-$stmt->bindValue(2, $offset, PDO::PARAM_INT);
+$stmt = $pdo->prepare(
+	"SELECT id, name, tag, description, html, css, js
+	 FROM snippets
+	 WHERE (? = '' OR name LIKE ? OR tag LIKE ?)
+	 ORDER BY created_at DESC
+	 LIMIT ? OFFSET ?"
+);
+$stmt->bindValue(1, $query, PDO::PARAM_STR);
+$stmt->bindValue(2, $like, PDO::PARAM_STR);
+$stmt->bindValue(3, $like, PDO::PARAM_STR);
+$stmt->bindValue(4, $limit, PDO::PARAM_INT);
+$stmt->bindValue(5, $offset, PDO::PARAM_INT);
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

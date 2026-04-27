@@ -19,7 +19,6 @@ session_start();
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
     <meta property="og:url" content="https://webelementslab.ru/">
     <meta property="og:type" content="website">
-
 </head>
 <body>
     <?php require_once __DIR__ . '/templates/header.php'; ?>
@@ -35,10 +34,14 @@ session_start();
                 </div>
             </section>
         <?php endif; ?>
-         <h1 class="ldp-admin-title">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?></h1>
-        <!-- Лента карточек -->
+        <div class="welcome-modal" id="greetingModal" aria-hidden="true" role="dialog" aria-labelledby="greetingTitle">
+            <div class="welcome-modal__card">
+                <button type="button" class="welcome-modal__close" id="greetingClose" aria-label="Закрыть окно">×</button>
+                <h2 id="greetingTitle">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?>!</h2>
+                <p>Добро пожаловать в WebElementsLab. Найдите нужный сниппет через поиск вверху страницы.</p>
+            </div>
+        </div>
         <div id="snippets-list"></div>
-        <!-- JS вынесен в assets/js/main.js -->
     </div>
     <?php require_once __DIR__ . '/templates/footer.php'; ?>
     <script src="/assets/js/main.js" defer></script>
