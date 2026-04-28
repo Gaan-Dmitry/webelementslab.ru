@@ -253,10 +253,13 @@
 /* Адаптация для темного/светлого режима */
 @media (prefers-color-scheme: light) {
   :root {
-    --main-bg: #f5f5f5;
-    --layot-bg: #e0e0e0;
-    --main-color: #333;
-    --text-color: #333;
+    --main-bg: #fff7ee;
+    --layot-bg: #f2e1cf;
+    --layout-bg: #f2e1cf;
+    --main-color: #3a2719;
+    --accent: #bf6f31;
+    --accent-hover: #d98948;
+    --text-color: #3a2719;
   }
 }
 
