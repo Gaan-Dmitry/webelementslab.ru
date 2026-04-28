@@ -8,20 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	const root = document.documentElement;
 
 	const applyTheme = theme => {
-		const isLight = theme === 'light';
-		root.setAttribute('data-theme', isLight ? 'light' : 'dark');
-		toggleButton.textContent = isLight ? '🌙 Тёмная тема' : '☀️ Светлая тема';
-		toggleButton.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+		const isDarker = theme === 'darker';
+		root.setAttribute('data-theme', isDarker ? 'darker' : 'dark');
+		toggleButton.textContent = isDarker ? '🌘 Тёмная тема' : '🌑 Ещё темнее';
+		toggleButton.setAttribute('aria-pressed', isDarker ? 'true' : 'false');
 	};
 
 	const savedTheme = localStorage.getItem(storageKey);
-	if (savedTheme === 'light' || savedTheme === 'dark') {
+	if (savedTheme === 'darker' || savedTheme === 'dark') {
 		applyTheme(savedTheme);
+	} else if (savedTheme === 'light') {
+		applyTheme('dark');
 	}
 
 	toggleButton.addEventListener('click', () => {
-		const currentTheme = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-		const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+		const currentTheme = root.getAttribute('data-theme') === 'darker' ? 'darker' : 'dark';
+		const nextTheme = currentTheme === 'darker' ? 'dark' : 'darker';
 		applyTheme(nextTheme);
 		localStorage.setItem(storageKey, nextTheme);
 	});

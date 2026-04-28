@@ -41,6 +41,8 @@
 }
 
 .theme-toggle-btn {
+	display: inline-flex;
+	align-items: center;
 	background: transparent;
 	color: var(--text-color);
 	border: 1px solid var(--accent);

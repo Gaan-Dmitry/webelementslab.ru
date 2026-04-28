@@ -5,7 +5,7 @@
 	<div class="footer-col right">
 		<a href="https://github.com/4gdv5fg1qq">GitHub</a>
 		<a href="/pages/privacy.php">Политика конфиденциальности</a>
-		<button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-pressed="false">☀️ Светлая тема</button>
+		<button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-pressed="false">🌑 Ещё темнее</button>
 	</div>
 
 </footer>

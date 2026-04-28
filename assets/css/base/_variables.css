@@ -1,24 +1,24 @@
 /* Цвета, шрифты, переменные */
 :root {
-	--main-bg: #2b1f1a;
-	--layot-bg: #3a2a23;
-	--layout-bg: #3a2a23;
-	--main-color: #f3e5d5;
-	--accent: #e09f5b;
-	--accent-hover: #f2b880;
+	--main-bg: #1d1a18;
+	--layot-bg: #292320;
+	--layout-bg: #292320;
+	--main-color: #f2e9df;
+	--accent: #c18a5b;
+	--accent-hover: #d9a476;
 	--error: #f44336;
 	--success: #4caf50;
-	--text-color: #f8efe6;
+	--text-color: #f4ece4;
 }
 
-html[data-theme='light'] {
-	--main-bg: #fff7ee;
-	--layot-bg: #f2e1cf;
-	--layout-bg: #f2e1cf;
-	--main-color: #3a2719;
-	--accent: #bf6f31;
-	--accent-hover: #d98948;
-	--text-color: #3a2719;
+html[data-theme='darker'] {
+	--main-bg: #0f0d0c;
+	--layot-bg: #171412;
+	--layout-bg: #171412;
+	--main-color: #f6eee6;
+	--accent: #b67a48;
+	--accent-hover: #cb9467;
+	--text-color: #f7f0e8;
 }
 body {
 	font-family: 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
