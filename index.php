@@ -13,7 +13,7 @@ session_start();
     <meta name="keywords" content="HTML, CSS, JS, сниппеты, UI, веб-разработка, компоненты, примеры, шаблоны, frontend, элементы, дизайн, код, WebElementsLab">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title>WebElementsLab — лучшие HTML, CSS и JS сниппеты для веб-разработчиков</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
     <meta property="og:title" content="WebElementsLab — лучшие сниппеты и UI-элементы для веба">
     <meta property="og:description" content="Библиотека сниппетов, UI и компонентов для современных сайтов. Быстрое внедрение, удобный поиск, свежие решения для разработчиков.">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
@@ -34,13 +34,6 @@ session_start();
                 </div>
             </section>
         <?php endif; ?>
-        <div class="welcome-modal" id="greetingModal" aria-hidden="true" role="dialog" aria-labelledby="greetingTitle">
-            <div class="welcome-modal__card">
-                <button type="button" class="welcome-modal__close" id="greetingClose" aria-label="Закрыть окно">×</button>
-                <h2 id="greetingTitle">Здравствуйте, <?= htmlspecialchars($_SESSION['username'] ?? 'Гость') ?>!</h2>
-                <p>Добро пожаловать в WebElementsLab. Найдите нужный сниппет через поиск вверху страницы.</p>
-            </div>
-        </div>
         <div id="snippets-list"></div>
     </div>
     <?php require_once __DIR__ . '/templates/footer.php'; ?>

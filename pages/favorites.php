@@ -25,11 +25,12 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Избранное — WebElementsLab</title>
 	<link rel="apple-touch-icon" href="/assets/img/logo192.png" >
 	<link rel="icon" href="/assets/img/favicon.ico" >
-	<link rel="stylesheet" href="/assets/css/style.css">
-	<link rel="stylesheet" href="/assets/css/pages/favorites.css">
+	<link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+	<link rel="stylesheet" href="/assets/css/pages/favorites.css?v=<?= filemtime(__DIR__ . '/../assets/css/pages/favorites.css') ?>">
 </head>
 <body>
 <?php require_once __DIR__ . '/../templates/header.php'; ?>
@@ -58,7 +59,7 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							$dataCss  = htmlspecialchars($rawCss,  ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 							$dataJs   = htmlspecialchars($rawJs,   ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 						?>
-						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>">
+						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>" data-href="/pages/card.php?id=<?= (int) $snippet['id'] ?>" tabindex="0" role="link">
 							<div class="snippet-card__preview"
 								data-html="<?= $dataHtml ?>"
 								data-css="<?= $dataCss ?>"
@@ -66,6 +67,8 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<iframe
 									class="snippet-card__iframe"
 									loading="lazy"
+									sandbox="allow-scripts"
+									referrerpolicy="no-referrer"
 									aria-hidden="true"
 									title="Предпросмотр сниппета «<?= htmlspecialchars($snippet['name']) ?>»"></iframe>
 								<div class="pholder">

@@ -38,7 +38,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
     <meta name="keywords" content="<?= htmlspecialchars($snippet['tag']) ?>, HTML, CSS, JS, сниппет, WebElementsLab, код, пример, компонент">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title><?= htmlspecialchars($snippet['name']) ?> — сниппет от <?= htmlspecialchars($snippet['username']) ?> | WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
     <meta property="og:title" content="<?= htmlspecialchars($snippet['name']) ?> — сниппет для веба">
     <meta property="og:description" content="<?= htmlspecialchars($snippet['description'] ?? $snippet['name']) ?>">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
@@ -73,7 +73,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
             <!-- Preview -->
             <div class="left-card-page d-flex gap1 f-d-column">
                 <div class="block-element d-flex j-c-center a-i-center">
-                    <iframe id="snippet-frame" style="width:100%;min-height:200px;border:none;"></iframe>
+                    <iframe id="snippet-frame" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:200px;border:none;"></iframe>
                 </div>
                 <div class="tags d-flex gap05 wrap f-d-column gap1">
                 <?php if (isset($_SESSION['username'])): ?>
