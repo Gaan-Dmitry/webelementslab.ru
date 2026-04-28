@@ -58,7 +58,7 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							$dataCss  = htmlspecialchars($rawCss,  ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 							$dataJs   = htmlspecialchars($rawJs,   ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 						?>
-						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>">
+						<article class="snippet-card" data-snippet-id="<?= (int) $snippet['id'] ?>" data-href="/pages/card.php?id=<?= (int) $snippet['id'] ?>" tabindex="0" role="link">
 							<div class="snippet-card__preview"
 								data-html="<?= $dataHtml ?>"
 								data-css="<?= $dataCss ?>"

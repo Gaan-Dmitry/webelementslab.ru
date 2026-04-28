@@ -122,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		const card = document.createElement('article');
 		card.className = 'snippet-card';
 		card.dataset.snippetId = snippet.id;
+		card.dataset.href = `/pages/card.php?id=${snippet.id}`;
+		card.tabIndex = 0;
+		card.setAttribute('role', 'link');
 
 		const preview = document.createElement('div');
 		preview.className = 'snippet-card__preview';
@@ -133,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		iframe.setAttribute('aria-hidden', 'true');
 		iframe.setAttribute('sandbox', 'allow-scripts');
 		iframe.setAttribute('referrerpolicy', 'no-referrer');
+		iframe.style.pointerEvents = 'none';
 		iframe.srcdoc = buildPreviewDocument(snippet);
 
 		preview.appendChild(iframe);
@@ -253,6 +257,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	if (list) {
 		loadSnippets();
+
+		const canOpenSnippetCard = event =>
+			!event.target.closest('button, a, input, textarea, select, label, .pholder');
+
+		list.addEventListener('click', event => {
+			const card = event.target.closest('.snippet-card[data-href]');
+			if (!card || !canOpenSnippetCard(event)) {
+				return;
+			}
+
+			window.location.href = card.dataset.href;
+		});
+
+		list.addEventListener('keydown', event => {
+			if (event.key !== 'Enter' && event.key !== ' ') {
+				return;
+			}
+
+			const card = event.target.closest('.snippet-card[data-href]');
+			if (!card) {
+				return;
+			}
+
+			event.preventDefault();
+			window.location.href = card.dataset.href;
+		});
 
 		window.addEventListener('scroll', () => {
 			if (allLoaded || loading) return;

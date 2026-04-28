@@ -175,6 +175,32 @@ document.addEventListener('DOMContentLoaded', function () {
 		toggleFavorite(button);
 	});
 
+	const canOpenSnippetCard = event =>
+		!event.target.closest('button, a, input, textarea, select, label, .pholder');
+
+	document.addEventListener('click', event => {
+		const card = event.target.closest('.snippet-card[data-href]');
+		if (!card || !canOpenSnippetCard(event)) {
+			return;
+		}
+
+		window.location.href = card.dataset.href;
+	});
+
+	document.addEventListener('keydown', event => {
+		if (event.key !== 'Enter' && event.key !== ' ') {
+			return;
+		}
+
+		const card = event.target.closest('.snippet-card[data-href]');
+		if (!card) {
+			return;
+		}
+
+		event.preventDefault();
+		window.location.href = card.dataset.href;
+	});
+
 	// Iframe для превью сниппета на странице карточки
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {
@@ -200,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		previewIframe.setAttribute('sandbox', 'allow-scripts');
 		previewIframe.setAttribute('referrerpolicy', 'no-referrer');
+		previewIframe.style.pointerEvents = 'none';
 		previewIframe.srcdoc = buildPreviewDocument(
 			preview.dataset.html || '',
 			preview.dataset.css || '',
