@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       content="Регистрация">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title>Регистрация | WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
 </head>
 <body>
 <div class="wrapper">

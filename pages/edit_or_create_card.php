@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="noindex, nofollow">
     <title><?= $editing ? 'Редактировать' : 'Создать' ?> карточку | WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 </head>
 <body>
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="f-d-row d-flex gap1">
                 <div class="left-card-page d-flex gap1 f-d-column">
                     <div class="block-element d-flex j-c-center a-i-center">
-                        <iframe id="snippet-frame" style="width:100%;min-height:200px;border:none;"></iframe>
+                        <iframe id="snippet-frame" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:200px;border:none;"></iframe>
                     </div>
                     <?php if ($error): ?>
                         <div class="form-error" style="color:red;"> <?= htmlspecialchars($error) ?> </div>
@@ -152,10 +152,9 @@ window.addEventListener('DOMContentLoaded', function () {
         const js = document.getElementById('js-input').value;
         const iframe = document.getElementById('snippet-frame');
         if (iframe) {
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(`<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`);
-            doc.close();
+            const safeCss = css.replace(/<\/style>/gi, '<\\/style>');
+            const safeJs = js.replace(/<\/script>/gi, '<\\/script>');
+            iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${safeCss}</style></head><body>${html}<script>document.addEventListener('click',event=>{if(event.target.closest('a, button')){event.preventDefault();}},true);document.addEventListener('submit',event=>event.preventDefault(),true);<\/script><script>${safeJs}<\/script></body></html>`;
         }
     }
     updatePreview();

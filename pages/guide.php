@@ -13,7 +13,7 @@ session_start();
     <meta name="keywords" content="CSS, JS, подключение, инструкция, гайд, WebElementsLab, frontend, скрипты, стили, best practices">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title>Гайд: как подключать CSS и JS | WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
     <meta property="og:title" content="Гайд: как подключать CSS и JS">
     <meta property="og:description" content="Подробная инструкция по подключению стилей и скриптов в HTML. Внутренние и внешние способы, советы и примеры.">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
