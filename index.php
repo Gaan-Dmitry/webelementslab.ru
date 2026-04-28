@@ -13,7 +13,7 @@ session_start();
     <meta name="keywords" content="HTML, CSS, JS, сниппеты, UI, веб-разработка, компоненты, примеры, шаблоны, frontend, элементы, дизайн, код, WebElementsLab">
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" >
     <title>WebElementsLab — лучшие HTML, CSS и JS сниппеты для веб-разработчиков</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
     <meta property="og:title" content="WebElementsLab — лучшие сниппеты и UI-элементы для веба">
     <meta property="og:description" content="Библиотека сниппетов, UI и компонентов для современных сайтов. Быстрое внедрение, удобный поиск, свежие решения для разработчиков.">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">

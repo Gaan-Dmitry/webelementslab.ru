@@ -103,8 +103,8 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
     <title>Настройки профиля — WebElementsLab</title>
     <link rel="apple-touch-icon" href="/uploads/logo192.png">
     <link rel="icon" href="/assets/img/favicon.ico">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/pages/settings.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+    <link rel="stylesheet" href="/assets/css/pages/settings.css?v=<?= filemtime(__DIR__ . '/../assets/css/pages/settings.css') ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css">
 </head>
 <body>

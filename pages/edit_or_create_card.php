@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="noindex, nofollow">
     <title><?= $editing ? 'Редактировать' : 'Создать' ?> карточку | WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 </head>
 <body>

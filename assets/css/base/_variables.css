@@ -4,8 +4,8 @@
 	--layot-bg: #292320;
 	--layout-bg: #292320;
 	--main-color: #f2e9df;
-	--accent: #c18a5b;
-	--accent-hover: #d9a476;
+	--accent: #77a8d9;
+	--accent-hover: #9bc3ea;
 	--error: #f44336;
 	--success: #4caf50;
 	--text-color: #f4ece4;
@@ -16,8 +16,8 @@ html[data-theme='darker'] {
 	--layot-bg: #171412;
 	--layout-bg: #171412;
 	--main-color: #f6eee6;
-	--accent: #b67a48;
-	--accent-hover: #cb9467;
+	--accent: #5f8fbe;
+	--accent-hover: #84afd9;
 	--text-color: #f7f0e8;
 }
 body {
