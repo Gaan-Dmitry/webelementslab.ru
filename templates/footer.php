@@ -10,3 +10,4 @@
 
 </footer>
 <script src="/assets/js/theme-toggle.js" defer></script>
+<script src="/assets/js/desktop-only.js" defer></script>
