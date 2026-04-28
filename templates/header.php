@@ -24,17 +24,6 @@
 		</nav>
 	</div>
 	<div class="nav-right">
-        <button id="searchToggle" class="search-btn" aria-label="Открыть поиск" aria-expanded="false" aria-controls="searchDropdown">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            </button>
-
-            <div id="searchDropdown" class="search-dropdown" aria-hidden="true">
-            <input type="text" id="searchInput" placeholder="Поиск по названию и тегам..." autocomplete="off" />
-            </div>
-
 		<?php if (isset($_SESSION['username'])): ?>
 			<div class="profile-menu-wrapper" id="profileWrapper">
 				<span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
@@ -53,5 +42,4 @@
 		<?php endif; ?>
 	</div>
 </header>
-<script src="/assets/js/search-dropdown.js"></script>
 <script src="/assets/js/profile-header.js"></script>
