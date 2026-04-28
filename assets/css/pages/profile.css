@@ -227,3 +227,54 @@
 	background: var(--main-bg);
     border-radius: 0 0 1rem 1rem;
 }
+
+@media (max-width: 900px) {
+	.block-profile-info {
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.profile-avatar {
+		margin: -4.5rem auto 0;
+	}
+
+	.profile-info {
+		width: 100%;
+		max-width: 32rem;
+		text-align: center;
+	}
+
+	.profile-socials {
+		justify-content: center;
+	}
+
+	.btn-profile-up {
+		min-width: 0;
+		width: 100%;
+		max-width: 20rem;
+	}
+}
+
+@media (max-width: 600px) {
+	:root {
+		--avatar-size: 8.8rem;
+	}
+
+	.profile-bg {
+		aspect-ratio: 2.3/1;
+	}
+
+	.profile-info h1 {
+		font-size: 1.35rem;
+	}
+
+	.profile-bio {
+		font-size: 0.95rem;
+	}
+
+	.btn-profile-up .error-btn {
+		width: 100%;
+	}
+}

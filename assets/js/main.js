@@ -1,32 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const greetingModal = document.getElementById('greetingModal');
-	const greetingClose = document.getElementById('greetingClose');
-
-	if (greetingModal && greetingClose) {
-		const closeGreetingModal = () => {
-			greetingModal.classList.remove('is-open');
-			greetingModal.setAttribute('aria-hidden', 'true');
-		};
-
-		requestAnimationFrame(() => {
-			greetingModal.classList.add('is-open');
-			greetingModal.setAttribute('aria-hidden', 'false');
-		});
-
-		greetingClose.addEventListener('click', closeGreetingModal);
-		greetingModal.addEventListener('click', event => {
-			if (event.target === greetingModal) {
-				closeGreetingModal();
-			}
-		});
-
-		document.addEventListener('keydown', event => {
-			if (event.key === 'Escape') {
-				closeGreetingModal();
-			}
-		});
-	}
-
 	const subBtn = document.getElementById('sub-btn');
 	const subInput = document.getElementById('subcribeemail');
 
@@ -72,6 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			</head>
 			<body>
 				${html}
+				<script>
+					document.addEventListener('click', event => {
+						if (event.target.closest('a, button')) {
+							event.preventDefault();
+						}
+					}, true);
+					document.addEventListener('submit', event => {
+						event.preventDefault();
+					}, true);
+				<\/script>
 				<script>
 					${js}
 				<\/script>
@@ -140,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		const card = document.createElement('article');
 		card.className = 'snippet-card';
 		card.dataset.snippetId = snippet.id;
+		card.dataset.href = `/pages/card.php?id=${snippet.id}`;
+		card.tabIndex = 0;
+		card.setAttribute('role', 'link');
 
 		const preview = document.createElement('div');
 		preview.className = 'snippet-card__preview';
@@ -149,6 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		iframe.loading = 'lazy';
 		iframe.title = `Предпросмотр сниппета «${snippet.name}»`;
 		iframe.setAttribute('aria-hidden', 'true');
+		iframe.setAttribute('sandbox', 'allow-scripts');
+		iframe.setAttribute('referrerpolicy', 'no-referrer');
+		iframe.style.pointerEvents = 'none';
 		iframe.srcdoc = buildPreviewDocument(snippet);
 
 		preview.appendChild(iframe);
@@ -230,25 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	let offset = 0;
 	let loading = false;
 	let allLoaded = false;
-	let currentQuery = '';
 
-	const buildRequestUrl = () => {
-		const params = new URLSearchParams({ offset: String(offset) });
-		if (currentQuery) {
-			params.set('q', currentQuery);
-		}
-		return `/handlers/load_snippets.php?${params.toString()}`;
-	};
-
-	const resetFeedAndReload = query => {
-		if (!list) return;
-		currentQuery = query;
-		offset = 0;
-		allLoaded = false;
-		list.innerHTML = '';
-		delete list.dataset.emptyShown;
-		loadSnippets();
-	};
+	const buildRequestUrl = () => `/handlers/load_snippets.php?offset=${offset}`;
 
 	const loadSnippets = () => {
 		if (!list || loading || allLoaded) return;
@@ -265,10 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (!Array.isArray(data) || data.length === 0) {
 					allLoaded = true;
 					if (!list.children.length) {
-						const message = currentQuery
-							? 'По вашему запросу ничего не найдено.'
-							: 'Новых сниппетов пока нет.';
-						showEmptyState(message);
+						showEmptyState('Новых сниппетов пока нет.');
 					}
 					return;
 				}
@@ -290,12 +258,30 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (list) {
 		loadSnippets();
 
-		document.addEventListener('snippets:search', event => {
-			const nextQuery = event.detail?.query ?? '';
-			if (nextQuery === currentQuery) {
+		const canOpenSnippetCard = event =>
+			!event.target.closest('button, a, input, textarea, select, label, .pholder');
+
+		list.addEventListener('click', event => {
+			const card = event.target.closest('.snippet-card[data-href]');
+			if (!card || !canOpenSnippetCard(event)) {
 				return;
 			}
-			resetFeedAndReload(nextQuery);
+
+			window.location.href = card.dataset.href;
+		});
+
+		list.addEventListener('keydown', event => {
+			if (event.key !== 'Enter' && event.key !== ' ') {
+				return;
+			}
+
+			const card = event.target.closest('.snippet-card[data-href]');
+			if (!card) {
+				return;
+			}
+
+			event.preventDefault();
+			window.location.href = card.dataset.href;
 		});
 
 		window.addEventListener('scroll', () => {

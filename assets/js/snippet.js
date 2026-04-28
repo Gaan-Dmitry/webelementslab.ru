@@ -26,6 +26,16 @@ const buildPreviewDocument = (html = '', css = '', js = '') => {
 		<body>
 			${html}
 			<script>
+				document.addEventListener('click', event => {
+					if (event.target.closest('a, button')) {
+						event.preventDefault();
+					}
+				}, true);
+				document.addEventListener('submit', event => {
+					event.preventDefault();
+				}, true);
+			<\/script>
+			<script>
 				${safeJs}
 			<\/script>
 		</body>
@@ -165,9 +175,37 @@ document.addEventListener('DOMContentLoaded', function () {
 		toggleFavorite(button);
 	});
 
+	const canOpenSnippetCard = event =>
+		!event.target.closest('button, a, input, textarea, select, label, .pholder');
+
+	document.addEventListener('click', event => {
+		const card = event.target.closest('.snippet-card[data-href]');
+		if (!card || !canOpenSnippetCard(event)) {
+			return;
+		}
+
+		window.location.href = card.dataset.href;
+	});
+
+	document.addEventListener('keydown', event => {
+		if (event.key !== 'Enter' && event.key !== ' ') {
+			return;
+		}
+
+		const card = event.target.closest('.snippet-card[data-href]');
+		if (!card) {
+			return;
+		}
+
+		event.preventDefault();
+		window.location.href = card.dataset.href;
+	});
+
 	// Iframe для превью сниппета на странице карточки
 	const iframe = document.getElementById('snippet-frame');
 	if (iframe && window.snippetPreviewData) {
+		iframe.setAttribute('sandbox', 'allow-scripts');
+		iframe.setAttribute('referrerpolicy', 'no-referrer');
 		iframe.srcdoc = buildPreviewDocument(
 			window.snippetPreviewData.html ?? '',
 			window.snippetPreviewData.css ?? '',
@@ -186,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			return;
 		}
 
+		previewIframe.setAttribute('sandbox', 'allow-scripts');
+		previewIframe.setAttribute('referrerpolicy', 'no-referrer');
+		previewIframe.style.pointerEvents = 'none';
 		previewIframe.srcdoc = buildPreviewDocument(
 			preview.dataset.html || '',
 			preview.dataset.css || '',
