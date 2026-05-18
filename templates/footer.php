@@ -1,13 +1,14 @@
 <footer class="footer">
-	<div class="footer-col left">
-		<p>&copy; <?= date('Y'); ?> Все права защищены.</p>
-	</div>
-	<div class="footer-col right">
-		<a href="https://github.com/4gdv5fg1qq">GitHub</a>
-		<a href="/pages/privacy.php">Политика конфиденциальности</a>
-		<button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-pressed="false">🌑 Ещё темнее</button>
-	</div>
+<div class="footer-col left">
+<p>&copy; <?= date('Y'); ?> Все права защищены.</p>
+</div>
+<div class="footer-col center">
+<p>Данный сайт был разработан Анастасией Леоненко</p>
+</div>
+<div class="footer-col right">
+<a href="https://github.com/4gdv5fg1qq">GitHub</a>
+<a href="/pages/privacy.php">Политика конфиденциальности</a>
+</div>
 
 </footer>
-<script src="/assets/js/theme-toggle.js" defer></script>
 <script src="/assets/js/desktop-only.js" defer></script>

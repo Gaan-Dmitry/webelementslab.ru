@@ -40,21 +40,16 @@
 	font-size: 1rem;
 }
 
-.theme-toggle-btn {
-	display: inline-flex;
-	align-items: center;
-	background: transparent;
-	color: var(--text-color);
-	border: 1px solid var(--accent);
-	border-radius: 999px;
-	padding: 0.4rem 0.8rem;
-	cursor: pointer;
-	opacity: 0.9;
-	transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+.footer-col.center {
+	justify-content: center;
+	flex: 1;
+	text-align: center;
 }
 
-.theme-toggle-btn:hover {
-	background-color: var(--accent);
-	color: #fff7ee;
-	opacity: 1;
+.footer-col.left {
+	flex: 0 0 auto;
+}
+
+.footer-col.right {
+	flex: 0 0 auto;
 }

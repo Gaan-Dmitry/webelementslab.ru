@@ -160,12 +160,6 @@
     width: 100%;
   }
 
-  .theme-toggle-btn {
-    width: 100%;
-    max-width: 20rem;
-    justify-content: center;
-    min-height: 2.4rem;
-  }
 
   .favorites-list {
     grid-template-columns: 1fr !important;
@@ -261,9 +255,6 @@
     justify-content: center;
   }
 
-  .theme-toggle-btn {
-    min-height: 2.3rem;
-  }
 
   .favorites-list {
     grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)) !important;
