@@ -1,3 +1,4 @@
+// Ждем загрузки DOM
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
     const username = document.getElementById("username");
@@ -5,17 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password");
     const agree = document.getElementById("agree-privacy");
 
+    // Элементы для вывода ошибок
     const emailError = document.getElementById("email-error");
     const usernameError = document.getElementById("username-error");
     const passwordError = document.getElementById("password-error");
     const generalError = document.getElementById("general-error");
 
-    // Валидация имени
+    // Валидация имени пользователя при потере фокуса
     username.addEventListener("blur", () => {
         const name = username.value.trim();
         username.classList.remove("valid", "invalid");
         usernameError.textContent = "";
 
+        // Регулярка: только буквы и цифры, от 3 до 20 символов
         const usernameRegex = /^[a-zа-я0-9]{3,20}$/i;
 
         if (!usernameRegex.test(name)) {
@@ -27,12 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
         checkField("username", name, username);
     });
 
-    // Валидация email
+    // Валидация email при потере фокуса
     email.addEventListener("blur", () => {
         const val = email.value.trim();
         email.classList.remove("valid", "invalid");
         emailError.textContent = "";
 
+        // Простая проверка формата почты
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(val)) {
@@ -44,12 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
         checkField("email", val, email);
     });
 
-    // Валидация пароля
+    // Валидация пароля при потере фокуса
     password.addEventListener("blur", () => {
         const val = password.value;
         password.classList.remove("valid", "invalid");
         passwordError.textContent = "";
 
+        // Пароль должен содержать буквы, цифры и спецсимволы, минимум 6 символов
         const passRegex = /^[A-Za-z0-9!@#$%^&*()_+=\-{}\[\]:;"'<>,.?/~`]{6,}$/;
 
         if (!passRegex.test(val)) {
@@ -60,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Проверка формы перед отправкой
+    // Проверка перед отправкой формы - согласие с политикой
     form.addEventListener("submit", (e) => {
         if (!agree.checked) {
             e.preventDefault();
@@ -68,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Функция проверки поля на существование в базе
     function checkField(field, value, element) {
         fetch(`/pages/check_field.php?field=${field}&value=${encodeURIComponent(value)}`)
             .then(res => res.json())

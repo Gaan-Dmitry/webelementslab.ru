@@ -1,11 +1,14 @@
 <?php
+// Подключение к базе данных
 $host = 'localhost';
 $dbname = 'u3299512_webelementslab';
 $user = 'u3299512_admin';
 $password = '4RP-ETj-fLm-B84'; 
 
+// DSN строка для подключения
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
+// Настройки PDO
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Ошибки будут исключениями
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // По умолчанию получаем ассоц массивы

@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../includes/db.php';
 
+// Функция для обрезки HTML до нужной длины (для превью)
 function buildSnippetPreview(?string $html, int $limit = 220): string
 {
 	$html = trim($html ?? '');
@@ -10,20 +11,26 @@ function buildSnippetPreview(?string $html, int $limit = 220): string
 		return '';
 	}
 
+	// Заменяем все пробельные символы на один пробел
 	$normalized = preg_replace('/\s+/', ' ', $html);
 
+	// Если текст короче лимита - возвращаем как есть
 	if (mb_strlen($normalized) <= $limit) {
 		return $normalized;
 	}
 
+	// Иначе обрезаем и добавляем троеточие
 	return mb_substr($normalized, 0, $limit) . '…';
 }
 
+// Получаем offset из запроса (для пагинации)
 $offset = isset($_GET['offset']) ? max((int) $_GET['offset'], 0) : 0;
 $limit = 10;
+// Поиск по названию или тегу
 $query = trim($_GET['q'] ?? '');
 $like = '%' . $query . '%';
 
+// Запрос к базе
 $stmt = $pdo->prepare(
 	"SELECT id, name, tag, description, html, css, js
 	 FROM snippets
@@ -39,6 +46,7 @@ $stmt->bindValue(5, $offset, PDO::PARAM_INT);
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Проверяем избранное если юзер залогинен
 $userId = isset($_SESSION['id']) ? (int) $_SESSION['id'] : null;
 $favoritesMap = [];
 
@@ -52,6 +60,7 @@ if ($userId && !empty($snippets)) {
 	$favoritesMap = array_fill_keys($favoritedIds, true);
 }
 
+// Формируем ответ с данными сниппетов
 $snippets = array_map(static function (array $snippet) use ($favoritesMap, $userId): array {
 	$tagString = $snippet['tag'] ?? '';
 	$tags = array_values(array_filter(array_map('trim', explode(',', $tagString))));
