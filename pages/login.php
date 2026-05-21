@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Проверка авторизации
+// Проверка авторизации - если уже залогинен, редирект на профиль
 if (!empty($_SESSION['username'])) {
     header("Location: /pages/profile.php"); 
     exit;

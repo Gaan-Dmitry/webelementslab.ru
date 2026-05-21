@@ -14,6 +14,7 @@ if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['last_attempt_time'] = time();
 }
 
+// Если превысили лимит попыток
 if ($_SESSION['login_attempts'] >= $MAX_ATTEMPTS) {
     $wait = $BLOCK_TIME - (time() - $_SESSION['last_attempt_time']);
     if ($wait > 0) {

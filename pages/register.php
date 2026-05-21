@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Проверка авторизации
+// Проверка авторизации - если уже залогинен, редирект на профиль
 if (!empty($_SESSION['username'])) {
     header('Location: /pages/profile.php'); 
     exit;
@@ -10,7 +10,7 @@ require_once __DIR__ . '/../includes/db.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Для отображения ошибок
+// Переменные для ошибок
 $emailError = '';
 $usernameError = '';
 $generalError = '';
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $emailError = 'Почта уже зарегистрирована';
             }
         } else {
+            // Хэшируем пароль
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $role = 'user';
 
