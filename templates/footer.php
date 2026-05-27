@@ -11,4 +11,20 @@
 </div>
 
 </footer>
+<?php
+// Передаём статус премиума в JavaScript для всех страниц
+$hasPremiumGlobal = false;
+if (isset($_SESSION['id'])) {
+    require_once __DIR__ . '/../includes/db.php';
+    $stmt = $pdo->prepare('SELECT is_premium FROM users WHERE id = ? LIMIT 1');
+    $stmt->execute([$_SESSION['id']]);
+    $user = $stmt->fetch();
+    if ($user && !empty($user['is_premium'])) {
+        $hasPremiumGlobal = true;
+    }
+}
+?>
+<script>
+    window.userHasPremium = <?= $hasPremiumGlobal ? 'true' : 'false' ?>;
+</script>
 <script src="/assets/js/desktop-only.js" defer></script>
