@@ -8,6 +8,13 @@ if (!isMobileUserAgent) {
 return;
 }
 
+// Проверяем, есть ли у пользователя премиум (данные из PHP)
+const hasPremium = window.userHasPremium === true;
+
+if (hasPremium) {
+return; // Если премиум есть, не показываем заглушку
+}
+
 const blocker = document.createElement('div');
 blocker.setAttribute('aria-live', 'assertive');
 blocker.innerHTML = `

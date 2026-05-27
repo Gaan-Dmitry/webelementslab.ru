@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+// Проверяем, есть ли у пользователя премиум
+$hasPremium = false;
+if (isset($_SESSION['id'])) {
+    require_once __DIR__ . '/../includes/db.php';
+    $stmt = $pdo->prepare('SELECT is_premium FROM users WHERE id = ? LIMIT 1');
+    $stmt->execute([$_SESSION['id']]);
+    $user = $stmt->fetch();
+    if ($user && !empty($user['is_premium'])) {
+        $hasPremium = true;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -11,7 +23,7 @@ session_start();
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Оформление премиум подписки WebElementsLab">
     <title>Премиум подписка — WebElementsLab</title>
-    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
     <meta property="og:title" content="Премиум подписка — WebElementsLab">
     <meta property="og:description" content="Получите доступ ко всем функциям сайта включая мобильную версию">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
@@ -56,6 +68,10 @@ session_start();
     </div>
     <?php require_once __DIR__ . '/../templates/footer.php'; ?>
     
+    <script>
+        // Передаём статус премиума в JavaScript
+        window.userHasPremium = <?= $hasPremium ? 'true' : 'false' ?>;
+    </script>
     <script src="/assets/js/premium.js" defer></script>
 </body>
 </html>
