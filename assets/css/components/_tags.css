@@ -86,10 +86,18 @@
 	z-index: 2;
 }
 
-/* Для ссылок-тегов убираем подчеркивание при hover */
+/* Для ссылок-тегов убираем подчеркивание и сохраняем оригинальный цвет */
+a.tag-pill {
+	color: #222;
+}
+
 a.tag-pill:hover {
 	text-decoration: none;
-	color: #222;
+	color: #222 !important;
+}
+
+a.tag-pill:hover::before {
+	left: 100%;
 }
 
 .tag-pill:active {

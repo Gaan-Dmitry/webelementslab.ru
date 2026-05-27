@@ -230,8 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			tagsContainer.className = 'snippet-card__tags tags';
 
 			snippet.tags.forEach(tagName => {
-				const tagEl = document.createElement('span');
+				const tagEl = document.createElement('a');
 				tagEl.className = 'tag-pill tag-pill--compact';
+				tagEl.href = `/pages/tag.php?tag=${encodeURIComponent(tagName)}`;
 				tagEl.dataset.full = tagName;
 				tagEl.textContent = tagName;
 				tagsContainer.appendChild(tagEl);
@@ -344,10 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			window.location.href = card.dataset.href;
 		});
 
-		// Обработка клика по тегам внутри карточек
+		// Обработка клика по тегам внутри карточек (если это не ссылки)
 		list.addEventListener('click', event => {
 			const tagElement = event.target.closest('.tag-pill');
 			if (!tagElement) return;
+
+			// Если это уже ссылка - пусть работает стандартный переход
+			if (tagElement.tagName === 'A' && tagElement.href) {
+				return;
+			}
 
 			// Предотвращаем всплытие чтобы не сработал клик по карточке
 			event.stopPropagation();
