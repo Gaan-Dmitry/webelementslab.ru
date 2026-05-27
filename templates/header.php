@@ -29,6 +29,8 @@
 		</button>
 		<div class="search-dropdown" id="searchDropdown">
 			<form action="/" method="get">
+				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
+				<span class="search-icon" aria-hidden="true">⌕</span>
 				<input
 					type="search"
 					id="searchInput"
@@ -37,6 +39,7 @@
 					value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
 					autocomplete="off"
 				>
+				<button class="search-submit" type="submit">Найти</button>
 			</form>
 		</div>
 		<?php if (isset($_SESSION['username'])): ?>

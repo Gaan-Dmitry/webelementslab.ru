@@ -62,6 +62,17 @@ if ($filterTag !== '') {
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Если LIKE-выборка ничего не дала (опечатка/другая раскладка), пробуем fuzzy по более широкой выборке
+if ($filterTag === '' && $query !== '' && empty($snippets)) {
+	$fallbackStmt = $pdo->query(
+		"SELECT id, name, tag, description, html, css, js
+		 FROM snippets
+		 ORDER BY created_at DESC
+		 LIMIT 240"
+	);
+	$snippets = $fallbackStmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 if ($filterTag === '' && $query !== '' && !empty($snippets)) {
 	$normalizedQuery = mb_strtolower($query);
 	$tokens = array_values(array_filter(array_map('trim', preg_split('/\s+/u', $normalizedQuery))));
