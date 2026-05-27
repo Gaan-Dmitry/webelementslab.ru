@@ -24,13 +24,13 @@
 		</nav>
 	</div>
 	<div class="nav-right">
-		<button class="search-btn" id="searchToggle" type="button" aria-label="Открыть поиск">
-			🔍
-		</button>
-		<div class="search-dropdown" id="searchDropdown">
-			<form action="/" method="get">
+		<div class="search-container" id="searchContainer">
+			<form action="/" method="get" class="search-form">
 				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
-				<span class="search-icon" aria-hidden="true">⌕</span>
+				<svg class="search-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="11" cy="11" r="8"></circle>
+					<path d="m21 21-4.35-4.35"></path>
+				</svg>
 				<input
 					type="search"
 					id="searchInput"
@@ -39,7 +39,7 @@
 					value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
 					autocomplete="off"
 				>
-				<button class="search-submit" type="submit">Найти</button>
+				<button class="search-submit-btn" type="submit">Найти</button>
 			</form>
 		</div>
 		<?php if (isset($_SESSION['username'])): ?>
@@ -61,33 +61,3 @@
 	</div>
 </header>
 <script src="/assets/js/profile-header.js"></script>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		const toggle = document.getElementById('searchToggle');
-		const dropdown = document.getElementById('searchDropdown');
-		const input = document.getElementById('searchInput');
-
-		if (!toggle || !dropdown || !input) {
-			return;
-		}
-
-		const hasQuery = input.value.trim() !== '';
-		if (hasQuery) {
-			dropdown.classList.add('is-open');
-		}
-
-		toggle.addEventListener('click', function () {
-			dropdown.classList.toggle('is-open');
-			if (dropdown.classList.contains('is-open')) {
-				input.focus();
-				input.select();
-			}
-		});
-
-		document.addEventListener('click', function (event) {
-			if (!dropdown.contains(event.target) && event.target !== toggle) {
-				dropdown.classList.remove('is-open');
-			}
-		});
-	});
-</script>
