@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Контейнер для сниппетов
 	const list = document.getElementById('snippets-list');
+	const searchParams = new URLSearchParams(window.location.search);
+	const searchQuery = (searchParams.get('q') || '').trim();
 
 	// Функция собирает HTML документ для превьюшки в iframe
 	const buildPreviewDocument = (snippet = {}) => {
@@ -251,11 +253,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Формируем URL для запроса
 	const buildRequestUrl = () => {
+		const params = new URLSearchParams({ offset: String(offset) });
+
 		// Если есть фильтр по тегу (например, на странице tag.php)
 		if (window.currentTag) {
-			return `/handlers/load_snippets.php?tag=${encodeURIComponent(window.currentTag)}&offset=${offset}`;
+			params.set('tag', window.currentTag);
+			return `/handlers/load_snippets.php?${params.toString()}`;
 		}
-		return `/handlers/load_snippets.php?offset=${offset}`;
+
+		if (searchQuery) {
+			params.set('q', searchQuery);
+		}
+
+		return `/handlers/load_snippets.php?${params.toString()}`;
 	};
 
 	// Загрузка сниппетов
@@ -275,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (!Array.isArray(data) || data.length === 0) {
 					allLoaded = true;
 					if (!list.children.length) {
-						showEmptyState('Новых сниппетов пока нет.');
+						showEmptyState(searchQuery ? 'По вашему запросу ничего не найдено.' : 'Новых сниппетов пока нет.');
 					}
 					return;
 				}
