@@ -120,6 +120,39 @@ header {
 .search-container {
 	display: flex;
 	align-items: center;
+	position: relative;
+}
+
+.search-toggle-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 1px white solid;
+	border-radius: 0.5rem;
+	background-color: transparent;
+	color: #d1d7e0;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	flex-shrink: 0;
+}
+
+.search-toggle-btn:hover {
+	background-color: rgba(1, 88, 114, 0.3);
+	box-shadow: 0 0 10px rgba(1, 88, 114, 0.5);
+	transform: translateY(-1px);
+}
+
+.search-toggle-btn:active {
+	transform: translateY(0) scale(0.98);
+}
+
+.search-icon-svg {
+	color: rgba(255, 255, 255, 0.55);
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
 }
 
 .search-form {
@@ -130,17 +163,26 @@ header {
 	border: 1px solid rgba(255, 255, 255, 0.16);
 	border-radius: 14px;
 	padding: 0.4rem 0.7rem;
-	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	transition: all 0.3s ease;
+	opacity: 0;
+	width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	position: absolute;
+	left: 3rem;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.search-form.active {
+	opacity: 1;
+	width: auto;
+	min-width: 20rem;
 }
 
 .search-form:focus-within {
 	border-color: var(--accent);
 	box-shadow: 0 0 12px rgba(138, 128, 242, 0.3);
-}
-
-.search-icon-svg {
-	color: rgba(255, 255, 255, 0.55);
-	flex-shrink: 0;
 }
 
 #searchInput {
@@ -169,7 +211,7 @@ header {
 	font-size: 0.95rem;
 	border: 1px white solid;
 	border-radius: 0.5rem;
-	background-color: #013d50;
+	background-color: transparent;
 	color: #d1d7e0;
 	cursor: pointer;
 	transition: all 0.3s ease;
@@ -179,7 +221,7 @@ header {
 }
 
 .search-submit-btn:hover {
-	background-color: #015872;
+	background-color: rgba(1, 88, 114, 0.3);
 	box-shadow: 0 0 10px rgba(1, 88, 114, 0.5);
 	transform: translateY(-1px);
 }

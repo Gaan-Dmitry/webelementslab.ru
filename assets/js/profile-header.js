@@ -48,4 +48,40 @@ document.addEventListener('DOMContentLoaded', () => {
     profileWrapper.addEventListener('mouseenter', () => {
         clearTimeout(hoverTimeout);
     });
+
+    // Поиск - разворачивается из иконки лупы
+    const searchToggle = document.getElementById('searchToggle');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchToggle && searchForm && searchInput) {
+        let searchOpen = false;
+
+        searchToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            searchOpen = !searchOpen;
+            if (searchOpen) {
+                searchForm.classList.add('active');
+                setTimeout(() => searchInput.focus(), 100);
+            } else {
+                searchForm.classList.remove('active');
+            }
+        });
+
+        // Закрытие поиска при клике вне
+        document.addEventListener('click', (e) => {
+            if (searchOpen && !searchForm.contains(e.target) && e.target !== searchToggle) {
+                searchForm.classList.remove('active');
+                searchOpen = false;
+            }
+        });
+
+        // Закрытие поиска по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOpen) {
+                searchForm.classList.remove('active');
+                searchOpen = false;
+            }
+        });
+    }
 });

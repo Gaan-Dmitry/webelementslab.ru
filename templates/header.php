@@ -25,12 +25,14 @@
 	</div>
 	<div class="nav-right">
 		<div class="search-container" id="searchContainer">
-			<form action="/" method="get" class="search-form">
-				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
+			<button type="button" class="search-toggle-btn" id="searchToggle" aria-label="Поиск">
 				<svg class="search-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<circle cx="11" cy="11" r="8"></circle>
 					<path d="m21 21-4.35-4.35"></path>
 				</svg>
+			</button>
+			<form action="/" method="get" class="search-form" id="searchForm">
+				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
 				<input
 					type="search"
 					id="searchInput"
