@@ -24,26 +24,22 @@
 		</nav>
 	</div>
 	<div class="nav-right">
-		<div class="search-container" id="searchContainer">
-			<button type="button" class="search-toggle-btn" id="searchToggle" aria-label="Поиск">
-				<svg class="search-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<circle cx="11" cy="11" r="8"></circle>
-					<path d="m21 21-4.35-4.35"></path>
-				</svg>
-			</button>
-			<form action="/" method="get" class="search-form" id="searchForm">
-				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
-				<input
-					type="search"
-					id="searchInput"
-					name="q"
-					placeholder="Поиск по названию сниппета"
-					value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
-					autocomplete="off"
-				>
-				<button class="search-submit-btn" type="submit">Найти</button>
-			</form>
-		</div>
+		<form action="/" method="get" class="search-form search-form-always-active" id="searchForm">
+			<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
+			<svg class="search-icon-svg-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<circle cx="11" cy="11" r="8"></circle>
+				<path d="m21 21-4.35-4.35"></path>
+			</svg>
+			<input
+				type="search"
+				id="searchInput"
+				name="q"
+				placeholder="Поиск по названию сниппета"
+				value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
+				autocomplete="off"
+			>
+			<button class="search-submit-btn" type="submit">Найти</button>
+		</form>
 		<?php if (isset($_SESSION['username'])): ?>
 			<div class="profile-menu-wrapper" id="profileWrapper">
 				<span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
