@@ -66,7 +66,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
         </div>
         <div class="block-tag">
             <?php foreach ($tags as $tag): ?>
-                <span class="tag-pill" data-full="<?= htmlspecialchars(trim($tag)) ?>"><?= htmlspecialchars(trim($tag)) ?></span>
+                <a href="/pages/tag.php?tag=<?= urlencode(trim($tag)) ?>" class="tag-pill" data-full="<?= htmlspecialchars(trim($tag)) ?>"><?= htmlspecialchars(trim($tag)) ?></a>
             <?php endforeach; ?>
         </div>
         <div class="f-d-row d-flex gap1">

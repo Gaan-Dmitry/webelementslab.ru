@@ -24,6 +24,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	z-index: 1;
+	text-decoration: none;
 }
 
 .tag-pill--compact {
@@ -85,6 +86,12 @@
 	z-index: 2;
 }
 
+/* Для ссылок-тегов убираем подчеркивание при hover */
+a.tag-pill:hover {
+	text-decoration: none;
+	color: #222;
+}
+
 .tag-pill:active {
 	transform: scale(0.95);
 	box-shadow: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.2),
@@ -94,4 +101,36 @@
 /* Ограничение ширины всего блока тегов, если нужно */
 .block-tag {
 	max-width: 60rem;
+}
+
+/* Стили для страницы тега */
+.tag-header {
+	text-align: center;
+	padding: 2rem 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.tag-header h1 {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	color: #f7f9ff;
+}
+
+.tag-highlight {
+	background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
+	color: #222;
+	padding: 0.25rem 0.8rem;
+	border-radius: 999px;
+	font-weight: 600;
+}
+
+.back-link {
+	display: inline-block;
+	color: #6493a7;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.back-link:hover {
+	color: #4fc3f7;
 }

@@ -189,3 +189,11 @@
     display: flex;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
 }
+
+.snippet-card__tags {
+	width: 100%;
+	padding: 0.5rem 0.75rem 0.75rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
