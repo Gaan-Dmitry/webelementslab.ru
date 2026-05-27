@@ -147,6 +147,21 @@ header {
 	z-index: 1100;
 }
 
+.search-dropdown form {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 0.6rem;
+	align-items: center;
+	position: relative;
+}
+
+.search-icon {
+	position: absolute;
+	left: 0.9rem;
+	color: rgba(255, 255, 255, 0.55);
+	pointer-events: none;
+}
+
 .search-dropdown.is-open {
 	opacity: 1;
 	pointer-events: auto;
@@ -156,13 +171,41 @@ header {
 #searchInput {
 	width: 100%;
 	height: 2.8rem;
-	padding: 0 0.95rem;
+	padding: 0 0.95rem 0 2.2rem;
 	color: var(--text-color);
 	background: rgba(14, 16, 24, 0.92);
 	border: 1px solid rgba(255, 255, 255, 0.22);
 	border-radius: 10px;
 	outline: none;
 	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-submit {
+	height: 2.8rem;
+	padding: 0 1rem;
+	border: 1px solid rgba(74, 149, 255, 0.45);
+	border-radius: 10px;
+	color: var(--text-color);
+	background: linear-gradient(160deg, rgba(74, 149, 255, 0.3), rgba(74, 149, 255, 0.15));
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.search-submit:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 16px rgba(74, 149, 255, 0.22);
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
 #searchInput::placeholder {

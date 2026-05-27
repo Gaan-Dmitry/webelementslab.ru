@@ -47,22 +47,98 @@ if ($filterTag !== '') {
     $stmt->bindValue(2, $limit, PDO::PARAM_INT);
     $stmt->bindValue(3, $offset, PDO::PARAM_INT);
 } else {
-    // Обычный поиск по названию или тегу
+    // Умный поиск по названию или тегу: сначала забираем кандидатов, затем сортируем по релевантности в PHP
     $stmt = $pdo->prepare(
         "SELECT id, name, tag, description, html, css, js
          FROM snippets
          WHERE (? = '' OR name LIKE ? OR tag LIKE ?)
          ORDER BY created_at DESC
-         LIMIT ? OFFSET ?"
+         LIMIT 120"
     );
     $stmt->bindValue(1, $query, PDO::PARAM_STR);
     $stmt->bindValue(2, $like, PDO::PARAM_STR);
     $stmt->bindValue(3, $like, PDO::PARAM_STR);
-    $stmt->bindValue(4, $limit, PDO::PARAM_INT);
-    $stmt->bindValue(5, $offset, PDO::PARAM_INT);
 }
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Если LIKE-выборка ничего не дала (опечатка/другая раскладка), пробуем fuzzy по более широкой выборке
+if ($filterTag === '' && $query !== '' && empty($snippets)) {
+	$fallbackStmt = $pdo->query(
+		"SELECT id, name, tag, description, html, css, js
+		 FROM snippets
+		 ORDER BY created_at DESC
+		 LIMIT 240"
+	);
+	$snippets = $fallbackStmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+if ($filterTag === '' && $query !== '' && !empty($snippets)) {
+	$normalizedQuery = mb_strtolower($query);
+	$tokens = array_values(array_filter(array_map('trim', preg_split('/\s+/u', $normalizedQuery))));
+
+	$scoreSnippet = static function (array $snippet) use ($normalizedQuery, $tokens): int {
+		$name = mb_strtolower((string) ($snippet['name'] ?? ''));
+		$tag = mb_strtolower((string) ($snippet['tag'] ?? ''));
+		$score = 0;
+
+		if ($name === $normalizedQuery) {
+			$score += 1200;
+		}
+
+		if (str_starts_with($name, $normalizedQuery)) {
+			$score += 700;
+		}
+
+		if (str_contains($name, $normalizedQuery)) {
+			$score += 520;
+		}
+
+		foreach ($tokens as $token) {
+			if ($token === '') {
+				continue;
+			}
+
+			if (str_starts_with($name, $token)) {
+				$score += 130;
+			}
+
+			if (str_contains($name, $token)) {
+				$score += 100;
+			}
+
+			if (str_contains($tag, $token)) {
+				$score += 45;
+			}
+		}
+
+		// Небольшой fuzzy-буст за близость по Левенштейну (для опечаток)
+		$nameAscii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name) ?: $name;
+		$queryAscii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $normalizedQuery) ?: $normalizedQuery;
+		if ($nameAscii !== '' && $queryAscii !== '') {
+			$distance = levenshtein($queryAscii, mb_substr($nameAscii, 0, max(mb_strlen($queryAscii), 1) + 6));
+			$score += max(0, 110 - $distance * 14);
+		}
+
+		return $score;
+	};
+
+	foreach ($snippets as &$snippet) {
+		$snippet['_score'] = $scoreSnippet($snippet);
+	}
+	unset($snippet);
+
+	usort(
+		$snippets,
+		static function (array $a, array $b): int {
+			return $b['_score'] <=> $a['_score'];
+		}
+	);
+
+	$snippets = array_values(array_slice($snippets, $offset, $limit));
+} elseif ($filterTag === '') {
+	$snippets = array_values(array_slice($snippets, $offset, $limit));
+}
 
 // Проверяем избранное если юзер залогинен
 $userId = isset($_SESSION['id']) ? (int) $_SESSION['id'] : null;

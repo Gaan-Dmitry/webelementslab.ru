@@ -24,6 +24,24 @@
 		</nav>
 	</div>
 	<div class="nav-right">
+		<button class="search-btn" id="searchToggle" type="button" aria-label="Открыть поиск">
+			🔍
+		</button>
+		<div class="search-dropdown" id="searchDropdown">
+			<form action="/" method="get">
+				<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
+				<span class="search-icon" aria-hidden="true">⌕</span>
+				<input
+					type="search"
+					id="searchInput"
+					name="q"
+					placeholder="Поиск по названию сниппета"
+					value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
+					autocomplete="off"
+				>
+				<button class="search-submit" type="submit">Найти</button>
+			</form>
+		</div>
 		<?php if (isset($_SESSION['username'])): ?>
 			<div class="profile-menu-wrapper" id="profileWrapper">
 				<span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
@@ -43,3 +61,33 @@
 	</div>
 </header>
 <script src="/assets/js/profile-header.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const toggle = document.getElementById('searchToggle');
+		const dropdown = document.getElementById('searchDropdown');
+		const input = document.getElementById('searchInput');
+
+		if (!toggle || !dropdown || !input) {
+			return;
+		}
+
+		const hasQuery = input.value.trim() !== '';
+		if (hasQuery) {
+			dropdown.classList.add('is-open');
+		}
+
+		toggle.addEventListener('click', function () {
+			dropdown.classList.toggle('is-open');
+			if (dropdown.classList.contains('is-open')) {
+				input.focus();
+				input.select();
+			}
+		});
+
+		document.addEventListener('click', function (event) {
+			if (!dropdown.contains(event.target) && event.target !== toggle) {
+				dropdown.classList.remove('is-open');
+			}
+		});
+	});
+</script>
