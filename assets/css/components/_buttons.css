@@ -8,6 +8,24 @@ input[type='submit']:disabled {
 	padding: 0.4rem 1.2rem;
 	border: 1px white solid;
 	border-radius: 0.5rem;
+	background-color: #013d50;
+	color: #d1d7e0;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.reg-btn:hover {
+	background-color: #015872;
+	box-shadow: 0 0 10px rgba(1, 88, 114, 0.5);
+	transform: translateY(-1px);
+}
+
+.reg-btn:active {
+	transform: translateY(0) scale(0.98);
 }
 
 .sub-btn {

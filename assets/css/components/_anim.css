@@ -5,4 +5,5 @@
 
 .anim-hover-box-shadow:hover{
   box-shadow: 0 0 1rem rgba(139, 193, 255, 0.5);
+  transform: translateY(-1px);
 }
