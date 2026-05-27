@@ -37,7 +37,7 @@ $pageTitle = "Сниппеты с тегом: " . htmlspecialchars($tag);
     <div class="wrapper">
         <main>
             <section class="tag-header">
-                <h1>Сниппеты с тегом: <span class="tag-highlight"><?= htmlspecialchars($tag) ?></span></h1>
+                <h1>Сниппеты с тегом: <?= htmlspecialchars($tag) ?></h1>
                 <a href="/" class="back-link">← Все сниппеты</a>
             </section>
             <!-- Сюда будут грузиться сниппеты через AJAX -->
