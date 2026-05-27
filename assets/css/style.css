@@ -29,3 +29,5 @@
 @import url('./utils/_position.css');
 /*===== Pages ======*/
 @import url('/assets/css/pages/404.css');
+@import url('/assets/css/pages/premium.css');
+@import url('/assets/css/adaptive.css');
