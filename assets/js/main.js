@@ -224,7 +224,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		title.className = 'snippet-card__title';
 		title.textContent = snippet.name ?? '';
 
-		card.append(preview, title);
+		// Контейнер для тегов
+		if (snippet.tags && snippet.tags.length > 0) {
+			const tagsContainer = document.createElement('div');
+			tagsContainer.className = 'snippet-card__tags tags';
+
+			snippet.tags.forEach(tagName => {
+				const tagEl = document.createElement('span');
+				tagEl.className = 'tag-pill tag-pill--compact';
+				tagEl.dataset.full = tagName;
+				tagEl.textContent = tagName;
+				tagsContainer.appendChild(tagEl);
+			});
+
+			card.append(preview, title, tagsContainer);
+		} else {
+			card.append(preview, title);
+		}
 
 		return card;
 	};
@@ -250,7 +266,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	let allLoaded = false;
 
 	// Формируем URL для запроса
-	const buildRequestUrl = () => `/handlers/load_snippets.php?offset=${offset}`;
+	const buildRequestUrl = () => {
+		// Если есть фильтр по тегу (например, на странице tag.php)
+		if (window.currentTag) {
+			return `/handlers/load_snippets.php?tag=${encodeURIComponent(window.currentTag)}&offset=${offset}`;
+		}
+		return `/handlers/load_snippets.php?offset=${offset}`;
+	};
 
 	// Загрузка сниппетов
 	const loadSnippets = () => {
@@ -320,6 +342,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			event.preventDefault();
 			window.location.href = card.dataset.href;
+		});
+
+		// Обработка клика по тегам внутри карточек
+		list.addEventListener('click', event => {
+			const tagElement = event.target.closest('.tag-pill');
+			if (!tagElement) return;
+
+			// Предотвращаем всплытие чтобы не сработал клик по карточке
+			event.stopPropagation();
+
+			const tagName = tagElement.dataset.full || tagElement.textContent.trim();
+			if (tagName) {
+				window.location.href = `/pages/tag.php?tag=${encodeURIComponent(tagName)}`;
+			}
 		});
 
 		// Скролл - подгрузка следующих сниппетов (бесконечный скролл)

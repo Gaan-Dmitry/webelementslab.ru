@@ -29,20 +29,38 @@ $limit = 10;
 // Поиск по названию или тегу
 $query = trim($_GET['q'] ?? '');
 $like = '%' . $query . '%';
+// Фильтр по конкретному тегу
+$filterTag = trim($_GET['tag'] ?? '');
 
 // Запрос к базе
-$stmt = $pdo->prepare(
-	"SELECT id, name, tag, description, html, css, js
-	 FROM snippets
-	 WHERE (? = '' OR name LIKE ? OR tag LIKE ?)
-	 ORDER BY created_at DESC
-	 LIMIT ? OFFSET ?"
-);
-$stmt->bindValue(1, $query, PDO::PARAM_STR);
-$stmt->bindValue(2, $like, PDO::PARAM_STR);
-$stmt->bindValue(3, $like, PDO::PARAM_STR);
-$stmt->bindValue(4, $limit, PDO::PARAM_INT);
-$stmt->bindValue(5, $offset, PDO::PARAM_INT);
+if ($filterTag !== '') {
+    // Фильтрация по точному тегу
+    $stmt = $pdo->prepare(
+        "SELECT id, name, tag, description, html, css, js
+         FROM snippets
+         WHERE tag LIKE ?
+         ORDER BY created_at DESC
+         LIMIT ? OFFSET ?"
+    );
+    $tagLike = '%' . $filterTag . '%';
+    $stmt->bindValue(1, $tagLike, PDO::PARAM_STR);
+    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+    $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+} else {
+    // Обычный поиск по названию или тегу
+    $stmt = $pdo->prepare(
+        "SELECT id, name, tag, description, html, css, js
+         FROM snippets
+         WHERE (? = '' OR name LIKE ? OR tag LIKE ?)
+         ORDER BY created_at DESC
+         LIMIT ? OFFSET ?"
+    );
+    $stmt->bindValue(1, $query, PDO::PARAM_STR);
+    $stmt->bindValue(2, $like, PDO::PARAM_STR);
+    $stmt->bindValue(3, $like, PDO::PARAM_STR);
+    $stmt->bindValue(4, $limit, PDO::PARAM_INT);
+    $stmt->bindValue(5, $offset, PDO::PARAM_INT);
+}
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
