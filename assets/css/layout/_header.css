@@ -121,6 +121,7 @@ header {
 	display: flex;
 	align-items: center;
 	position: relative;
+	flex-direction: row-reverse;
 }
 
 .search-toggle-btn {
@@ -136,11 +137,12 @@ header {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	flex-shrink: 0;
+	margin-left: 0.5rem;
 }
 
 .search-toggle-btn:hover {
-	background-color: rgba(1, 88, 114, 0.3);
-	box-shadow: 0 0 10px rgba(1, 88, 114, 0.5);
+	background-color: transparent;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 	transform: translateY(-1px);
 }
 
@@ -169,15 +171,16 @@ header {
 	overflow: hidden;
 	white-space: nowrap;
 	position: absolute;
-	left: 3rem;
-	top: 50%;
-	transform: translateY(-50%);
+	right: 2.5rem;
+	top: 0;
+	transform: translateX(100%);
 }
 
 .search-form.active {
 	opacity: 1;
 	width: auto;
 	min-width: 20rem;
+	transform: translateX(0);
 }
 
 .search-form:focus-within {
@@ -221,8 +224,8 @@ header {
 }
 
 .search-submit-btn:hover {
-	background-color: rgba(1, 88, 114, 0.3);
-	box-shadow: 0 0 10px rgba(1, 88, 114, 0.5);
+	background-color: transparent;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 	transform: translateY(-1px);
 }
 
