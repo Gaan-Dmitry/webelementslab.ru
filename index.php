@@ -43,6 +43,6 @@ session_start();
         <div id="snippets-list"></div>
     </div>
     <?php require_once __DIR__ . '/templates/footer.php'; ?>
-    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/main.js?v=<?= filemtime(__DIR__ . '/assets/js/main.js') ?>" defer></script>
 </body>
 </html>

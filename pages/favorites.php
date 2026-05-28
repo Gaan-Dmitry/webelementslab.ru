@@ -120,5 +120,5 @@ function shareSnippet(id, name) {
 }
 </script>
 </body>
-<script src="/assets/js/snippet.js"></script>
+<script src="/assets/js/snippet.js?v=<?= filemtime(__DIR__ . '/../assets/js/snippet.js') ?>"></script>
 </html>

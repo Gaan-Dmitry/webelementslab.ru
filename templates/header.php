@@ -58,4 +58,4 @@
 		<?php endif; ?>
 	</div>
 </header>
-<script src="/assets/js/profile-header.js"></script>
+<script src="/assets/js/profile-header.js?v=<?= filemtime(__DIR__ . '/../assets/js/profile-header.js') ?>"></script>
