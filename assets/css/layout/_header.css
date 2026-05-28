@@ -229,6 +229,13 @@ header {
 	transform: translateX(0);
 }
 
+/* Скрываем иконку лупы на мобильных устройствах */
+@media (max-width: 768px) {
+	.search-form-always-active .search-icon-svg-inline {
+		display: none;
+	}
+}
+
 .search-form-always-active:focus-within {
 	border-color: var(--accent);
 	box-shadow: 0 0 12px rgba(138, 128, 242, 0.3);
