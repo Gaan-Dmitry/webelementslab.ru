@@ -13,49 +13,71 @@
 ?>
 
 <header>
-	<div class="nav-left">
-		<a href="/">
-			<img src="/assets/img/logo.svg" class="logo-header" alt="logo">
-		</a>
-		<nav class="main-nav">
-			<a href="/">Главная</a>
-			<a href="/pages/random_snippet.php">Случайный</a>
-			<a href="/pages/edit_or_create_card.php">Создать</a>
-		</nav>
-	</div>
-	<div class="nav-right">
-		<form action="/" method="get" class="search-form search-form-always-active" id="searchForm">
-			<label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
-			<svg class="search-icon-svg-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-				<circle cx="11" cy="11" r="8"></circle>
-				<path d="m21 21-4.35-4.35"></path>
-			</svg>
-			<input
-				type="search"
-				id="searchInput"
-				name="q"
-				placeholder="Поиск по названию сниппета"
-				value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
-				autocomplete="off"
-			>
-			<button class="search-submit-btn" type="submit">Найти</button>
-		</form>
-		<?php if (isset($_SESSION['username'])): ?>
-			<div class="profile-menu-wrapper" id="profileWrapper">
-				<span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
-				<img src="<?= $avatar ?>" alt="avatar" class="avatar" id="avatarToggle">
-				<div class="dropdown-menu" id="profileMenu">
-					<a href="/pages/profile.php">Профиль</a>
-					<a href="/pages/settings.php">Настройки</a>
-					<a href="/pages/edit_or_create_card.php">Создать</a>
-					<a href="/pages/favorites.php">Избранное</a>
-					<a href="/pages/logout.php" class="red-link">Выход</a>
-				</div>
-			</div>
-		<?php else: ?>
-			<a href="/pages/login.php">Вход</a>
-			<a class="reg-btn anim-hover-box-shadow" href="/pages/register.php">Регистрация</a>
-		<?php endif; ?>
-	</div>
+        <div class="nav-left">
+                <a href="/">
+                        <img src="/assets/img/logo.svg" class="logo-header" alt="logo">
+                </a>
+                <button class="mobile-menu-toggle" aria-label="Меню" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                </button>
+                <nav class="main-nav">
+                        <a href="/">Главная</a>
+                        <a href="/pages/random_snippet.php">Случайный</a>
+                        <a href="/pages/edit_or_create_card.php">Создать</a>
+                </nav>
+        </div>
+        <div class="nav-right">
+                <form action="/" method="get" class="search-form search-form-always-active" id="searchForm">
+                        <label class="visually-hidden" for="searchInput">Поиск сниппетов</label>
+                        <svg class="search-icon-svg-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input
+                                type="search"
+                                id="searchInput"
+                                name="q"
+                                placeholder="Поиск по названию сниппета"
+                                value="<?= htmlspecialchars($_GET['q'] ?? '') ?>"
+                                autocomplete="off"
+                        >
+                        <button class="search-submit-btn" type="submit">Найти</button>
+                </form>
+                <?php if (isset($_SESSION['username'])): ?>
+                        <div class="profile-menu-wrapper" id="profileWrapper">
+                                <span class="username-label"><?= htmlspecialchars($_SESSION['username']) ?></span>
+                                <img src="<?= $avatar ?>" alt="avatar" class="avatar" id="avatarToggle">
+                                <div class="dropdown-menu" id="profileMenu">
+                                        <a href="/pages/profile.php">Профиль</a>
+                                        <a href="/pages/settings.php">Настройки</a>
+                                        <a href="/pages/edit_or_create_card.php">Создать</a>
+                                        <a href="/pages/favorites.php">Избранное</a>
+                                        <a href="/pages/logout.php" class="red-link">Выход</a>
+                                </div>
+                        </div>
+                <?php else: ?>
+                        <a href="/pages/login.php" class="mobile-nav-link">Вход</a>
+                        <a class="reg-btn anim-hover-box-shadow mobile-nav-link" href="/pages/register.php">Регистрация</a>
+                <?php endif; ?>
+        </div>
+        <div class="mobile-nav-overlay" id="mobileNavOverlay">
+                <nav class="mobile-nav-menu">
+                        <a href="/">Главная</a>
+                        <a href="/pages/random_snippet.php">Случайный</a>
+                        <a href="/pages/edit_or_create_card.php">Создать</a>
+                        <?php if (isset($_SESSION['username'])): ?>
+                                <a href="/pages/profile.php">Профиль</a>
+                                <a href="/pages/settings.php">Настройки</a>
+                                <a href="/pages/favorites.php">Избранное</a>
+                                <a href="/pages/logout.php" class="red-link">Выход</a>
+                        <?php else: ?>
+                                <a href="/pages/login.php">Вход</a>
+                                <a href="/pages/register.php">Регистрация</a>
+                        <?php endif; ?>
+                </nav>
+        </div>
 </header>
 <script src="/assets/js/profile-header.js?v=<?= filemtime(__DIR__ . '/../assets/js/profile-header.js') ?>"></script>
+<script src="/assets/js/mobile-menu.js?v=<?= filemtime(__DIR__ . '/../assets/js/mobile-menu.js') ?>"></script>

@@ -14,12 +14,12 @@
   .nav-right {
     gap: 0.8rem;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
   }
 
   .nav-left {
-    flex-direction: column;
+    flex-direction: row;
   }
   
   .main-nav {
@@ -35,6 +35,24 @@
 
   .username-label {
     display: none;
+  }
+  
+  /* Поисковая форма на мобильных - вертикальное расположение */
+  .search-form.search-form-always-active {
+    flex-direction: column;
+    width: 100%;
+    min-width: auto;
+    gap: 0;
+  }
+  
+  #searchInput {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  
+  .search-submit-btn {
+    width: 100%;
+    margin-bottom: 0;
   }
   
   .slogan {
