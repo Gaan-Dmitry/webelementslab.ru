@@ -40,6 +40,27 @@ html[data-theme='light'] {
 	--preview-bg-inverted: #05070c;
 	--card-border: rgba(0, 0, 0, 0.1);
 	--card-shadow: rgba(0, 0, 0, 0.1);
+	--heading-color: #1a1a1a;
+}
+
+/* Заголовки для темной и цветной темы */
+html[data-theme='dark'] h1,
+html[data-theme='dark'] h2,
+html[data-theme='dark'] h3,
+html:not([data-theme]) h1,
+html:not([data-theme]) h2,
+html:not([data-theme]) h3,
+html[data-theme='colored'] h1,
+html[data-theme='colored'] h2,
+html[data-theme='colored'] h3 {
+	color: var(--main-color);
+}
+
+/* Заголовки для светлой темы */
+html[data-theme='light'] h1,
+html[data-theme='light'] h2,
+html[data-theme='light'] h3 {
+	color: var(--heading-color);
 }
 
 body {
