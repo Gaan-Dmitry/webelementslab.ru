@@ -1,4 +1,5 @@
 <?php
+    $isPremium = false;
     if (isset($_SESSION['id'])) {
         require_once __DIR__ . '/../includes/db.php';
         $stmt = $pdo->prepare('SELECT avatar FROM user_profiles WHERE user_id = ? LIMIT 1');
@@ -9,10 +10,16 @@
         $avatarFile = $_SERVER['DOCUMENT_ROOT'] . $avatar;
         $avatarTime = file_exists($avatarFile) ? filemtime($avatarFile) : time();
         $avatar .= '?t=' . $avatarTime;
+        
+        // Проверяем премиум статус
+        $stmtRole = $pdo->prepare('SELECT role FROM users WHERE id = ? LIMIT 1');
+        $stmtRole->execute([$_SESSION['id']]);
+        $userData = $stmtRole->fetch();
+        $isPremium = ($userData && $userData['role'] === 'premium');
     }
 ?>
 
-<script src="/assets/js/theme-toggle.js?v=<?= filemtime(__DIR__ . '/../assets/js/theme-toggle.js') ?>"></script>
+<script src="/assets/js/theme-toggle.js?v=<?= filemtime(__DIR__ . '/../assets/js/theme-toggle.js') ?>" data-is-premium="<?= $isPremium ? 'true' : 'false' ?>"></script>
 <header>
         <div class="nav-left">
                 <a href="/">
