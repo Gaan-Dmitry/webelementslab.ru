@@ -1,4 +1,4 @@
-/* Version: 2.1 */
+/* Version: 2.2 */
 /* Цвета, шрифты, переменные */
 :root {
 	--main-bg: #1d1a18;
@@ -10,6 +10,19 @@
 	--error: #f44336;
 	--success: #4caf50;
 	--text-color: #f4ece4;
+
+	--card-border: rgba(255, 255, 255, 0.8);
+	--card-title-color: #f7f9ff;
+	--input-border: rgba(255, 255, 255, 0.16);
+	--input-text: #d1d7e0;
+	--dropdown-bg: #292320;
+	--dropdown-border: #444;
+	--preview-bg: #05070c;
+	--btn-border: rgba(255, 255, 255, 0.8);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #333;
+	--footer-border: rgba(255, 255, 255, 0.1);
 }
 
 html[data-theme='darker'] {
@@ -20,6 +33,44 @@ html[data-theme='darker'] {
 	--accent: #5f8fbe;
 	--accent-hover: #84afd9;
 	--text-color: #f7f0e8;
+
+	--card-border: rgba(255, 255, 255, 0.4);
+	--card-title-color: #f6eee6;
+	--input-border: rgba(255, 255, 255, 0.1);
+	--input-text: #f6eee6;
+	--dropdown-bg: #171412;
+	--dropdown-border: #333;
+	--preview-bg: #000000;
+	--btn-border: rgba(255, 255, 255, 0.4);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #222;
+	--footer-border: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme='light'] {
+	--main-bg: #f0f2f5;
+	--layot-bg: #ffffff;
+	--layout-bg: #ffffff;
+	--main-color: #1c1e21;
+	--accent: #007bff;
+	--accent-hover: #0056b3;
+	--error: #dc3545;
+	--success: #28a745;
+	--text-color: #4b4f56;
+
+	--card-border: rgba(0, 0, 0, 0.15);
+	--card-title-color: #1c1e21;
+	--input-border: rgba(0, 0, 0, 0.2);
+	--input-text: #1c1e21;
+	--dropdown-bg: #ffffff;
+	--dropdown-border: #dee2e6;
+	--preview-bg: #f8f9fa;
+	--btn-border: rgba(0, 0, 0, 0.2);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #dee2e6;
+	--footer-border: rgba(0, 0, 0, 0.1);
 }
 body {
 	font-family: 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,

@@ -1,4 +1,4 @@
-/* Version: 2.1 */
+/* Version: 2.2 */
 /* Header */
 header {
     display: flex;
@@ -6,7 +6,7 @@ header {
     align-items: center;
     padding: 1rem 2rem;
     background-color: var(--layot-bg);
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--header-border);
 }
 
 .nav-left,
@@ -171,11 +171,11 @@ header {
     top: 110%;
     right: 0;
     display: none;
-    background-color: var(--layot-bg);
-    border: 1px solid #444;
+    background-color: var(--dropdown-bg);
+    border: 1px solid var(--dropdown-border);
     border-radius: 8px;
     min-width: 10rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     opacity: 0;
     transform: translateY(-10px);
@@ -220,7 +220,7 @@ header {
 	gap: 0.6rem;
 	align-items: center;
 	background-color: var(--layot-bg);
-	border: 1px solid rgba(255, 255, 255, 0.16);
+	border: 1px solid var(--input-border);
 	border-radius: 14px;
 	padding: 0.4rem 0.7rem;
 	transition: all 0.3s ease;
@@ -243,7 +243,8 @@ header {
 }
 
 .search-icon-svg-inline {
-	color: rgba(255, 255, 255, 0.55);
+	color: var(--text-color);
+	opacity: 0.55;
 	flex-shrink: 0;
 	width: 20px;
 	height: 20px;
@@ -253,7 +254,7 @@ header {
 	width: 14rem;
 	height: 2.4rem;
 	padding: 0 0.5rem;
-	color: #d1d7e0;
+	color: var(--input-text);
 	background-color: transparent;
 	border: none;
 	outline: none;
@@ -262,7 +263,8 @@ header {
 }
 
 #searchInput::placeholder {
-	color: rgba(255, 255, 255, 0.58);
+	color: var(--text-color);
+	opacity: 0.58;
 }
 
 #searchInput:focus {
@@ -273,10 +275,10 @@ header {
 	height: 2.4rem;
 	padding: 0 1.2rem;
 	font-size: 0.95rem;
-	border: 1px white solid;
+	border: 1px var(--btn-border) solid;
 	border-radius: 0.5rem;
 	background-color: transparent;
-	color: #d1d7e0;
+	color: var(--main-color);
 	cursor: pointer;
 	transition: all 0.3s ease;
 	display: flex;
@@ -286,8 +288,9 @@ header {
 
 .search-submit-btn:hover {
 	background-color: transparent;
-	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 10px var(--accent);
 	transform: translateY(-1px);
+	border-color: var(--accent);
 }
 
 .search-submit-btn:active {

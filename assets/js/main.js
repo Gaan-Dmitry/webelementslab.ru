@@ -182,7 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		shareButton.className = 'btn-card snippet-card__share-btn';
 		shareButton.textContent = '🔗';
 		shareButton.setAttribute('aria-label', 'Поделиться сниппетом');
-		shareButton.addEventListener('click', () => {
+		shareButton.addEventListener('click', (e) => {
+			e.stopPropagation();
 			const shareUrl = `${window.location.origin}/pages/card.php?id=${snippet.id}`;
 			// Если есть нативный шеринг (мобилки) - используем его
 			if (navigator.share) {
@@ -218,6 +219,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		shareWrapper.appendChild(shareButton);
 		pholder.appendChild(shareWrapper);
+
+		// Кнопка контраста (переключение фона превью)
+		const contrastWrapper = document.createElement('div');
+		contrastWrapper.className = 'snippet-card__contrast';
+
+		const contrastButton = document.createElement('button');
+		contrastButton.type = 'button';
+		contrastButton.className = 'btn-card snippet-card__contrast-btn';
+		contrastButton.textContent = '🌓';
+		contrastButton.setAttribute('aria-label', 'Изменить фон предпросмотра');
+		contrastButton.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const currentBg = iframe.style.background;
+			if (currentBg === 'rgb(255, 255, 255)' || currentBg === 'white') {
+				iframe.style.background = 'var(--preview-bg)';
+			} else {
+				iframe.style.background = 'white';
+			}
+		});
+
+		contrastWrapper.appendChild(contrastButton);
+		pholder.appendChild(contrastWrapper);
 
 		preview.appendChild(pholder);
 

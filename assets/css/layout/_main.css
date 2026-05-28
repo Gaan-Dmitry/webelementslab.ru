@@ -1,6 +1,6 @@
-/* Version: 2.1 */
+/* Version: 2.2 */
 .slogan {
-	color: #d1d7e0;
+	color: var(--main-color);
 	margin: 6rem 0;
 	display: flex;
 	gap: 1rem;
@@ -50,9 +50,9 @@ main {
 .welcome-modal__card {
 	width: min(32rem, 92vw);
 	padding: 1.3rem 1.4rem;
-	border: 1px solid rgba(255, 255, 255, 0.18);
+	border: 1px solid var(--card-border);
 	border-radius: 16px;
-	background: linear-gradient(155deg, #1d2235, #141a29);
+	background: var(--layout-bg);
 	box-shadow: 0 20px 46px rgba(0, 0, 0, 0.38);
 	color: var(--text-color);
 	position: relative;
