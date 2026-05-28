@@ -56,6 +56,7 @@ if (isset($_SESSION['id'])) {
                 </div>
 
                 <div class="payment-methods">
+                    <?php if (!$hasPremium): ?>
                     <h2>Выберите способ оплаты:</h2>
                     <div class="payment-buttons">
                         <button class="payment-btn disabled" data-method="card">Банковская карта — Скоро</button>
@@ -63,6 +64,14 @@ if (isset($_SESSION['id'])) {
                         <button class="payment-btn disabled" data-method="qiwi">QIWI — Скоро</button>
                         <button class="payment-btn disabled" data-method="crypto">Криптовалюта — Скоро</button>
                     </div>
+                    <div class="login-prompt">
+                        <p>Уже есть аккаунт? <a href="/pages/login.php" class="login-link">Войти</a></p>
+                    </div>
+                    <?php else: ?>
+                    <div class="premium-active-message">
+                        <p>У вас уже оформлена премиум подписка!</p>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </section>
         </main>
