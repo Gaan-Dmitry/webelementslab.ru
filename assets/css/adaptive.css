@@ -411,6 +411,19 @@
   }
 }
 
+/* Адаптация для страницы премиум - прозрачный фон кнопок на мобильных */
+@media (max-width: 768px) {
+  .payment-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+  }
+  
+  .payment-btn.disabled {
+    background: transparent;
+    border-color: #6c757d;
+  }
+}
+
 /* Адаптация для печати */
 @media print {
   header,
