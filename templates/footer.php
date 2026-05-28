@@ -16,10 +16,10 @@
 $hasPremiumGlobal = false;
 if (isset($_SESSION['id'])) {
     require_once __DIR__ . '/../includes/db.php';
-    $stmt = $pdo->prepare('SELECT is_premium FROM users WHERE id = ? LIMIT 1');
+    $stmt = $pdo->prepare('SELECT role FROM users WHERE id = ? LIMIT 1');
     $stmt->execute([$_SESSION['id']]);
     $user = $stmt->fetch();
-    if ($user && !empty($user['is_premium'])) {
+    if ($user && $user['role'] === 'premium') {
         $hasPremiumGlobal = true;
     }
 }
