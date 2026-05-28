@@ -8,6 +8,12 @@ if (!isMobileUserAgent) {
 return;
 }
 
+// Не показываем заглушку на странице оформления премиума
+const currentPath = window.location.pathname;
+if (currentPath.includes('/pages/premium.php')) {
+return;
+}
+
 // Проверяем, есть ли у пользователя премиум (данные из PHP)
 const hasPremium = window.userHasPremium === true;
 

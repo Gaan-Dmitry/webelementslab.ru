@@ -24,6 +24,7 @@ if (isset($_SESSION['id'])) {
     <meta name="description" content="Оформление премиум подписки WebElementsLab">
     <title>Премиум подписка — WebElementsLab</title>
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+    <link rel="stylesheet" href="/assets/css/pages/premium.css?v=<?= filemtime(__DIR__ . '/../assets/css/pages/premium.css') ?>">
     <meta property="og:title" content="Премиум подписка — WebElementsLab">
     <meta property="og:description" content="Получите доступ ко всем функциям сайта включая мобильную версию">
     <meta property="og:image" content="https://webelementslab.ru/assets/img/logo512.png">
