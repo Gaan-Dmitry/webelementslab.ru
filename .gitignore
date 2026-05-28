@@ -1,4 +1,4 @@
-```
+```php
 # Compiled and build artifacts
 *.pyc
 __pycache__/
@@ -33,7 +33,7 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Coverage reports
+# Coverage
 coverage/
 htmlcov/
 .coverage
@@ -45,10 +45,19 @@ target/
 .gradle/
 
 # Python specific
-.mypy_cache/
-.pytest_cache/
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+.eggs/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
 
 # Compressed files
 *.zip
