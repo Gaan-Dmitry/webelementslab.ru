@@ -145,6 +145,47 @@
     opacity: 0.7;
 }
 
+/* Блок с предложением войти */
+.login-prompt {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-prompt p {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.login-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* Сообщение для пользователей с премиумом */
+.premium-active-message {
+    padding: 1.5rem;
+    background: rgba(119, 168, 217, 0.15);
+    border-radius: 8px;
+    border: 2px solid var(--accent);
+    text-align: center;
+}
+
+.premium-active-message p {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 0;
+    font-weight: 600;
+}
+
 /* === Адаптивность для мобильных === */
 
 @media (max-width: 480px) {

@@ -28,6 +28,10 @@ blocker.innerHTML = `
 <h1>Мобильная версия доступна только премиум подписчикам</h1>
 <p>Получите доступ к мобильной версии сайта и другим эксклюзивным функциям с премиум подпиской.</p>
 <a href="/pages/premium.php" class="premium-link-btn">Оформить премиум подписку</a>
+<div class="login-block">
+<p>Уже есть аккаунт?</p>
+<a href="/pages/login.php" class="login-link-btn">Войти</a>
+</div>
 </div>
 `;
 
@@ -78,6 +82,30 @@ transition: all 0.3s ease;
 background: #9bc3ea;
 transform: translateY(-2px);
 box-shadow: 0 4px 12px rgba(119, 168, 217, 0.4);
+}
+.login-block {
+margin-top: 1.2rem;
+padding-top: 1rem;
+border-top: 1px solid #3f5062;
+}
+.login-block p {
+margin: 0 0 0.6rem 0;
+font-size: 0.9rem;
+color: #adb5bd;
+}
+.login-link-btn {
+display: inline-block;
+padding: 0.6rem 1.2rem;
+background: transparent;
+color: #9bc3ea;
+text-decoration: none;
+border: 1px solid #9bc3ea;
+border-radius: 8px;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+.login-link-btn:hover {
+background: rgba(155, 195, 234, 0.1);
 }
 `;
 
