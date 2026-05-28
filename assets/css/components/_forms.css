@@ -3,7 +3,7 @@
 label {
 	display: block;
 	margin-bottom: 5px;
-	color: #d1d7e0;
+	color: var(--main-color);
 }
 
 input[type='text'],
@@ -14,9 +14,9 @@ textarea {
 	padding: 0.8rem;
 	margin-bottom: 0.9rem;
 	border-radius: 0.25rem;
-	background-color: #ffffff00;
-	color: #d1d7e0;
-	border: 2px solid #8a80f2;
+	background-color: transparent;
+	color: var(--main-color);
+	border: 2px solid var(--accent);
 	transition: border-color 0.2s ease;
 }
 

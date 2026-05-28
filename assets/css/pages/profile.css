@@ -167,19 +167,20 @@
 	font-size: 1.6rem;
 	margin: 0 0 6px 0;
 	font-weight: 700;
-	color: #fff;
+	color: var(--main-color);
 	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 .profile-email,
 .profile-bio {
-	color: #b3b9c9;
+	color: var(--text-color);
 	font-size: 1rem;
 	margin: 0 0 8px 0;
 	word-break: break-word;
+	opacity: 0.8;
 }
 .profile-email span,
 .profile-bio span {
-	color: #e6eaff;
+	color: var(--main-color);
 	font-weight: 500;
 }
 .profile-socials {

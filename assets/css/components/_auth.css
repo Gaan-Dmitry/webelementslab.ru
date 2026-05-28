@@ -36,7 +36,7 @@
 }
 
 .link-form {
-	color: #87d9ff;
+	color: var(--accent);
 }
 
 .auth-form form {
