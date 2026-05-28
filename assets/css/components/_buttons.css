@@ -7,10 +7,10 @@ input[type='submit']:disabled {
 
 .reg-btn {
 	padding: 0.4rem 1.2rem;
-	border: 1px white solid;
+	border: 1px var(--main-color) solid;
 	border-radius: 0.5rem;
 	background-color: transparent;
-	color: #d1d7e0;
+	color: var(--main-color);
 	cursor: pointer;
 	transition: all 0.3s ease;
 	text-decoration: none;
@@ -67,10 +67,10 @@ input[type='submit']:disabled {
 /* Кнопка "Оформить премиум подписку" с прозрачным фоном и светлым текстом */
 .premium-link-inline {
 	padding: 0.4rem 1.2rem;
-	border: 1px white solid;
+	border: 1px var(--main-color) solid;
 	border-radius: 0.5rem;
 	background-color: transparent;
-	color: #d1d7e0;
+	color: var(--main-color);
 	cursor: pointer;
 	transition: all 0.3s ease;
 	text-decoration: none;
@@ -98,8 +98,8 @@ input[type='submit'],
 input[type='reset'] {
 	width: 100%;
 	padding: 0.9rem;
-	background-color: #013d50;
-	color: #d1d7e0;
+	background-color: var(--accent);
+	color: #ffffff;
 	border: none;
 	border-radius: 0.25rem;
 	cursor: pointer;

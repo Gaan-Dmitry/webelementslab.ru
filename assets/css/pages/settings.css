@@ -2,7 +2,7 @@
 /* Стили для страницы настроек профиля в стиле login */
 .wrapper-profile-editor {
 	border-radius: 1rem;
-	background-color: var(--layot-bg);
+	background-color: var(--layout-bg);
 	padding-bottom: 1rem;
 }
 .bg-cover {
