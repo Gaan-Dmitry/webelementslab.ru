@@ -73,7 +73,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
             <!-- Preview -->
             <div class="left-card-page d-flex gap1 f-d-column">
                 <div class="block-element d-flex j-c-center a-i-center">
-                    <iframe id="snippet-frame" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:200px;border:none;"></iframe>
+                    <iframe id="snippet-frame" class="snippet-card__iframe" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:200px;border:none;"></iframe>
                 </div>
                 <div class="tags d-flex gap05 wrap f-d-column gap1">
                 <?php if (isset($_SESSION['username'])): ?>
