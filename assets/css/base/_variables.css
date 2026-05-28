@@ -1,8 +1,8 @@
-/* Version: 2.1 */
+/* Version: 2.2 */
 /* Цвета, шрифты, переменные */
 :root {
+	/* Colored Theme (Default) */
 	--main-bg: #1d1a18;
-	--layot-bg: #292320;
 	--layout-bg: #292320;
 	--main-color: #f2e9df;
 	--accent: #77a8d9;
@@ -10,17 +10,38 @@
 	--error: #f44336;
 	--success: #4caf50;
 	--text-color: #f4ece4;
+	--preview-bg: #05070c;
+	--preview-bg-inverted: #ffffff;
+	--card-border: rgba(255, 255, 255, 0.1);
+	--card-shadow: rgba(0, 0, 0, 0.2);
 }
 
-html[data-theme='darker'] {
-	--main-bg: #0f0d0c;
-	--layot-bg: #171412;
-	--layout-bg: #171412;
-	--main-color: #f6eee6;
+html[data-theme='dark'] {
+	--main-bg: #000000;
+	--layout-bg: #121212;
+	--main-color: #ffffff;
 	--accent: #5f8fbe;
 	--accent-hover: #84afd9;
-	--text-color: #f7f0e8;
+	--text-color: #e0e0e0;
+	--preview-bg: #05070c;
+	--preview-bg-inverted: #ffffff;
+	--card-border: rgba(255, 255, 255, 0.1);
+	--card-shadow: rgba(0, 0, 0, 0.4);
 }
+
+html[data-theme='light'] {
+	--main-bg: #ffffff;
+	--layout-bg: #f8f9fa;
+	--main-color: #1a1a1a;
+	--accent: #0056b3;
+	--accent-hover: #004494;
+	--text-color: #212529;
+	--preview-bg: #ffffff;
+	--preview-bg-inverted: #05070c;
+	--card-border: rgba(0, 0, 0, 0.1);
+	--card-shadow: rgba(0, 0, 0, 0.1);
+}
+
 body {
 	font-family: 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji';

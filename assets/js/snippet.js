@@ -234,5 +234,42 @@ document.addEventListener('DOMContentLoaded', function () {
 		);
 
 		preview.dataset.previewReady = 'true';
+
+		// Кнопка переключения контраста для карточек
+		const pholder = preview.querySelector('.pholder');
+		if (pholder) {
+			const contrastWrapper = document.createElement('div');
+			contrastWrapper.className = 'snippet-card__contrast';
+			const contrastBtn = document.createElement('button');
+			contrastBtn.type = 'button';
+			contrastBtn.className = 'btn-card snippet-card__contrast-btn';
+			contrastBtn.textContent = '🌓';
+			contrastBtn.setAttribute('aria-label', 'Переключить фон предпросмотра');
+			contrastBtn.addEventListener('click', e => {
+				e.stopPropagation();
+				previewIframe.classList.toggle('preview-contrast');
+			});
+			contrastWrapper.appendChild(contrastBtn);
+			pholder.prepend(contrastWrapper);
+		}
 	});
+
+	// Кнопка контраста на странице карточки
+	const iframeFrame = document.getElementById('snippet-frame');
+	if (iframeFrame) {
+		const contrastBtn = document.createElement('button');
+		contrastBtn.type = 'button';
+		contrastBtn.className = 'btn-card snippet-contrast-btn';
+		contrastBtn.style.marginTop = '10px';
+		contrastBtn.textContent = '🌓 Переключить фон';
+		contrastBtn.addEventListener('click', () => {
+			iframeFrame.classList.toggle('preview-contrast');
+		});
+
+		const container = iframeFrame.parentElement;
+		if (container) {
+			container.style.flexDirection = 'column';
+			container.appendChild(contrastBtn);
+		}
+	}
 });

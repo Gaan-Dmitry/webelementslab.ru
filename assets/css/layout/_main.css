@@ -1,6 +1,6 @@
 /* Version: 2.1 */
 .slogan {
-	color: #d1d7e0;
+	color: var(--main-color);
 	margin: 6rem 0;
 	display: flex;
 	gap: 1rem;
@@ -64,7 +64,8 @@ main {
 
 .welcome-modal__card p {
 	margin: 0;
-	color: rgba(255, 255, 255, 0.8);
+	color: var(--text-color);
+	opacity: 0.8;
 }
 
 .welcome-modal__close {

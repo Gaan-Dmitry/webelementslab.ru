@@ -163,9 +163,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		preview.appendChild(iframe);
 
-		// Плейсхолдер с кнопками (избранное, шеринг)
+		// Плейсхолдер с кнопками (избранное, шеринг, контраст)
 		const pholder = document.createElement('div');
 		pholder.className = 'pholder';
+
+		// Кнопка переключения контраста
+		const contrastWrapper = document.createElement('div');
+		contrastWrapper.className = 'snippet-card__contrast';
+		const contrastBtn = document.createElement('button');
+		contrastBtn.type = 'button';
+		contrastBtn.className = 'btn-card snippet-card__contrast-btn';
+		contrastBtn.textContent = '🌓';
+		contrastBtn.setAttribute('aria-label', 'Переключить фон предпросмотра');
+		contrastBtn.addEventListener('click', e => {
+			e.stopPropagation();
+			iframe.classList.toggle('preview-contrast');
+		});
+		contrastWrapper.appendChild(contrastBtn);
+		pholder.appendChild(contrastWrapper);
 
 		// Кнопка избранного
 		const favoriteButton = createFavoriteButton(snippet);

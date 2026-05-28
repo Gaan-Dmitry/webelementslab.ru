@@ -5,7 +5,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--layot-bg);
+    background-color: var(--layout-bg);
     border-bottom: 1px solid #333;
 }
 
@@ -82,7 +82,7 @@ header {
     width: 100%;
     max-width: 300px;
     height: 100vh;
-    background-color: var(--layot-bg);
+    background-color: var(--layout-bg);
     z-index: 1000;
     transition: right 0.3s ease;
     padding: 80px 20px 20px;
@@ -171,7 +171,7 @@ header {
     top: 110%;
     right: 0;
     display: none;
-    background-color: var(--layot-bg);
+    background-color: var(--layout-bg);
     border: 1px solid #444;
     border-radius: 8px;
     min-width: 10rem;
@@ -219,7 +219,7 @@ header {
 	display: flex;
 	gap: 0.6rem;
 	align-items: center;
-	background-color: var(--layot-bg);
+	background-color: var(--layout-bg);
 	border: 1px solid rgba(255, 255, 255, 0.16);
 	border-radius: 14px;
 	padding: 0.4rem 0.7rem;
@@ -308,4 +308,49 @@ header {
 
 .nav-right {
 	position: relative;
+}
+
+.theme-toggle-btn {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--text-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem;
+	border-radius: 50%;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='light'] .theme-toggle-btn:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme='light'] .search-form-always-active,
+html[data-theme='light'] #searchInput {
+	color: var(--text-color);
+}
+
+html[data-theme='light'] .search-icon-svg-inline {
+	color: var(--text-color);
+	opacity: 0.6;
+}
+
+html[data-theme='light'] #searchInput::placeholder {
+	color: var(--text-color);
+	opacity: 0.5;
+}
+
+html[data-theme='light'] .search-submit-btn {
+	border-color: var(--text-color);
+	color: var(--text-color);
+}
+
+html[data-theme='light'] .logo-header {
+	filter: invert(1) hue-rotate(180deg);
 }

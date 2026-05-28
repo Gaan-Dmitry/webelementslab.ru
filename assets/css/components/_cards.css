@@ -37,9 +37,9 @@
 
 .btn-card {
 	background-color: transparent;
-	color: white;
+	color: var(--main-color);
 	padding: 0.4rem 1.2rem;
-	border: 0.0625rem white solid;
+	border: 0.0625rem var(--main-color) solid;
 	border-radius: 50em;
 	cursor: pointer;
 	display: inline-flex;
@@ -92,10 +92,10 @@
 
 .snippet-card {
 	background-color: transparent;
-	color: white;
+	color: var(--main-color);
 	padding: 0.3rem;
 	height: 100%;
-	border: 0.0625rem white solid;
+	border: 0.0625rem var(--card-border) solid;
 	border-radius: 0.3rem ;
 	cursor: pointer;
 	display: inline-flex;
@@ -104,14 +104,18 @@
 	transform-origin: center;
 	flex-direction: column;
 	will-change: transform;
-	box-shadow: 0 0.2rem 0.9rem rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0.2rem 0.9rem var(--card-shadow);
 	backdrop-filter: blur(0.5rem);
 	position: relative;
 	overflow: hidden;
 }
 
+html[data-theme='light'] .snippet-card {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
 .snippet-card:hover {
-	border-color: rgba(255, 255, 255, 0.6);
+	border-color: var(--accent);
 }
 
 
@@ -124,7 +128,12 @@
 	height: 100%;
 	border: none;
 	border-radius: inherit;
-	background: #05070c;
+	background: var(--preview-bg);
+	transition: background-color 0.3s ease;
+}
+
+.snippet-card__iframe.preview-contrast {
+	background: var(--preview-bg-inverted) !important;
 }
 
 .pholder {
@@ -163,7 +172,7 @@
 	font-size: 1.2rem;
 	font-weight: 600;
 	margin: 0;
-	color: #f7f9ff;
+	color: var(--main-color);
 	text-align: center;
 	min-height: 5rem;
 	display: flex;
