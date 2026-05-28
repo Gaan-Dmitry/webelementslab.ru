@@ -17,7 +17,7 @@ if (!empty($_SESSION['username'])) {
     <meta name="description" content="Авторизация | WebElementsLab" />
     <link rel="apple-touch-icon" href="/assets/img/logo192.png" />
     <title>Авторизация | WebElementsLab</title>
-    <script src="/assets/js/theme-toggle.js?v=<?= filemtime(__DIR__ . '/../assets/js/theme-toggle.js') ?>"></script>
+    <script src="/assets/js/theme-toggle.js?v=<?= filemtime(__DIR__ . '/../assets/js/theme-toggle.js') ?>" data-is-premium="false"></script>
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>" />
 </head>
 <body>

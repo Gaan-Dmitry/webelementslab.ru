@@ -15,7 +15,7 @@
         $stmtRole = $pdo->prepare('SELECT role FROM users WHERE id = ? LIMIT 1');
         $stmtRole->execute([$_SESSION['id']]);
         $userData = $stmtRole->fetch();
-        $isPremium = ($userData && $userData['role'] === 'premium');
+        $isPremium = ($userData && ($userData['role'] === 'premium' || $userData['role'] === 'admin'));
     }
 ?>
 

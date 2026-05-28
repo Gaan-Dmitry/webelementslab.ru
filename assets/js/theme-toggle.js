@@ -32,6 +32,17 @@
 		const themeToggle = document.getElementById('theme-toggle-btn');
 		if (themeToggle) {
 			themeToggle.addEventListener('click', () => {
+				const isPremium =
+					document.currentScript?.getAttribute('data-is-premium') === 'true' ||
+					document
+						.querySelector('script[src*="theme-toggle.js"]')
+						?.getAttribute('data-is-premium') === 'true';
+
+				if (!isPremium) {
+					alert('Смена темы доступна только Premium пользователям');
+					return;
+				}
+
 				const currentTheme = getSavedTheme();
 				const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
 				const nextTheme = themes[nextIndex];

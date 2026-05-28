@@ -116,7 +116,7 @@ $tags = explode(',', $snippet['tag'] ?? '');
         </div>
         <div>
             <?php if (!empty($snippet['description'])): ?>
-                <div class="snippet-description" style="margin-bottom:1.2em;font-size:1.1em;color:#e0e0e0;line-height:1.5;word-break:break-word;">
+                <div class="snippet-description" style="margin-bottom:1.2em;font-size:1.1em;color:var(--text-color);line-height:1.5;word-break:break-word;">
                     <?= nl2br(htmlspecialchars($snippet['description'])) ?>
                 </div>
             <?php endif; ?>
