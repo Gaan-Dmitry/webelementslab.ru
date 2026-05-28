@@ -211,6 +211,24 @@ document.addEventListener('DOMContentLoaded', function () {
 			window.snippetPreviewData.css ?? '',
 			window.snippetPreviewData.js ?? ''
 		);
+
+		// Contrast toggle for the main preview
+		const contrastBtn = document.createElement('button');
+		contrastBtn.className = 'btn-card contrast-toggle-main';
+		contrastBtn.innerHTML = '🌓 Изменить фон';
+		contrastBtn.style.position = 'absolute';
+		contrastBtn.style.bottom = '1rem';
+		contrastBtn.style.right = '1rem';
+		contrastBtn.style.zIndex = '10';
+
+		contrastBtn.onclick = () => {
+			iframe.classList.toggle('preview-contrast');
+		};
+
+		if (iframe.parentElement) {
+			iframe.parentElement.style.position = 'relative';
+			iframe.parentElement.appendChild(contrastBtn);
+		}
 	}
 
 	// Рендер превью в карточках, где данные передаются через data-атрибуты
@@ -232,6 +250,23 @@ document.addEventListener('DOMContentLoaded', function () {
 			preview.dataset.css || '',
 			preview.dataset.js || ''
 		);
+
+		// Add contrast toggle if pholder exists or create it
+		let pholder = preview.querySelector('.pholder');
+		if (pholder) {
+			const contrastWrapper = document.createElement('div');
+			contrastWrapper.className = 'snippet-card__contrast';
+			const contrastButton = document.createElement('button');
+			contrastButton.type = 'button';
+			contrastButton.className = 'btn-card snippet-card__contrast-btn';
+			contrastButton.textContent = '🌓';
+			contrastButton.onclick = (e) => {
+				e.stopPropagation();
+				previewIframe.classList.toggle('preview-contrast');
+			};
+			contrastWrapper.appendChild(contrastButton);
+			pholder.appendChild(contrastWrapper);
+		}
 
 		preview.dataset.previewReady = 'true';
 	});

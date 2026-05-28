@@ -1,6 +1,8 @@
-/* Version: 2.1 */
+/* Version: 2.3 */
 /* Цвета, шрифты, переменные */
-:root {
+
+/*Colored (Original Chocolate) Theme*/
+:root, html[data-theme='colored'] {
 	--main-bg: #1d1a18;
 	--layot-bg: #292320;
 	--layout-bg: #292320;
@@ -10,17 +12,74 @@
 	--error: #f44336;
 	--success: #4caf50;
 	--text-color: #f4ece4;
+
+	--card-border: rgba(255, 255, 255, 0.8);
+	--card-title-color: #f7f9ff;
+	--input-border: rgba(255, 255, 255, 0.16);
+	--input-text: #d1d7e0;
+	--dropdown-bg: #292320;
+	--dropdown-border: #444;
+	--preview-bg: #05070c;
+	--preview-bg-inverted: #ffffff;
+	--btn-border: rgba(255, 255, 255, 0.8);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #333;
+	--footer-border: rgba(255, 255, 255, 0.1);
 }
 
-html[data-theme='darker'] {
-	--main-bg: #0f0d0c;
-	--layot-bg: #171412;
-	--layout-bg: #171412;
-	--main-color: #f6eee6;
-	--accent: #5f8fbe;
-	--accent-hover: #84afd9;
-	--text-color: #f7f0e8;
+/*Pure Dark Theme*/
+html[data-theme='dark'] {
+	--main-bg: #000000;
+	--layot-bg: #111111;
+	--layout-bg: #111111;
+	--main-color: #e0e0e0;
+	--accent: #4a9eff;
+	--accent-hover: #7dbbff;
+	--text-color: #cccccc;
+
+	--card-border: rgba(255, 255, 255, 0.2);
+	--card-title-color: #ffffff;
+	--input-border: rgba(255, 255, 255, 0.2);
+	--input-text: #ffffff;
+	--dropdown-bg: #1a1a1a;
+	--dropdown-border: #333;
+	--preview-bg: #000000;
+	--preview-bg-inverted: #ffffff;
+	--btn-border: rgba(255, 255, 255, 0.3);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #222;
+	--footer-border: rgba(255, 255, 255, 0.05);
 }
+
+/*Pure Light Theme*/
+html[data-theme='light'] {
+	--main-bg: #ffffff;
+	--layot-bg: #f8f9fa;
+	--layout-bg: #f8f9fa;
+	--main-color: #212529;
+	--accent: #007bff;
+	--accent-hover: #0056b3;
+	--error: #dc3545;
+	--success: #28a745;
+	--text-color: #495057;
+
+	--card-border: rgba(0, 0, 0, 0.1);
+	--card-title-color: #212529;
+	--input-border: rgba(0, 0, 0, 0.15);
+	--input-text: #212529;
+	--dropdown-bg: #ffffff;
+	--dropdown-border: #dee2e6;
+	--preview-bg: #ffffff;
+	--preview-bg-inverted: #000000;
+	--btn-border: rgba(0, 0, 0, 0.1);
+	--btn-bg: var(--accent);
+	--btn-text: #ffffff;
+	--header-border: #dee2e6;
+	--footer-border: rgba(0, 0, 0, 0.05);
+}
+
 body {
 	font-family: 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji';
