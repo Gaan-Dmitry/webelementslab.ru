@@ -1,4 +1,4 @@
-/* Version: 2.2 */
+/* Version: 2.1 */
 /* Стили для табов и превью */
 .tabs {
 	display: flex;
@@ -6,10 +6,9 @@
 }
 
 .tab-btn {
-	background: var(--layout-bg);
-	color: var(--text-color);
-	border: 1px solid var(--card-border);
-	border-bottom: none;
+	background: #232323;
+	color: #bbb;
+	border: none;
 	border-radius: 6px 6px 0 0;
 	padding: 8px 20px;
 	font-size: 1rem;
@@ -22,9 +21,8 @@
 .tab-btn.active,
 .tab-btn:hover,
 .tab-btn:focus {
-	background: var(--layout-bg);
-	color: var(--accent);
-	border-color: var(--accent);
+	background: #2d2d2d;
+	color: var(--succes);
 	z-index: 2;
 	outline: none;
 }
@@ -34,8 +32,7 @@
 	height: auto;
 	display: none;
 	margin-top: 10px;
-	background: var(--layout-bg);
-	border: 1px solid var(--card-border);
+	background: #2d2d2d;
 	border-radius: 0 0 8px 8px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 	padding: 0;

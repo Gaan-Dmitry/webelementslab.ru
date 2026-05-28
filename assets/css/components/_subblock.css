@@ -1,4 +1,4 @@
-/* Version: 2.2 */
+/* Version: 2.1 */
 /* Стили для блока sub-block и input.inp-sub */
 .sub-block {
 	margin: 2rem auto;
@@ -18,9 +18,8 @@ input.inp-sub {
 	min-width: 0;
 	padding: 0 1rem;
 	font-size: 1rem;
-	background-color: transparent;
-	color: var(--input-text);
-	border: 1px solid var(--input-border);
+	background-color: #27272756;
+	border: 1px solid #d1d7e0;
 	border-right: none;
 	border-bottom-right-radius: 0;
 	border-top-right-radius: 0;
@@ -41,7 +40,7 @@ input.inp-sub {
 
 	input.inp-sub {
 		width: 100%;
-		border-right: 1px solid var(--input-border);
+		border-right: 1px solid #d1d7e0;
 		border-radius: 0.5rem;
 	}
 
