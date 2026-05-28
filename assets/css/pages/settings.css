@@ -28,6 +28,12 @@
 }
 .bg-actions button {
 	background: var(--layout-bg);
+	color: var(--main-color);
+	border-color: var(--main-color);
+}
+.avatar-actions .error-btn {
+	color: var(--main-color);
+	border-color: var(--main-color);
 }
 .avatar-block {
 	position: relative;
@@ -201,6 +207,8 @@
 	left: 0;
 	padding: 0.8rem 3rem;
 	z-index: 1;
+	color: var(--main-color);
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .er-suc {
