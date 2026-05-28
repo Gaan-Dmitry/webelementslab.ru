@@ -58,7 +58,7 @@
                                 </div>
                         </div>
                 <?php else: ?>
-                        <a href="/pages/login.php" class="mobile-nav-link">Вход</a>
+                        <a href="/pages/login.php" class="login-link mobile-nav-link">Вход</a>
                         <a class="reg-btn anim-hover-box-shadow mobile-nav-link" href="/pages/register.php">Регистрация</a>
                 <?php endif; ?>
         </div>
