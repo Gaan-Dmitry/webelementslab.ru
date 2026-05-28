@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="robots" content="noindex, nofollow">
     <title><?= $editing ? 'Редактировать' : 'Создать' ?> карточку | WebElementsLab</title>
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
-    <link id="prism-theme" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 </head>
 <body>
 <?php require_once __DIR__ . '/../templates/header.php'; ?>
