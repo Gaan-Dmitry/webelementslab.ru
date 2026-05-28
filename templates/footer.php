@@ -6,6 +6,7 @@
 <p>Данный сайт был разработан Анастасией Леоненко</p>
 </div>
 <div class="footer-col right">
+<button id="theme-toggle-btn" class="reg-btn" onclick="toggleTheme()" style="margin-right: 1rem; min-width: 10rem;">🌓 Тема</button>
 <a href="https://github.com/4gdv5fg1qq">GitHub</a>
 <a href="/pages/privacy.php">Политика конфиденциальности</a>
 </div>

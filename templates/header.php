@@ -1,3 +1,4 @@
+<script src="/assets/js/theme-toggle.js?v=<?= filemtime(__DIR__ . '/../assets/js/theme-toggle.js') ?>"></script>
 <?php
     if (isset($_SESSION['id'])) {
         require_once __DIR__ . '/../includes/db.php';

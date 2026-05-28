@@ -1,4 +1,4 @@
-/* Version: 2.1 */
+/* Version: 2.2 */
 /* Стили для кнопок */
 input[type='submit']:disabled {
 	opacity: 0.7;
@@ -7,10 +7,10 @@ input[type='submit']:disabled {
 
 .reg-btn {
 	padding: 0.4rem 1.2rem;
-	border: 1px white solid;
+	border: 1px var(--btn-border) solid;
 	border-radius: 0.5rem;
 	background-color: transparent;
-	color: #d1d7e0;
+	color: var(--main-color);
 	cursor: pointer;
 	transition: all 0.3s ease;
 	text-decoration: none;
@@ -21,8 +21,9 @@ input[type='submit']:disabled {
 
 .reg-btn:hover {
 	background-color: transparent;
-	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 10px var(--accent);
 	transform: translateY(-1px);
+	border-color: var(--accent);
 }
 
 .reg-btn:active {
@@ -67,10 +68,10 @@ input[type='submit']:disabled {
 /* Кнопка "Оформить премиум подписку" с прозрачным фоном и светлым текстом */
 .premium-link-inline {
 	padding: 0.4rem 1.2rem;
-	border: 1px white solid;
+	border: 1px var(--btn-border) solid;
 	border-radius: 0.5rem;
 	background-color: transparent;
-	color: #d1d7e0;
+	color: var(--main-color);
 	cursor: pointer;
 	transition: all 0.3s ease;
 	text-decoration: none;
@@ -82,8 +83,9 @@ input[type='submit']:disabled {
 
 .premium-link-inline:hover {
 	background-color: transparent;
-	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 10px var(--accent);
 	transform: translateY(-1px);
+	border-color: var(--accent);
 }
 
 .auth-actions {
@@ -98,28 +100,24 @@ input[type='submit'],
 input[type='reset'] {
 	width: 100%;
 	padding: 0.9rem;
-	background-color: #013d50;
-	color: #d1d7e0;
+	background-color: var(--btn-bg);
+	color: var(--btn-text);
 	border: none;
 	border-radius: 0.25rem;
 	cursor: pointer;
-	transition: background-color 0.3s;
+	transition: opacity 0.3s;
 }
 
 input[type='submit']:hover,
 input[type='reset']:hover {
-	background-color: #015872;
+	opacity: 0.9;
 }
 
 .btn-card {
-	background: linear-gradient(
-		135deg,
-		rgba(255, 255, 255, 0.1) 0%,
-		rgba(255, 255, 255, 0.05) 100%
-	);
-	color: white;
+	background: var(--layout-bg);
+	color: var(--text-color);
 	padding: 0.4rem 1.2rem;
-	border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+	border: 0.0625rem solid var(--card-border);
 	border-radius: 50em;
 	cursor: pointer;
 	display: inline-flex;
@@ -130,8 +128,8 @@ input[type='reset']:hover {
 	height: 2.25rem;
 	will-change: transform, box-shadow, background, border-color;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	box-shadow: 0 0.2rem 0.9rem rgba(255, 255, 255, 0.15),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0.2rem 0.9rem rgba(0, 0, 0, 0.1),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05);
 	backdrop-filter: blur(0.5rem);
 	position: relative;
 	overflow: hidden;
@@ -158,26 +156,18 @@ input[type='reset']:hover {
 }
 
 .btn-card:hover {
-	background: linear-gradient(
-		135deg,
-		rgba(255, 255, 255, 0.2) 0%,
-		rgba(255, 255, 255, 0.1) 100%
-	);
-	border-color: rgba(255, 255, 255, 0.6);
-	box-shadow: 0 0.4rem 1.5rem rgba(255, 255, 255, 0.25),
-		0 0 0 0.0625rem rgba(255, 255, 255, 0.1),
-		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
+	background: var(--layout-bg);
+	border-color: var(--accent);
+	box-shadow: 0 0.4rem 1.5rem rgba(0, 0, 0, 0.15),
+		0 0 0 0.0625rem var(--accent),
+		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
 	transform: translateY(-0.125rem);
 }
 
 .btn-card:active {
 	transform: translateY(0) scale(0.95);
-	background: linear-gradient(
-		135deg,
-		rgba(255, 255, 255, 0.15) 0%,
-		rgba(255, 255, 255, 0.05) 100%
-	);
-	box-shadow: 0 0.125rem 0.5rem rgba(255, 255, 255, 0.1),
+	background: var(--layout-bg);
+	box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1),
 		inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05);
 	transition: all 0.1s ease;
 }
