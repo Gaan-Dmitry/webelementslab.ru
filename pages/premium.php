@@ -73,6 +73,6 @@ if (isset($_SESSION['id'])) {
         // Передаём статус премиума в JavaScript
         window.userHasPremium = <?= $hasPremium ? 'true' : 'false' ?>;
     </script>
-    <script src="/assets/js/premium.js" defer></script>
+    <script src="/assets/js/premium.js?v=<?= filemtime(__DIR__ . '/../assets/js/premium.js') ?>" defer></script>
 </body>
 </html>

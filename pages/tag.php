@@ -48,6 +48,6 @@ $pageTitle = "Сниппеты с тегом: " . htmlspecialchars($tag);
     <script>
         window.currentTag = <?= json_encode($tag) ?>;
     </script>
-    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/main.js?v=<?= filemtime(__DIR__ . '/../assets/js/main.js') ?>" defer></script>
 </body>
 </html>

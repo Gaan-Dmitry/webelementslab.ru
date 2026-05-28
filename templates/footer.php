@@ -27,4 +27,4 @@ if (isset($_SESSION['id'])) {
 <script>
     window.userHasPremium = <?= $hasPremiumGlobal ? 'true' : 'false' ?>;
 </script>
-<script src="/assets/js/desktop-only.js" defer></script>
+<script src="/assets/js/desktop-only.js?v=<?= filemtime(__DIR__ . '/../assets/js/desktop-only.js') ?>" defer></script>

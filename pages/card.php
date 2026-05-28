@@ -136,6 +136,6 @@ window.snippetPreviewData = {
     js: <?= json_encode($snippet['js']) ?>
 };
 </script>
-<script src="/assets/js/snippet.js" defer></script>
+<script src="/assets/js/snippet.js?v=<?= filemtime(__DIR__ . '/../assets/js/snippet.js') ?>" defer></script>
 </body>
 </html>

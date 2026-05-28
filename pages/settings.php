@@ -194,6 +194,6 @@ $bg_url = !empty($profile['bg_img']) ? $profile['bg_img'] : '/uploads/default-bg
 </div>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
-<script src="/assets/js/profile-settings.js"></script>
+<script src="/assets/js/profile-settings.js?v=<?= filemtime(__DIR__ . '/../assets/js/profile-settings.js') ?>"></script>
 </body>
 </html>
