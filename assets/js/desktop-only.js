@@ -8,10 +8,14 @@ if (!isMobileUserAgent) {
 return;
 }
 
-// Не показываем заглушку на странице оформления премиума
+// Не показываем заглушку на страницах оформления премиума, логина и регистрации
 const currentPath = window.location.pathname;
-if (currentPath.includes('/pages/premium.php')) {
-return;
+if (
+  currentPath.includes('/pages/premium.php') ||
+  currentPath.includes('/pages/login.php') ||
+  currentPath.includes('/pages/register.php')
+) {
+  return;
 }
 
 // Проверяем, есть ли у пользователя премиум (данные из PHP)
@@ -70,23 +74,23 @@ line-height: 1.45;
 .premium-link-btn {
 display: inline-block;
 margin-top: 1rem;
-padding: 0.8rem 1.5rem;
-background: #77a8d9;
-color: #1d1a18;
+padding: 0.4rem 1.2rem;
+background: transparent;
+color: #d1d7e0;
 text-decoration: none;
-border-radius: 8px;
+border: 1px solid white;
+border-radius: 0.5rem;
 font-weight: 600;
 transition: all 0.3s ease;
 }
 .premium-link-btn:hover {
-background: #9bc3ea;
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(119, 168, 217, 0.4);
+background: transparent;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+transform: translateY(-1px);
 }
 .login-block {
 margin-top: 1.2rem;
 padding-top: 1rem;
-border-top: 1px solid #3f5062;
 }
 .login-block p {
 margin: 0 0 0.6rem 0;
@@ -99,13 +103,13 @@ padding: 0.6rem 1.2rem;
 background: transparent;
 color: #9bc3ea;
 text-decoration: none;
-border: 1px solid #9bc3ea;
+border: none;
 border-radius: 8px;
 font-weight: 500;
 transition: all 0.3s ease;
 }
 .login-link-btn:hover {
-background: rgba(155, 195, 234, 0.1);
+text-shadow: 0 0 4px #77a8d9, 0 0 10px #9bc3ea;
 }
 `;
 

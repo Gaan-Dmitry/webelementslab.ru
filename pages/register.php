@@ -81,6 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <div class="authentication ">
         <div class="auth-text-up">
+            <a href="/">
+                <img src="/assets/img/logo.svg" alt="logo" class="auth-logo" />
+            </a>
             <h1>Регистрация</h1>
         </div>
         <div class="auth-form">

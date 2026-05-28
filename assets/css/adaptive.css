@@ -9,6 +9,7 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0.8rem;
+    border-bottom: none;
   }
   
   .nav-left,
@@ -63,6 +64,18 @@
   
   .slogan h1 {
     font-size: 1.8rem;
+  }
+
+  .auth-logo {
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .authentication {
+    width: 100%;
+    max-width: 24rem;
+    padding: 1.5rem;
+    margin-top: 0;
   }
   
   main {
