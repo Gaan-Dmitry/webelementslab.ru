@@ -31,11 +31,15 @@ session_start();
         <?php // Если юзер не залогинен - показываем блок с подпиской ?>
         <?php if (!isset($_SESSION['id'])): ?>
             <section class="slogan">
-                <h1>WebElementsLab — <br>Готовые HTML, CSS и JS решения</h1><br>
+                <h1>WebElementsLab — <br>Готовые HTML, CSS и JS решения</h1>
                 <h2>Подпишитесь на обновления и получайте свежие сниппеты первыми</h2>
                 <div class="sub-block">
                     <input class="inp-sub" type="email" name="subcribeemail" id="subcribeemail" autocomplete="email" placeholder="Ваша почта...">
                     <button class="sub-btn" id="sub-btn">Подписаться</button>
+                </div>
+                <div class="auth-actions">
+                    <a href="/pages/login.php" class="login-link-inline">Войти</a>
+                    <a href="/pages/premium.php" class="premium-link-inline">Оформить премиум подписку</a>
                 </div>
             </section>
         <?php endif; ?>
